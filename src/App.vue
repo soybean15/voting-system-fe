@@ -1,18 +1,31 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="flex flex-col h-full">
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link>
+     </nav>
+
+    <div class="grow" ><router-view/></div>
+     <div class="footer"></div>
+
+  </div>
+
 </template>
 
 <style>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  
+  position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    
 }
 
 nav {
@@ -26,5 +39,9 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+.footer{
+  background: red;
+  height: 5px;
 }
 </style>
