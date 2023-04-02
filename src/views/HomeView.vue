@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home w-5/6 m-auto">
 
     <ElectionView />
   </div>

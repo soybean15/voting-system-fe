@@ -2,7 +2,7 @@
   <h1>Vote</h1>
 
   <div class="flex">
-    <div class="" v-for="position in positions.data" :key="position.id">
+    <div class="" v-for="position in positions" :key="position.id">
       <PositionView :position="position" />
     </div>
   </div>
@@ -10,29 +10,14 @@
 
 <script>
 import { ref } from "vue";
-import PositionView from "./PositionView.vue";
+import PositionView from "./PositionView.vue"
+import getPositions from '@/data/getPositions'
 
 export default {
   components: { PositionView },
   setup() {
-    const positions = ref([]);
+    const positions = ref(getPositions());
 
-    const fetchData = async () => {
-      const error = ref(null);
-
-      try {
-        let data = await fetch("http://voting.test/candidate");
-        if (!data.ok) {
-          throw Error("no Data available");
-        }
-        positions.value = await data.json();
-      } catch (err) {
-        error.value = err.message;
-      }
-    };
-
-    fetchData();
-    console.log(positions);
     return { positions };
   },
 };
