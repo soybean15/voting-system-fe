@@ -1,75 +1,90 @@
 <template>
   <h1>Vote</h1>
 
-  <div class="parent">
-    <div class="item" v-for="(position, index) in positions" :key="position.id">
-      <div class="tab" :class="{active:activeTab==index}">
-        <PositionView  :position="{ ...position, index }" @next ="next" @back="back"/>
+  <div class="parent flex">
+    <div class="w-2/6"></div>
+
+    <div class="relative w-full">
+      <div class="">
+        <div
+          class="item"
+          v-for="(position, index) in positions"
+          :key="position.id"
+        >
+          <div class="tab w-full" :class="{ active: activeTab == index }">
+            <PositionView
+              :position="{ ...position, index }"
+              @next="next"
+              @back="back"
+            />
+          </div>
+        </div>
       </div>
-    
     </div>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
-import PositionView from "./PositionView.vue"
-import getPositions from '@/data/getPositions'
-import { onMounted , onUpdated} from 'vue'
+import PositionView from "./PositionView.vue";
+import getPositions from "@/data/getPositions";
+import { onMounted, onUpdated } from "vue";
 
 export default {
   components: { PositionView },
   setup() {
     const positions = ref([]);
-    const activeTab = ref(0)
-    const len = ref(0)
+    const activeTab = ref(0);
+    const len = ref(0);
 
-    getPositions().then(response =>{
-      positions.value = response.data
-      len.value = positions.value.length
-    })
+    getPositions().then((response) => {
+      positions.value = response.data;
+      len.value = positions.value.length;
+    });
 
-    const next =()=>{
-      console.log(len)
-      if(activeTab.value<len.value-1){
-        activeTab.value++
+    const next = () => {
+      console.log(len);
+      if (activeTab.value < len.value - 1) {
+        activeTab.value++;
       }
-     
-    }
+    };
 
-    const back =()=>{
-      if(activeTab.value>0){
-        activeTab.value--
+    const back = () => {
+      if (activeTab.value > 0) {
+        activeTab.value--;
       }
-      
-    }
+    };
 
-      
-
-    
-    return { positions,activeTab,next,back };
+    return { positions, activeTab, next, back };
   },
-
 };
 </script>
 
 
 <style>
-.parent{
+.parent {
   background-color: #ffffff;
-  margin: 100px auto;
-  padding: 40px;
+  margin: auto;
+
   width: 70%;
+  height: 80%;
   min-width: 300px;
+  border: 1px solid gray;
 }
-.item{
-  width:100%;
+.item {
+  display: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
 }
-.tab{
+.tab {
+  display: absolute;
+  top: 0;
+  left: 0;
   display: none;
 }
-.tab.active{
+.tab.active {
   display: block;
 }
 </style>
