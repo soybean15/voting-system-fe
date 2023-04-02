@@ -15,4 +15,6 @@ const fetchData = async (route) => {
     }
   };
 
+  
+
   export default fetchData
