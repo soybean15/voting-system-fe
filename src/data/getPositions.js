@@ -12,6 +12,7 @@ const getPositions = ()=>{
     fetchData(path)
     .then(response=>{
         positions.value = response.data
+       
     })
   
     
