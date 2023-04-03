@@ -1,18 +1,24 @@
 <template>
-    <div class="w-40">{{position.index}} {{ position.name }} - {{ position.isActive }} </div>
-    <ul>
-        <li v-for="candidate in position.candidates" :key="candidate.id">{{ candidate.name }}</li>
-    </ul>
-    <button @click="handleBack" class="rounded-lg bg-gray-400">Back</button>
-    <button @click="handleNext" class="rounded-lg bg-gray-400">Next</button>
-   
-  
+  <div class="relative h-full ">
+
+    <div class="text-4xl font-bold p-2">{{ position.name }} </div>
+
+    <div v-for="candidate in position.candidates" :key="candidate.id">
+        <CandidateCard :candidate="candidate"/>
+        
+    </div>
+
+
+  </div>
 </template>
 
 <script>
+import CandidateCard from './CandidateCard.vue'
+
 export default {
     props:['position'],
     emits:['next','back'],
+    components:{CandidateCard},
     setup(props,{emit}){
         props.position.isActive = false
         const handleNext = () => {
@@ -30,5 +36,4 @@ export default {
 </script>
 
 <style>
-
 </style>

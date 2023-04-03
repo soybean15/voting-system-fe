@@ -18,6 +18,18 @@
               @back="back"
             />
           </div>
+
+
+          <div class="absolute right-0 bottom-0 w-full m-4">
+            <div class="flex ">
+
+              <button @click="back" class="rounded-lg bg-gray-400">Back</button>
+              <div class="grow"></div>
+              <button @click="next" class="rounded-lg bg-gray-400">Next</button>
+            </div>
+
+        </div>
+
         </div>
       </div>
     </div>
