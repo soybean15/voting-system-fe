@@ -2,7 +2,12 @@
   <h1>Vote</h1>
 
   <div class="parent flex">
-    <div class="w-2/6"></div>
+    <div class="w-2/6">
+
+      <PositionSideView :positions="positions"/>
+
+
+    </div>
 
     <div class="relative w-full">
       <div class="">
@@ -39,11 +44,12 @@
 <script>
 import { ref } from "vue";
 import PositionView from "./PositionView.vue";
+import PositionSideView from './PositionSideView.vue'
 import getPositions from "@/data/getPositions";
 import { onMounted, onUpdated } from "vue";
 
 export default {
-  components: { PositionView },
+  components: { PositionView,PositionSideView },
   setup() {
     const positions = ref([]);
     const activeTab = ref(0);
