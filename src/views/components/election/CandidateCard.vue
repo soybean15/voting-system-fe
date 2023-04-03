@@ -22,7 +22,7 @@ export default {
 
 
     const onSelect = ()=>{
-      props.candidate.isSelected = true
+     
       emit("selectedCandidate",props.candidate)
     
     }

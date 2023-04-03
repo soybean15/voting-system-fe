@@ -5,8 +5,7 @@
     <div class="w-2/6">
 
       <PositionSideView :positions="positions"/>
-
-
+    
     </div>
 
     <div class="relative w-full">
@@ -21,6 +20,7 @@
               :position="{ ...position, index }"
               @next="next"
               @back="back"
+            
             />
           </div>
 
@@ -58,10 +58,27 @@ export default {
     getPositions().then((response) => {
       positions.value = response.data;
       len.value = positions.value.length;
+
+     addAttribute(positions )
     });
 
+    const addAttribute = (positions)=>{
+      positions.value.forEach(position=>{
+        position.voted = ref(false)
+      })
+    }
+
+    const updateAttribute = (positions,_position)=>{
+      positions.value.forEach(position=>{
+        if(position.id ==_position.id &&_position.id.voted ===true ){
+          position.voted =true
+        }
+      })
+    }
+
+
     const next = () => {
-      console.log(len);
+      
       if (activeTab.value < len.value - 1) {
         activeTab.value++;
       }
@@ -72,6 +89,9 @@ export default {
         activeTab.value--;
       }
     };
+
+    
+
 
     return { positions, activeTab, next, back };
   },
