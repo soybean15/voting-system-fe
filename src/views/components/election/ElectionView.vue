@@ -17,7 +17,7 @@
         >
           <div class="tab w-full" :class="{ active: activeTab == index }">
             <PositionView
-              :position="{ ...position, index }"
+              :position="position"
               @next="next"
               @back="back"
             
