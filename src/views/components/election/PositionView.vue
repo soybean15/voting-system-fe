@@ -1,6 +1,6 @@
 <template>
   <div class="relative h-full">
-    <div class="text-4xl font-bold p-2">{{ position.name }} {{ position.voted }}</div>
+    <div class="text-4xl font-bold p-2">{{ position.name }}</div>
 
     <div v-for="candidate in position.candidates" :key="candidate.id">
       <CandidateCard

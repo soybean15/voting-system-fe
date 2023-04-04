@@ -4,7 +4,7 @@
   <div class="parent flex">
     <div class="w-2/6">
 
-      <PositionSideView :positions="positions"/>
+      <PositionSideView :positions="positions" :activeTab="activeTab" @onClickTab="onClickTab"/>
     
     </div>
 
@@ -54,6 +54,7 @@ export default {
     const positions = ref([]);
     const activeTab = ref(0);
     const len = ref(0);
+ 
 
     getPositions().then((response) => {
       positions.value = response.data;
@@ -68,13 +69,7 @@ export default {
       })
     }
 
-    const updateAttribute = (positions,_position)=>{
-      positions.value.forEach(position=>{
-        if(position.id ==_position.id &&_position.id.voted ===true ){
-          position.voted =true
-        }
-      })
-    }
+
 
 
     const next = () => {
@@ -90,10 +85,18 @@ export default {
       }
     };
 
+    const onClickTab=(index)=>{
+      activeTab.value=index
+    }
+
     
 
 
-    return { positions, activeTab, next, back };
+    return { positions, 
+      activeTab, 
+      next, 
+      back,
+      onClickTab };
   },
 };
 </script>
@@ -124,5 +127,8 @@ export default {
 }
 .tab.active {
   display: block;
+}
+.activeButton{
+  background-color: rgb(127 29 29);
 }
 </style>
