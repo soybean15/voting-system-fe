@@ -45,9 +45,6 @@ export default {
         console.log( props.position.voted)
 
 
-      
-
-
     }
     
 
