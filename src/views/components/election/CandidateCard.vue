@@ -5,7 +5,7 @@
     :class="{onselected: candidate.isSelected}"
   >
     <div class="candidate-img">
-      <img class="h-20 rounded-full" :src="candidate.image" />
+      <img class="h-20 w-20 rounded-full" :src="candidate.image" />
     </div>
 
     <div>{{ candidate.name }} </div>

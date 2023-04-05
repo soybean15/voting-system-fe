@@ -9,13 +9,13 @@
     </div>
 
     <div class="relative w-full">
-      <div class="">
+      <div class="flex-col h-full">
         <div
-          class="item"
+          class=" h-full w-full item"
           v-for="(position, index) in positions"
           :key="position.id"
         >
-          <div class="tab w-full" :class="{ active: activeTab == index }">
+          <div class="absolute tab w-full h-full" :class="{ active: activeTab == index }">
             <PositionView
               :position="position"
               @next="next"

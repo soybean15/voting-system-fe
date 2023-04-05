@@ -1,13 +1,18 @@
 <template>
   <div class="relative h-full">
-    <div class="text-4xl font-bold p-2">{{ position.name }}</div>
+    <div class="flex-none font-bold p-2 text-xl md:text-4xl">{{ position.name }}</div>
 
-    <div v-for="candidate in position.candidates" :key="candidate.id">
+    <div class="candidate-list absolute grow overflow-auto  w-full">
+      <div v-for="candidate in position.candidates" :key="candidate.id">
       <CandidateCard
         :candidate="candidate"
         @selectedCandidate="selectedCandidate"
       />
     </div>
+
+    </div>
+
+ 
   </div>
 </template>
 
@@ -54,4 +59,7 @@ export default {
 </script>
 
 <style>
+.candidate-list{
+height: 70%;
+}
 </style>
