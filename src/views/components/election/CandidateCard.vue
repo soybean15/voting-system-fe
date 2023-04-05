@@ -16,14 +16,14 @@
 import { ref } from "vue";
 export default {
   props: ["candidate"],
-  emits:['selectedCandidate'],
+  emits:['selectCandidate'],
   setup(props,{emit}) {
     props.candidate.isSelected = false;
 
 
     const onSelect = ()=>{
      
-      emit("selectedCandidate",props.candidate)
+      emit("selectCandidate",props.candidate)
     
     }
     
