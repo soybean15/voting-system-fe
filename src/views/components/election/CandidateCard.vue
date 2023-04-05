@@ -1,7 +1,7 @@
 <template>
   <div
   @click="onSelect"
-    class="flex h-16 p-1 m-5 bg-slate-200 rounded-md drop-shadow-lg cursor-pointer overflow-visible content-center"
+    class="flex h-16 p-1 m-5 bg-slate-200  rounded-md drop-shadow-lg cursor-pointer overflow-visible content-center"
     :class="{onselected: candidate.isSelected}"
   >
     <div class="candidate-img">

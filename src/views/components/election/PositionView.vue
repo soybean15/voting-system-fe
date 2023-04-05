@@ -2,7 +2,8 @@
   <div class="relative h-full">
     <div class="flex-none font-bold p-2 text-xl md:text-4xl">{{ position.name }}</div>
 
-    <div class="candidate-list absolute grow overflow-auto  w-full">
+    <!-- candidate-list absolute grow overflow-auto  w-full -->
+    <div class="grid w-full" :class="gridProperty">
       <div v-for="candidate in position.candidates" :key="candidate.id">
       <CandidateCard
         :candidate="candidate"
@@ -24,9 +25,19 @@ export default {
   props: ["position"],
     
   components: { CandidateCard },
-  setup(props,{emit}) {
-    //const voted = ref(props.position.voted)
+  setup(props) {
+    const len = props.position.candidates.length
+    let col = 1;
+    if (len>3){
+      col = len/3
+    }
+    const gridProperty = ref("grid-cols-"+col);
+
     const selected = ref(null);
+
+
+
+
 
     const selectedCandidate = (candidate)=>{
         if(selected.value!=null ){
@@ -53,7 +64,7 @@ export default {
     }
     
 
-    return { selectedCandidate };
+    return { selectedCandidate ,gridProperty};
   },
 };
 </script>
@@ -61,5 +72,9 @@ export default {
 <style>
 .candidate-list{
 height: 70%;
+}
+
+.grid-container{
+  grid-template-columns: v-bind(gridProperty)
 }
 </style>
