@@ -7,7 +7,7 @@
     <div class="text-left text-lg font-semibold">Select : {{ count }}</div>
 
     <!-- candidate-list absolute grow overflow-auto  w-full -->
-    <div class="grid w-full" :class="gridProperty">
+    <div class="grid w-full " :class="gridProperty">
       <div v-for="candidate in position.candidates" :key="candidate.id">
         <CandidateCard
           :candidate="candidate"
@@ -34,9 +34,9 @@ export default {
     if (len > 3) {
       col = len / 3;
     }
-    console.log("WInner count "+props.position.winner_count)
+   
     const gridProperty = ref("grid-cols-" + col);
-
+    console.log("gridProperty "+gridProperty.value)
     const selected = ref(null);
     let count = ref(props.position.winner_count)
 
