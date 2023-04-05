@@ -2,7 +2,9 @@
   <div class="relative h-full">
     <div class="flex-none font-bold p-2 text-xl md:text-4xl">
       {{ position.name }}
+      
     </div>
+    <div class="text-left text-lg font-semibold">Select : {{ count }}</div>
 
     <!-- candidate-list absolute grow overflow-auto  w-full -->
     <div class="grid w-full" :class="gridProperty">
@@ -25,6 +27,8 @@ export default {
 
   components: { CandidateCard },
   setup(props) {
+
+   // props.position.selectedWinners = []
     const len = props.position.candidates.length;
     let col = 1;
     if (len > 3) {
@@ -34,13 +38,29 @@ export default {
     const gridProperty = ref("grid-cols-" + col);
 
     const selected = ref(null);
+    let count = ref(props.position.winner_count)
 
     const selectCandidate = (candidate) => {
       if(props.position.winner_count>1){
 
-        candidate.isSelected =  !candidate.isSelected 
+        
+        if(count.value>0 || candidate.isSelected){
+          candidate.isSelected =  !candidate.isSelected 
 
-        if(candidate.isSelected)
+
+          if(candidate.isSelected){
+          // props.position.selectedWinners.push(candidate)
+            props.position.isSelected = true
+            count.value--
+          }else{
+            //props.position.selectedWinners.filter(candidate => candidate !== candidate)
+            props.position.isSelected = false
+            count.value++
+          }
+
+        }
+
+        console.log("count "+count+" "+props.position.winner_count)
         
       }else{
 
@@ -64,7 +84,7 @@ export default {
       }
     };
 
-    return { selectCandidate, gridProperty };
+    return { selectCandidate, gridProperty ,count};
   },
 };
 </script>
