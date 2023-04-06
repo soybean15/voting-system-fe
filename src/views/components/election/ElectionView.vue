@@ -30,7 +30,7 @@
                 {{ backStr }}
               </button>
               <div class="grow"></div>
-              <button @click="next" class="btn btn-blue">
+              <button @click="next"   class="btn btn-blue">
                 {{ nextStr }}
               </button>
             </div>
@@ -39,17 +39,20 @@
       </div>
     </div>
   </div>
+  <ResultModal :positions="positions" :class="{hidden:!showResult}" @closeResultModal="closeResultModal"/>
 </template>
 
 <script>
 import { ref, watchEffect } from "vue";
 import PositionView from "./PositionView.vue";
 import PositionSideView from "./PositionSideView.vue";
+import ResultModal from "./modal/ResultModal.vue"
 import getPositions from "@/data/getPositions";
+
 import { onMounted, onUpdated } from "vue";
 
 export default {
-  components: { PositionView, PositionSideView },
+  components: { PositionView, PositionSideView,ResultModal },
   setup() {
     const positions = ref([]);
     const activeTab = ref(0);
@@ -60,6 +63,8 @@ export default {
 
     let onLast = false;
     let onFirst = ref(true);
+
+    let showResult = ref(false)
 
     getPositions().then((response) => {
       positions.value = response.data;
@@ -78,6 +83,9 @@ export default {
       if (activeTab.value < len.value - 1) {
         activeTab.value++;
       }
+      if(onLast){
+        showResult.value = true
+      }
     };
 
     const back = () => {
@@ -87,6 +95,12 @@ export default {
         activeTab.value--;
       }
     };
+
+    const closeResultModal=()=>{
+      showResult.value = false
+    }
+
+
 
     const onClickTab = (index) => {
       activeTab.value = index;
@@ -117,7 +131,9 @@ export default {
       onClickTab, 
       nextStr, 
       backStr,
-      onFirst  
+      onFirst ,
+      closeResultModal,
+      showResult
     };
   },
 };
