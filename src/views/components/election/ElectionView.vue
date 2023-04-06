@@ -3,38 +3,38 @@
 
   <div class="parent flex">
     <div class="w-2/6">
-
-      <PositionSideView :positions="positions" :activeTab="activeTab" @onClickTab="onClickTab"/>
-    
+      <PositionSideView
+        :positions="positions"
+        :activeTab="activeTab"
+        @onClickTab="onClickTab"
+      />
     </div>
 
     <div class="relative w-full">
       <div class="flex-col h-full">
         <div
-          class=" h-full w-full item"
+          class="h-full w-full item"
           v-for="(position, index) in positions"
           :key="position.id"
         >
-          <div class="absolute tab w-full h-full" :class="{ active: activeTab == index }">
-            <PositionView
-              :position="position"
-              @next="next"
-              @back="back"
-            
-            />
+          <div
+            class="absolute tab w-full h-full"
+            :class="{ active: activeTab == index }"
+          >
+            <PositionView :position="position" @next="next" @back="back" />
           </div>
 
-
           <div class="absolute right-0 bottom-0 w-full m-4">
-            <div class="flex ">
-
-              <button @click="back" class="rounded-lg bg-gray-400">Back</button>
+            <div class="flex">
+              <button @click="back" class="btn btn-blue" :class="{hidden:onFirst}">
+                {{ backStr }}
+              </button>
               <div class="grow"></div>
-              <button @click="next" class="rounded-lg bg-gray-400">Next</button>
+              <button @click="next" class="btn btn-blue">
+                {{ nextStr }}
+              </button>
             </div>
-
-        </div>
-
+          </div>
         </div>
       </div>
     </div>
@@ -42,38 +42,39 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import PositionView from "./PositionView.vue";
-import PositionSideView from './PositionSideView.vue'
+import PositionSideView from "./PositionSideView.vue";
 import getPositions from "@/data/getPositions";
 import { onMounted, onUpdated } from "vue";
 
 export default {
-  components: { PositionView,PositionSideView },
+  components: { PositionView, PositionSideView },
   setup() {
     const positions = ref([]);
     const activeTab = ref(0);
     const len = ref(0);
- 
+
+    const backStr = ref("Back");
+    const nextStr = ref("Next");
+
+    let onLast = false;
+    let onFirst = ref(true);
 
     getPositions().then((response) => {
       positions.value = response.data;
       len.value = positions.value.length;
 
-     addAttribute(positions )
+      addAttribute(positions);
     });
 
-    const addAttribute = (positions)=>{
-      positions.value.forEach(position=>{
-        position.voted = ref(false)
-      })
-    }
-
-
-
+    const addAttribute = (positions) => {
+      positions.value.forEach((position) => {
+        position.voted = ref(false);
+      });
+    };
 
     const next = () => {
-      
       if (activeTab.value < len.value - 1) {
         activeTab.value++;
       }
@@ -81,22 +82,43 @@ export default {
 
     const back = () => {
       if (activeTab.value > 0) {
+        nextStr.value = "Next";
+
         activeTab.value--;
       }
     };
 
-    const onClickTab=(index)=>{
-      activeTab.value=index
-    }
+    const onClickTab = (index) => {
+      activeTab.value = index;
+    };
 
-    
+    watchEffect(() => {
+      if (activeTab.value == len.value - 1) {
+        nextStr.value = "Finished";
+        onLast = true;
+      } else {
+        onLast = false;
+        nextStr.value = "Next";
+      }
 
+      if (activeTab.value == 0) {
+        onFirst.value =true
+        
+      } else {
+        onFirst.value =false
+      }
+    });
 
-    return { positions, 
-      activeTab, 
-      next, 
-      back,
-      onClickTab };
+    return { 
+      positions, 
+      activeTab,
+      next,
+      back, 
+      onClickTab, 
+      nextStr, 
+      backStr,
+      onFirst  
+    };
   },
 };
 </script>
@@ -128,7 +150,11 @@ export default {
 .tab.active {
   display: block;
 }
-.activeButton{
+.activeButton {
   background-color: rgb(127 29 29);
+}
+.hidden{
+  display: none;
+
 }
 </style>

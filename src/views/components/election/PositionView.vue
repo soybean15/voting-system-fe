@@ -7,7 +7,7 @@
     <div class="text-left text-lg font-semibold">Select : {{ count }}</div>
 
     <!-- candidate-list absolute grow overflow-auto  w-full -->
-    <div class="grid w-full " :class="gridProperty">
+    <div class="grid w-full grid-cols-2 " :class="gridProperty">
       <div v-for="candidate in position.candidates" :key="candidate.id">
         <CandidateCard
           :candidate="candidate"
@@ -28,14 +28,14 @@ export default {
   components: { CandidateCard },
   setup(props) {
 
-   // props.position.selectedWinners = []
+
     const len = props.position.candidates.length;
     let col = 1;
     if (len > 3) {
       col = len / 3;
     }
    
-    const gridProperty = ref("grid-cols-" + col);
+    const gridProperty = ref("grid-cols-[" + col+"]");
     console.log("gridProperty "+gridProperty.value)
     const selected = ref(null);
     let count = ref(props.position.winner_count)
@@ -60,7 +60,7 @@ export default {
 
         }
 
-        console.log("count "+count+" "+props.position.winner_count)
+        console.log("count "+count.value+" "+props.position.winner_count)
         
       }else{
 
