@@ -7,7 +7,7 @@
     <div class="text-left text-lg font-semibold">Select : {{ count }}</div>
 
     <!-- candidate-list absolute grow overflow-auto  w-full -->
-    <div class="grid w-full grid-cols-2 " :class="gridProperty">
+    <div class="candidate-list grid w-full grid-cols-2 " :class="gridProperty">
       <div v-for="candidate in position.candidates" :key="candidate.id">
         <CandidateCard
           :candidate="candidate"
@@ -91,7 +91,7 @@ export default {
 
 <style>
 .candidate-list {
-  height: 70%;
+  height:65%;
 }
 
 .grid-container {

@@ -3,7 +3,7 @@
     <div class="modal">
 
       <div class="flex-col p-4 h-full">
-        <div class="flex-none font-bold text-2xl">Your Voting Result</div>
+        <div class="flex-none font-bold text-2xl">Your Voting Selection</div>
         <div class="h-4/5">
           <div class="" v-for="position in positions" :key="position.id">
 

@@ -10,21 +10,24 @@
       />
     </div>
 
-    <div class="relative w-full">
-      <div class="flex-col h-full">
+    <div class="relative w-full overflow-hidden">
+      <div class="flex-col h-full ">
         <div
-          class="h-full w-full item"
+          class=" w-full item "
           v-for="(position, index) in positions"
           :key="position.id"
         >
+       
           <div
-            class="absolute tab w-full h-full"
+            class="absolute   tab w-full h-full"
             :class="{ active: activeTab == index }"
           >
+        
             <PositionView :position="position" @next="next" @back="back" />
           </div>
+       
 
-          <div class="absolute right-0 bottom-0 w-full m-4">
+          <div class="absolute right-0 bottom-0 w-full pl-4 m-1">
             <div class="flex">
               <button @click="back" class="btn btn-blue" :class="{hidden:onFirst}">
                 {{ backStr }}
@@ -152,25 +155,52 @@ export default {
 }
 .item {
   display: absolute;
+  
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
-.tab {
+/* .tab {
   display: absolute;
   top: 0;
   left: 0;
   display: none;
+  transition: all 2s ease-in-out;
+  transform: translateX(-100%);
+ 
 }
 .tab.active {
   display: block;
+  transform: translateX(0);
+
+} */
+
+
+.tab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all .5s ease-in-out;
+}
+
+.tab.active {
+  opacity: 1;
+ 
+  transform: translateX(0%);
 }
 .activeButton {
   background-color: rgb(127 29 29);
 }
 .hidden{
   display: none;
+ 
 
 }
+
+
 </style>
