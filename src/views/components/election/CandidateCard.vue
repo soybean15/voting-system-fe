@@ -8,7 +8,12 @@
       <img class="h-20 w-20 rounded-full" :src="candidate.image" />
     </div>
 
-    <div>{{ candidate.name }} </div>
+    <div>
+      <div>{{ candidate.name }}</div>
+      <div>{{ candidate.party_list_name }} </div>
+    
+    </div>
+   
   </div>
 </template>
 
