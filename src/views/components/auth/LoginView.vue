@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="onLogin">
         <input v-model="form.email" type="email" name="email" placeholder="Email">
-        <input v-model="form.passsword" type="password" name="password" placeholder="Password">
+        <input v-model="form.password" type="password" name="password" placeholder="Password">
         <input  class="btn btn-blue" type="submit" name="submit">
 
     </form>
@@ -22,13 +22,13 @@ export default {
 
 
         const onLogin =async ()=>{
-        await axios.get("http://localhost:8000/sanctum/csrf-cookie")
-        await axios.post("http://localhost:8000/login",{
+        await axios.get("/sanctum/csrf-cookie")
+        await axios.post("/login",{
             email: form.value.email,
             password: form.value.password
         })
         
-        let {data} = await axios.get("http://localhost:8000/api/user")
+        let {data} = await axios.get("/api/user")
         user.value = data
         }
 
