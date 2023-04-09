@@ -1,11 +1,13 @@
 <template>
   <div class="flex flex-col h-full">
-    <nav>
+    <!-- <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>|
       <router-link to="/login">Login</router-link>|
       <router-link to="/register">Register</router-link>
-     </nav>
+      <router-link to="/register">Logout</router-link>
+     </nav> -->
+     <NavView></NavView>
 
     <div class="grow" ><router-view/></div>
      <div class="footer"></div>
@@ -13,8 +15,16 @@
   </div>
 
 </template>
+<script>
+import NavView from './views/components/NavView.vue';
+export default{
+  components:{NavView}
+}
 
+</script>
 <style>
+
+
 
 @import '@/assets/css/style.css';
 #app {
