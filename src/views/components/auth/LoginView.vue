@@ -28,8 +28,7 @@ export default {
             password: form.value.password
         })
         
-        let {data} = await axios.get("/api/user")
-        user.value = data
+        
         }
 
 
