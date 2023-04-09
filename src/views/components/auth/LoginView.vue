@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="onLogin">
+    <form @submit.prevent="authStore.onLogin(form)">
         <input v-model="form.email" type="email" name="email" placeholder="Email">
         <input v-model="form.password" type="password" name="password" placeholder="Password">
         <input  class="btn btn-blue" type="submit" name="submit">
@@ -10,29 +10,22 @@
 
 <script>
 import { ref } from 'vue'
-import axios from 'axios';
+import {useAuthStore } from "@/stores/auth"
 export default {
     setup(){
 
-        axios.defaults.withCredentials =true
         const form = ref({
-            email:'',
+            email :'',
             password:''
         })
+        const authStore = useAuthStore()
 
 
-        const onLogin =async ()=>{
-        await axios.get("/sanctum/csrf-cookie")
-        await axios.post("/login",{
-            email: form.value.email,
-            password: form.value.password
-        })
-        
-        
-        }
 
 
-        return {form, onLogin}
+
+
+        return {form, authStore}
     }
 
 }

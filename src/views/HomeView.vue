@@ -1,9 +1,17 @@
 <template>
   <div class="home w-5/6 h-full m-auto">
 
-    {{ user }}
    <!-- // <ElectionView /> -->
+   <div v-if="authStore.user">
+    <div>{{authStore.user.name}}</div>
+    <div>{{authStore.user.email}}</div>
+  
   </div>
+  <div v-else>
+    <h1>Login </h1>
+  </div>
+  </div>
+
 </template>
 
 <script>
@@ -11,7 +19,7 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 import ElectionView from "./components/election/ElectionView";
 import { ref ,onMounted} from 'vue';
-import axios from 'axios';
+import {useAuthStore, userAuthStore} from '@/stores/auth'
 
 export default {
   name: "HomeView",
@@ -20,14 +28,14 @@ export default {
     ElectionView
   },
   setup(){
-    const user = ref()
+    const authStore = useAuthStore()
 
-    onMounted( async()=>{
-      const _user = await axios.get("http://localhost:8000/api/user")
-      user.value = _user
+    onMounted( async ()=>{
+      await authStore.getUser()
+
     })
 
-    return {user}
+    return {authStore}
 
   }
  
