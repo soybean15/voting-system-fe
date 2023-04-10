@@ -1,9 +1,13 @@
 <template>
   
-  <div class="header">
+  <div class=" header">
     
-    <div class="flex flex-col nav md:flex-row bg-green-400 overflow-visible">
-      <div class=" md:hidden">expand</div>
+    <div @click="onHideNav" class="menu onhide"><img class="w-5 cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
+    <div  class="flex flex-col nav md:flex-row bg-green-400 overflow-visible" :class="{hide:hideNav}"> 
+      <div class="relative md:hidden w-full ">
+        <div @click="onHideNav" class="menu"><img class="w-5  cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
+      </div>
+     
       <div class="p-2 m-2">
         <img
           class="w-24 border border-green-400 h-24 object-cover rounded-full"
@@ -53,6 +57,11 @@ export default {
   setup() {
     const authStore = useAuthStore();
     //   const isLogged  =ref(authStore.user)
+    const hideNav = ref(false)
+
+    const onHideNav= ()=>{
+      hideNav.value = !hideNav.value 
+    }
 
     const navItems = [
       { route_name: "home", name: "Home", route: "/", visible: true },
@@ -74,16 +83,47 @@ export default {
       authStore,
       navItems,
       navAuth,
+      hideNav,
+      onHideNav
     };
   },
 };
 </script>
 
 <style>
+.header{
+  height: 100%;
+}
+
+.menu{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+.menu.onhide{
+  left: 0;
+  top: 0;
+  z-index: 0;
+}
 .nav {
   height: 100%;
+  position: fixed;
+ 
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease-out; /* Add a transition effect */
+  transform: translateX(0%); /* Move the nav off screen by default */
  
 }
+.nav.hide{
+  
+  transition: transform 0.3s ease-out; /* Add a transition effect */
+  transform: translateX(-100%); /* Move the nav off screen by default */
+
+}
+
+
 
 
 @media only screen and (min-width: 768px) {
@@ -91,6 +131,7 @@ export default {
   .nav {
     height: 5.6rem;
     display: block;
+    position:static;
   }
 
 
