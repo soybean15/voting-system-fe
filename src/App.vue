@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-row md:flex-col h-full">
     <!-- <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>|
@@ -7,7 +7,8 @@
       <router-link to="/register">Register</router-link>
       <router-link to="/register">Logout</router-link>
      </nav> -->
-     <NavView></NavView>
+     <div> <NavView/></div>
+    
 
     <div class="grow" ><router-view/></div>
      <div class="footer"></div>
