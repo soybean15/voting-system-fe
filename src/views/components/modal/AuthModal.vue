@@ -17,7 +17,7 @@
            <RegisterView/>
         </div>
         <div v-else>
-           <LoginView/>
+           <LoginView @onClickRegister="onClickRegister"/>
         </div>
         
        
@@ -42,9 +42,14 @@ export default {
         const route = useRoute();
         const register =ref(route.query.register)
 
+        const onClickRegister=()=>{
+            register.value = 'true'
+            authStore.routeToRegister
+        }
+
    
     
-        return {authStore,register}
+        return {authStore,register,onClickRegister}
     
     }
 

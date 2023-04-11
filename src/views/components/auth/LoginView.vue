@@ -28,7 +28,8 @@
         </div>
     </form>
     <div class="login-container border m-2">
-    <div>No account yet? <a href="#">Register</a></div>
+    <div class="no-account">No account yet? <span class="register-button" @click="onClickRegister" ><router-link :to="{name:'register'}">Register</router-link></span>
+    </div>
    </div>
    </div>
   
@@ -41,7 +42,8 @@
 import { ref } from 'vue'
 import {useAuthStore } from "@/stores/auth"
 export default {
-    setup(){
+    emits:['onClickRegister'],
+    setup(props,{emit}){
 
         const form = ref({
             email :'',
@@ -49,9 +51,13 @@ export default {
         })
         const authStore = useAuthStore()
 
+        const onClickRegister=()=>{
+            emit('onClickRegister')
+        }
 
 
-        return {form, authStore}
+
+        return {form, authStore,onClickRegister}
     }
 
 }
@@ -80,5 +86,9 @@ export default {
 }
 .btn-submit:hover{
     background-color: rgb(132 204 22);
+}
+.register-button{
+    color: rgb(20 184 166);
+    cursor:pointer;
 }
 </style>

@@ -52,6 +52,10 @@ export const useAuthStore = defineStore('auth',{
         },
         currentRouteName() {
             return this.router;
+        },
+        routeToRegister(){
+            
+            this.router.push('/register')
         }
 
     }
