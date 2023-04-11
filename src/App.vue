@@ -18,6 +18,7 @@
 </template>
 <script>
 import NavView from './views/components/NavView.vue';
+
 export default{
   components:{NavView}
 }

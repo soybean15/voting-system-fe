@@ -32,7 +32,7 @@
             <div
               class="ml-4 md:h-24 flex items-end md:pl-1 md:pb-2 text-xl text-gray-100 semi-bold"
             >
-              <router-link :to="{ name: auth.route_name }">{{
+              <router-link :to="{ name: auth.route_name, query:{register:auth.register} }">{{
                 auth.name
               }}</router-link>
             </div>
@@ -76,8 +76,8 @@ export default {
     ];
 
     const navAuth = [
-      { route_name: "login", name: "Login" },
-      { route_name: "register", name: "Register" },
+      { route_name: "login", name: "Login" ,register:false},
+      { route_name: "register", name: "Register" ,register:true},
     ];
     return {
       authStore,

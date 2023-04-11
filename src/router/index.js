@@ -12,12 +12,14 @@ const routes = [
   {
     path: '/login',
     name : 'login',
+ 
     component:AuthModal ,
   },
   {
     path: '/register',
     name : 'register',
-    component:RegisterView ,
+
+    component:AuthModal ,
   },
   {
     path: '/about',

@@ -9,9 +9,17 @@
 
    <div class="modal-overlay">
   
-    <div class="relative modal ">
-        <div class="absolute close-button "> <img class="h-7" src="../../../assets/img/icon/close-icon.svg"></div>
-        <LoginView/>
+    <div class="relative modal m-20 ">
+  
+        <div @click="authStore.onCloseAuthModal" class="absolute close-button"> <img class="h-7" src="../../../assets/img/icon/close-icon.svg"></div>
+        
+        <div v-if="register=='true'">
+           <RegisterView/>
+        </div>
+        <div v-else>
+           <LoginView/>
+        </div>
+        
        
     </div> 
 
@@ -20,11 +28,23 @@
 
 <script>
 import LoginView from '@/views/components/auth/LoginView.vue'
+import RegisterView from '@/views/components/auth/RegisterView.vue'
+import {useAuthStore } from "@/stores/auth"
+
+import { useRoute } from 'vue-router';
+import { ref } from 'vue';
 
 export default {
-    components:{LoginView},
+    components:{LoginView, RegisterView},
+   
     setup(){
+        const authStore = useAuthStore()
+        const route = useRoute();
+        const register =ref(route.query.register)
 
+   
+    
+        return {authStore,register}
     
     }
 
@@ -34,15 +54,15 @@ export default {
 <style>
 .modal{
   
+    height: 50%;
     width:20rem;
     border-radius: 5px;
 }
-.close-button{
-    
+.close-button{   
     cursor: pointer;
-   
     right: 15px;
     top:10px;
+    z-index: 1;
 }
 
 </style>

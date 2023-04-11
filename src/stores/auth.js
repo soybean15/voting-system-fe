@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 import axios from "axios"
+import router from '@/router'
 
 export const useAuthStore = defineStore('auth',{
 
@@ -45,6 +46,12 @@ export const useAuthStore = defineStore('auth',{
         async handleLogout(){
             await axios.post('/logout')
             this.authUser =null
+        },
+        onCloseAuthModal(){
+            this.router.push('/')
+        },
+        currentRouteName() {
+            return this.router;
         }
 
     }

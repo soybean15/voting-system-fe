@@ -6,7 +6,7 @@
 
     </form>
    -->
-   <div class="login-container border m-2">
+   <div class="login-container bg-neutral-800 border m-2">
     <div class=" text-2xl mt-4 font-bold">Login</div>
     <form>
         <div class="p-2">
@@ -24,14 +24,14 @@
           
         </div>
         <div class="p-2">
-            <input  class="btn-submit" type="submit" value="Sign in">
+            <input  class="btn-submit bg-lime-600" type="submit" value="Sign in">
         </div>
     </form>
-
-   </div>
-   <div class="login-container border m-2">
+    <div class="login-container border m-2">
     <div>No account yet? <a href="#">Register</a></div>
    </div>
+   </div>
+  
   
 
 
@@ -51,9 +51,6 @@ export default {
 
 
 
-
-
-
         return {form, authStore}
     }
 
@@ -61,15 +58,15 @@ export default {
 </script>
 
 <style>
-.modal{
-    height:50%;
-   
-}
+
 .login-container{
+    
     border-radius: 5px;
+    color: white;
+    opacity: .9;
 }
 .input-field{
-   
+    color: rgb(56, 54, 54);
     width: 95%;
     border: 1px solid gray;
     border-radius: 5px;

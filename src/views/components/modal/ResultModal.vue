@@ -1,6 +1,6 @@
 <template>
   <div class="modal-overlay">
-    <div class="modal">
+    <div class="res-modal">
 
       <div class="flex-col p-4 h-full">
         <div class="flex-none font-bold text-2xl">Your Voting Selection</div>
@@ -59,5 +59,14 @@ export default {
     position: absolute;
 
 }
-
+.res-modal {
+    text-align: center;
+    /* background-color: white; */
+    /* height: 80%; */
+    width: 60%;
+    margin-top: 5%;
+  
+    
+    border-radius: 20px;
+  }
 </style>
