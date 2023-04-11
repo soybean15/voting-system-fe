@@ -59,24 +59,5 @@ export default {
     position: absolute;
 
 }
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  background-color: #000000da;
-}
-.modal {
-  text-align: center;
-  background-color: white;
-  height: 80%;
-  width: 60%;
-  margin-top: 5%;
 
-  
-  border-radius: 20px;
-}
 </style>

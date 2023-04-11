@@ -49,7 +49,7 @@
 import { ref, watchEffect } from "vue";
 import PositionView from "./PositionView.vue";
 import PositionSideView from "./PositionSideView.vue";
-import ResultModal from "./modal/ResultModal.vue"
+import ResultModal from "@/views/components/modal/ResultModal.vue"
 import getPositions from "@/data/getPositions";
 
 import { onMounted, onUpdated } from "vue";
