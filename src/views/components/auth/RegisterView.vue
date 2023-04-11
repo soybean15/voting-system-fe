@@ -2,29 +2,29 @@
    
   <div class="reg-container bg-neutral-800 border m-2">
     <div class=" text-2xl mt-4 font-bold">Register</div>
-    <form>
+    <form @submit.prevent="authStore.handleRegister(form)">
 
         <div class="p-2"> 
 
             <div  class="text-left pl-2"><label>Name</label></div>
-            <input class="input-field" type="text" name="name">
+            <input v-model="form.name" class="input-field" type="text" name="name">
             
         </div>
 
         <div class="p-2">
             <div  class="text-left pl-2"><label >Email</label></div>
-            <input class="input-field" type="email" name="password">
+            <input v-model="form.email" class="input-field" type="email" name="password">
             
         </div>
 
         <div class="p-2">
             <div  class="text-left pl-2"><label >Password</label></div>
-            <input class="input-field" type="password" name="password">
+            <input v-model="form.password" class="input-field" type="password" name="password">
             
         </div>
         <div class="p-2">
             <div  class="text-left pl-2"><label>Confirm Password</label></div>
-            <input class="input-field" type="password" name="password">
+            <input v-model="form.password_confirmation" class="input-field" type="password" name="password">
             
         </div>
 
@@ -36,11 +36,24 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch, watchEffect } from "vue";
 import { useAuthStore } from "@/stores/auth";
 export default {
   setup() {
-    return {};
+    const authStore = useAuthStore()
+
+    const form = ref({
+        name:'',
+        email:'',
+        password:'',
+        password_confirmation:''
+    })
+
+    
+    watchEffect(()=>{
+
+    })
+    return {form,authStore};
   },
 };
 </script>
