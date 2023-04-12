@@ -22,6 +22,18 @@ const routes = [
     component:AuthModal ,
   },
   {
+    path: '/forgot-password',
+    name : 'forgotPassword',
+
+    component:AuthModal ,
+  },
+  {
+    path: '/reset-password',
+    name : 'resetPassword',
+
+    component:AuthModal ,
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

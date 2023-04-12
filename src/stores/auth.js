@@ -19,8 +19,14 @@ export const useAuthStore = defineStore('auth',{
         },
         async getUser(){
             await this.getToken()
-            const data = await axios.get("/api/user")
-            this.authUser = data.data
+            try{
+                const data = await axios.get("/api/user")
+                this.authUser = data.data
+            }catch(e){
+               
+
+            }
+    
         },
 
 
@@ -62,10 +68,11 @@ export const useAuthStore = defineStore('auth',{
                 this.router.push('/')
 
             }catch(e){
-                if(error.response.status === 422){
-                    this.authErrors = e.response.data.error
+                if(e.response.status === 422){
+                    this.authErrors = e.response.data.errors
                 }
 
+        
             }
 
         },
@@ -79,6 +86,10 @@ export const useAuthStore = defineStore('auth',{
         routeToRegister(){
             
             this.router.push('/register')
+        },
+        routeToForgotPassword(){
+            
+            this.router.push('/forgot-password')
         }
 
     }

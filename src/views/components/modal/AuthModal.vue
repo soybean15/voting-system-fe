@@ -12,12 +12,15 @@
     <div class="relative modal m-20 ">
   
         <div @click="authStore.onCloseAuthModal" class="absolute close-button"> <img class="h-7" src="../../../assets/img/icon/close-icon.svg"></div>
-        
+       
         <div v-if="register=='true'">
            <RegisterView/>
         </div>
+        <div v-else-if="register=='forgot'">
+           <ForgotPasswordView/>
+        </div>
         <div v-else>
-           <LoginView @onClickRegister="onClickRegister"/>
+           <LoginView @onClickRegister="onClickRegister" @onClickForgotPassword="onClickForgotPassword"/>
         </div>
         
        
@@ -29,13 +32,20 @@
 <script>
 import LoginView from '@/views/components/auth/LoginView.vue'
 import RegisterView from '@/views/components/auth/RegisterView.vue'
+import ResetPasswordView from '@/views/components/auth/ResetPasswordView.vue'
+import ForgotPasswordView from '@/views/components/auth/ForgotPasswordView.vue'
 import {useAuthStore } from "@/stores/auth"
 
 import { useRoute } from 'vue-router';
 import { ref } from 'vue';
 
 export default {
-    components:{LoginView, RegisterView},
+    components:{
+        LoginView, 
+        RegisterView,
+        ResetPasswordView,
+        ForgotPasswordView
+    },
    
     setup(){
         const authStore = useAuthStore()
@@ -47,9 +57,20 @@ export default {
             authStore.routeToRegister
         }
 
+        const onClickForgotPassword=()=>{
+            register.value = 'forgot'
+            authStore.routeToForgotPassword
+        }
+
+
    
     
-        return {authStore,register,onClickRegister}
+        return {
+            authStore,
+            register,
+            onClickRegister,
+            onClickForgotPassword
+        }
     
     }
 
