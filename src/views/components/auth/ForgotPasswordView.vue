@@ -1,10 +1,27 @@
 <template>
 
-    <form @submit.prevent="authStore.handleForgotPassword(email)">
-        <input v-model="email" type="email" placeholder="forgot password"/>
-        {{ email }}
-        <input type="submit"/>
-    </form>
+    <div class="fg-container bg-neutral-800 border m-2">
+        <div class=" text-2xl mt-4 font-bold">Forgot Password</div>
+        <form @submit.prevent="authStore.handleForgotPassword(email)">
+            <div class="p-2">
+
+            <div  class="text-left pl-2"><label>Email</label></div>
+                <input class="input-field" v-model="email" type="email" />
+            </div>
+            <div v-if="authStore.errors.email">
+                <span class="text-red-400 text-xs">{{ authStore.errors.email[0] }}</span>
+            </div>
+           
+          
+
+            <div class="p-2">
+                <input class="btn-submit bg-lime-600" type="submit" value="Submit"/>
+            </div>
+            
+        </form>
+
+    </div>
+
   
 </template>
 
@@ -25,5 +42,9 @@ export default {
 </script>
 
 <style>
-
+.fg-container{
+    border-radius: 5px;
+    color: white;
+    opacity: .9;
+}
 </style>

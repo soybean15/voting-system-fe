@@ -51,6 +51,7 @@ export default {
         const authStore = useAuthStore()
         const route = useRoute();
         const register =ref(route.query.register)
+        authStore.resetErrors()
 
         const onClickRegister=()=>{
             register.value = 'true'
