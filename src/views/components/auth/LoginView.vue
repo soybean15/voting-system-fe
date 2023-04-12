@@ -14,16 +14,22 @@
             <div>
                 <input  class="input-field" v-model="form.email" type="email" name="email">
             </div>
-            
-           
+            <div v-if="authStore.errors.email">
+                <span class="text-red-400 text-sm">{{ authStore.errors.email[0] }}</span>
+            </div>
+                     
         </div>
         <div class="p-2">
             <div class="text-left pl-2"><label>Password</label></div>
             <div >  <input class="input-field" v-model="form.password" type="password" name="password"></div>
 
+            <div v-if="authStore.errors.password">
+                <span class="text-red-400 text-sm">{{ authStore.errors.password[0] }}</span>
+            </div>
+                     
           
         </div>
-        <div class="p-2">
+        <div class="p-2">git
             <input  class="btn-submit bg-lime-600" type="submit" value="Sign in">
         </div>
     </form>

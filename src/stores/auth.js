@@ -6,10 +6,12 @@ export const useAuthStore = defineStore('auth',{
 
 
     state: ()=>({
-        authUser:null
+        authUser:null,
+        authErrors:[]
     }),
     getters:{
-        user:(state)=>state.authUser
+        user:(state)=>state.authUser,
+        errors:(state)=>state.authErrors
     },
     actions:{
         async getToken(){
@@ -23,25 +25,49 @@ export const useAuthStore = defineStore('auth',{
 
 
         async onLogin (data){
+            this.authErrors=[]
             await this.getToken()
-            await axios.post("/login",{
-                email: data.email,
-                password: data.password
-            })
 
-            this.router.push('/')
+            try{
+                await axios.post("/login",{
+                    email: data.email,
+                    password: data.password
+                })
+    
+                this.router.push('/')
+
+            }catch(e){
+                if(e.response.status === 422){
+                    this.authErrors = e.response.data.errors
+                }
+
+            }
+
+
+
+
                        
         }
         ,
         async handleRegister(data){
+            this.authErrors=[]
             await this.getToken()
-            await axios.post('/register',{
-                name:data.name,
-                email:data.email,
-                password:data.password,
-                password_confirmation :data.password_confirmation
-            })
-            this.router.push('/')
+            try{
+                await axios.post('/register',{
+                    name:data.name,
+                    email:data.email,
+                    password:data.password,
+                    password_confirmation :data.password_confirmation
+                })
+                this.router.push('/')
+
+            }catch(e){
+                if(error.response.status === 422){
+                    this.authErrors = e.response.data.error
+                }
+
+            }
+
         },
         async handleLogout(){
             await axios.post('/logout')
@@ -49,9 +75,6 @@ export const useAuthStore = defineStore('auth',{
         },
         onCloseAuthModal(){
             this.router.push('/')
-        },
-        currentRouteName() {
-            return this.router;
         },
         routeToRegister(){
             
