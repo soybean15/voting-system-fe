@@ -1,15 +1,15 @@
 <template>
   <div class="home w-5/6 h-full m-auto">
 
-   <!-- // <ElectionView /> -->
-   <div v-if="authStore.user">
+    <ElectionView />
+   <!-- <div v-if="authStore.user">
     <div>{{authStore.user.name}}</div>
     <div>{{authStore.user.email}}</div>
   
   </div>
   <div v-else>
     <h1>Login </h1>
-  </div>
+  </div> -->
   </div>
 
 </template>

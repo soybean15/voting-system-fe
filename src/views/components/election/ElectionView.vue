@@ -1,6 +1,8 @@
 <template>
   <h1>Vote</h1>
 
+  {{ voteStore.positionsSize }}
+
   <div class="parent flex">
     <div class="w-2/6">
       <PositionSideView
@@ -46,18 +48,29 @@
 </template>
 
 <script>
-import { ref, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import PositionView from "./PositionView.vue";
 import PositionSideView from "./PositionSideView.vue";
 import ResultModal from "@/views/components/modal/ResultModal.vue"
 import getPositions from "@/data/getPositions";
+
+import {useVoteStore} from '@/stores/voting'
 
 import { onMounted, onUpdated } from "vue";
 
 export default {
   components: { PositionView, PositionSideView,ResultModal },
   setup() {
-    const positions = ref([]);
+
+    const voteStore = useVoteStore()
+ 
+   
+    voteStore.getPositions()
+    // console.log(voteStore.positions)
+   
+    const positions = ref()
+
+    
     const activeTab = ref(0);
     const len = ref(0);
 
@@ -69,12 +82,16 @@ export default {
 
     let showResult = ref(false)
 
-    getPositions().then((response) => {
-      positions.value = response.data;
-      len.value = positions.value.length;
 
-      addAttribute(positions);
-    });
+ 
+  // getPositions().then((response) => {
+  //     positions.value = response.data;
+  //     len.value = positions.value.length;
+
+
+
+  //     addAttribute(positions);
+  //   });
 
     const addAttribute = (positions) => {
       positions.value.forEach((position) => {
@@ -86,7 +103,7 @@ export default {
       if (activeTab.value < len.value - 1) {
         activeTab.value++;
       }
-      if(onLast){
+      if(onLast ){
         showResult.value = true
       }
     };
@@ -110,7 +127,9 @@ export default {
     };
 
     watchEffect(() => {
-      if (activeTab.value == len.value - 1) {
+
+
+        if (activeTab.value == voteStore.positionsSize - 1) {
         nextStr.value = "Finished";
         onLast = true;
       } else {
@@ -124,6 +143,22 @@ export default {
       } else {
         onFirst.value =false
       }
+    
+      
+      // if (activeTab.value == len.value - 1) {
+      //   nextStr.value = "Finished";
+      //   onLast = true;
+      // } else {
+      //   onLast = false;
+      //   nextStr.value = "Next";
+      // }
+
+      // if (activeTab.value == 0) {
+      //   onFirst.value =true
+        
+      // } else {
+      //   onFirst.value =false
+      // }
     });
 
     return { 
@@ -136,7 +171,8 @@ export default {
       backStr,
       onFirst ,
       closeResultModal,
-      showResult
+      showResult,
+      voteStore
     };
   },
 };
