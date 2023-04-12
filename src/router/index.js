@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '@/views/components/auth/LoginView.vue'
-import RegisterView from '@/views/components/auth/RegisterView.vue'
+import ResetPassword from '@/views/components/auth/ResetPasswordView.vue'
 import AuthModal from '@/views/components/modal/AuthModal'
 const routes = [
   {
@@ -28,10 +28,10 @@ const routes = [
     component:AuthModal ,
   },
   {
-    path: '/reset-password',
+    path: '/password-reset/:token',
     name : 'resetPassword',
 
-    component:AuthModal ,
+    component:ResetPassword ,
   },
   {
     path: '/about',
