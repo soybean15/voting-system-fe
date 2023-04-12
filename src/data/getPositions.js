@@ -1,10 +1,10 @@
 import { ref } from "vue";
 import fetchData from "./fetchData"
 
-// const getPositions = ()=>{
+// const getPositionsList =()=>{
 
     
-//     const path = "candidate"
+//     const path = "api/candidate"
 
 //     const positions = ref([])
     
@@ -14,6 +14,7 @@ import fetchData from "./fetchData"
 //         positions.value = response.data
        
 //     })
+// };
   
     
 
@@ -27,7 +28,7 @@ import fetchData from "./fetchData"
 const getPositions = ()=>{
 
     
-    const path = "candidate"
+    const path = "api/candidate"
 
     
 

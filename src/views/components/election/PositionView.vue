@@ -1,4 +1,5 @@
 <template>
+
   <div class="relative h-full">
     <div class="flex-none font-bold p-2 text-xl md:text-4xl">
       {{ position.name }}
@@ -6,8 +7,7 @@
     </div>
     <div class="text-left text-lg font-semibold">Select : {{ count }}</div>
 
-    <!-- candidate-list absolute grow overflow-auto  w-full -->
-    <div class="candidate-list grid w-full grid-cols-2 " :class="gridProperty">
+    <div class="candidate-list grid w-full grid-container">
       <div v-for="candidate in position.candidates" :key="candidate.id">
         <CandidateCard
           :candidate="candidate"
@@ -30,12 +30,14 @@ export default {
 
 
     const len = props.position.candidates.length;
-    let col = 1;
+    let c = 2;
     if (len > 3) {
-      col = len / 3;
+      c = len / 3;
     }
+    let col = Math.ceil(c)
    
-    const gridProperty = ref("grid-cols-[" + col+"]");
+
+    const gridProperty = ref("repeat("+col+", minmax(0, 1fr))")
     console.log("gridProperty "+gridProperty.value)
     const selected = ref(null);
     let count = ref(props.position.winner_count)
@@ -72,19 +74,22 @@ export default {
     const onTwoSelection = (candidate) => {
       if (selected.value != null) {
         selected.value.isSelected = false;
+       
       }
       if (selected.value == candidate) {
         candidate.isSelected = false;
         selected.value = null;
         props.position.voted = false;
+        count.value++
       } else {
         candidate.isSelected = true;
         selected.value = candidate;
         props.position.voted = true;
+        if(count.value==1) {count.value--}
       }
     };
 
-    return { selectCandidate, gridProperty ,count};
+    return { selectCandidate, gridProperty ,count,col};
   },
 };
 </script>

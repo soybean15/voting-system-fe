@@ -1,8 +1,6 @@
 <template>
   <h1>Vote</h1>
 
-  {{ voteStore.positionsSize }}
-
   <div class="parent flex">
     <div class="w-2/6">
       <PositionSideView
@@ -25,14 +23,14 @@
             :class="{ active: activeTab == index }"
           >
         
-            <PositionView :position="position" @next="next" @back="back" />
+            <PositionView :position="position" />
           </div>
        
 
           <div class="absolute right-0 bottom-0 w-full pl-4 m-1">
             <div class="flex">
               <button @click="back" class="btn btn-blue" :class="{hidden:onFirst}">
-                {{ backStr }}
+               {{ backStr }}
               </button>
               <div class="grow"></div>
               <button @click="next"   class="btn btn-blue">
@@ -43,8 +41,10 @@
         </div>
       </div>
     </div>
+    
   </div>
-  <ResultModal :positions="positions" :class="{hidden:!showResult}" @closeResultModal="closeResultModal"/>
+
+  <ResultModal :positions="positions"  :showResult="showResult"  @closeResultModal="closeResultModal"/>
 </template>
 
 <script>
@@ -54,7 +54,6 @@ import PositionSideView from "./PositionSideView.vue";
 import ResultModal from "@/views/components/modal/ResultModal.vue"
 import getPositions from "@/data/getPositions";
 
-import {useVoteStore} from '@/stores/voting'
 
 import { onMounted, onUpdated } from "vue";
 
@@ -62,11 +61,8 @@ export default {
   components: { PositionView, PositionSideView,ResultModal },
   setup() {
 
-    const voteStore = useVoteStore()
- 
-   
-    voteStore.getPositions()
-    // console.log(voteStore.positions)
+
+    
    
     const positions = ref()
 
@@ -80,18 +76,17 @@ export default {
     let onLast = false;
     let onFirst = ref(true);
 
-    let showResult = ref(false)
+    let showResult = ref("hidden")
 
 
  
-  // getPositions().then((response) => {
-  //     positions.value = response.data;
-  //     len.value = positions.value.length;
+    getPositions().then((response) => {
+        positions.value = response.data;
+        len.value = positions.value.length;
+        console.log(positions.value)
 
-
-
-  //     addAttribute(positions);
-  //   });
+        addAttribute(positions);
+      });
 
     const addAttribute = (positions) => {
       positions.value.forEach((position) => {
@@ -104,7 +99,7 @@ export default {
         activeTab.value++;
       }
       if(onLast ){
-        showResult.value = true
+        showResult.value = 'flex'
       }
     };
 
@@ -117,7 +112,8 @@ export default {
     };
 
     const closeResultModal=()=>{
-      showResult.value = false
+      showResult.value = 'hidden'
+      
     }
 
 
@@ -129,36 +125,20 @@ export default {
     watchEffect(() => {
 
 
-        if (activeTab.value == voteStore.positionsSize - 1) {
+      if (activeTab.value== len.value - 1) {
         nextStr.value = "Finished";
         onLast = true;
       } else {
         onLast = false;
-        nextStr.value = "Next";
+        nextStr.value= "Next";
       }
 
       if (activeTab.value == 0) {
         onFirst.value =true
-        
+
       } else {
         onFirst.value =false
       }
-    
-      
-      // if (activeTab.value == len.value - 1) {
-      //   nextStr.value = "Finished";
-      //   onLast = true;
-      // } else {
-      //   onLast = false;
-      //   nextStr.value = "Next";
-      // }
-
-      // if (activeTab.value == 0) {
-      //   onFirst.value =true
-        
-      // } else {
-      //   onFirst.value =false
-      // }
     });
 
     return { 
@@ -171,8 +151,9 @@ export default {
       backStr,
       onFirst ,
       closeResultModal,
-      showResult,
-      voteStore
+      showResult
+      
+
     };
   },
 };
@@ -233,9 +214,7 @@ export default {
   background-color: rgb(127 29 29);
 }
 .hidden{
-  display: none;
- 
-
+ display: none;
 }
 
 

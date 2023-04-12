@@ -7,7 +7,7 @@
     </form>
    -->
 
-   <div class="modal-overlay">
+   <div class="modal-overlay flex">
   
     <div class="relative modal m-20 ">
   

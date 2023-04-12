@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-overlay">
+  <div class="modal-overlay" :class="showResult">
     <div class="res-modal">
 
       <div class="flex-col p-4 h-full">
@@ -34,7 +34,7 @@
 <script>
 import ResultModalPosition from './ResultModalPosition.vue';
 export default {
-  props:['positions'],
+  props:['positions',"showResult"],
   emits:['closeResultModal'],
   components:{ResultModalPosition},
   setup(props,{emit}){
@@ -57,16 +57,19 @@ export default {
     background-color: rgb(15 23 42);
     opacity: 0.05;
     position: absolute;
+  
 
 }
 .res-modal {
     text-align: center;
-    /* background-color: white; */
-    /* height: 80%; */
+    background-color: white;
+    height: 80%;
     width: 60%;
     margin-top: 5%;
+    
   
     
     border-radius: 20px;
   }
+
 </style>

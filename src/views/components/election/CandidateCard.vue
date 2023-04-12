@@ -1,8 +1,9 @@
 <template>
   <div
   @click="onSelect"
-    class="flex h-14 p-1 m-5 bg-slate-200 rounded-md drop-shadow-lg cursor-pointer overflow-visible content-center"
-    :class="{onselected: candidate.isSelected}"
+  :class="{'on-selected': candidate.isSelected}"
+    class="flex h-14 p-1 m-5 candidate-card rounded-md drop-shadow-lg cursor-pointer overflow-visible content-center"
+   
   >
     <div class="candidate-img">
       <img class="h-20 w-20 rounded-full" :src="candidate.image" />
@@ -10,6 +11,7 @@
 
     <div>
       <div>{{ candidate.name }}</div>
+      {{  candidate.isSelected }}
       <div>{{ candidate.party_list_name }} </div>
     
     </div>
@@ -43,7 +45,10 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.onselected{
-  background-color: rgb(148 163 184);
+.candidate-card{
+  @apply bg-slate-200;
+}
+.on-selected{
+  @apply bg-slate-400;
 }
 </style>

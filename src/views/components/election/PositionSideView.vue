@@ -5,7 +5,7 @@
 
         <div 
         @click="onClickTab(index)"
-        class="flex-col bg-slate-200 m-2 cursor-pointer" 
+        class="flex-col side-tab m-2 cursor-pointer" 
         :class="{voted:position.voted,sideActive: index==activeTab}" 
         v-for="(position,index) in positions" :key="position.id">
             <div class="m-2 p-2">{{ position.name }}</div>
@@ -39,6 +39,9 @@ export default {
 </script>
 
 <style>
+.side-tab{
+    @apply bg-slate-200
+}
 .voted{
     background-color: rgb(74 222 128);
 }

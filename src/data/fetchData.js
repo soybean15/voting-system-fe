@@ -2,7 +2,7 @@ import {ref} from 'vue'
 
 const fetchData = async (route) => {
     const error = ref(null);
-    const api =  "http://voting.test/"
+    const api =  "http://localhost:8000/"
 
     try {
       let data = await fetch(api+route);
