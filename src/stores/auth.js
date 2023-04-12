@@ -90,6 +90,18 @@ export const useAuthStore = defineStore('auth',{
         routeToForgotPassword(){
             
             this.router.push('/forgot-password')
+        },
+        async handleResetPassword(resetData){
+            this.authErrors =[]
+            try{
+                const response = await axios.post('/reset-password',resetData)
+                this.router.push('/')
+
+            }catch(e){
+                if(e.response.status === 422){
+                    this.authErrors = e.response.data.errors
+                }
+            }
         }
 
     }
