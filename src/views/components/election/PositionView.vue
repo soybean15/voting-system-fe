@@ -38,7 +38,7 @@ export default {
    
 
     const gridProperty = ref("repeat("+col+", minmax(0, 1fr))")
-    console.log("gridProperty "+gridProperty.value)
+
     const selected = ref(null);
     let count = ref(props.position.winner_count)
 
@@ -51,18 +51,26 @@ export default {
 
 
           if(candidate.isSelected){
-          // props.position.selectedWinners.push(candidate)
+         
             props.position.isSelected = true
             count.value--
           }else{
-            //props.position.selectedWinners.filter(candidate => candidate !== candidate)
+            
             props.position.isSelected = false
             count.value++
           }
 
         }
 
-        console.log("count "+count.value+" "+props.position.winner_count)
+
+        //check if voted or not
+        if(count.value==props.position.winner_count){
+          props.position.voted = false;
+        }else{
+          props.position.voted = true;
+        }
+
+    
         
       }else{
 
