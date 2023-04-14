@@ -6,7 +6,7 @@
         <div 
         @click="onClickTab(index)"
         class="flex-col side-tab m-2 cursor-pointer" 
-        :class="{voted:position.voted,sideActive: index==activeTab}" 
+    :class="{sideActive: index==activeTab}" 
         v-for="(position,index) in positions" :key="position.id">
             <div class="m-2 p-2">{{ position.name }} <span class="check text-2xl text-lime-700 font-bold" :class="{hidden:!position.voted}">✓</span></div>
             {{ }}
@@ -42,9 +42,7 @@ export default {
 .side-tab{
     @apply bg-slate-200
 }
-.voted{
-    background-color: rgb(74 222 128);
-}
+
 .sideActive{
     background-color: rgb(212 212 216);
 }

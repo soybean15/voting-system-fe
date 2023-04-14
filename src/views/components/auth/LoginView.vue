@@ -27,7 +27,7 @@
             <div >  <input class="input-field" v-model="form.password" type="password" name="password"></div>
 
             <div v-if="authStore.errors.password">
-                <span class="text-red-400 text-sm">{{ authStore.errors.email[0] }}</span>
+                <span class="text-red-400 text-sm">{{ authStore.errors.password[0] }}</span>
             </div>
                      
           

@@ -5,8 +5,8 @@
     </div>
     <div class="text-left text-lg font-semibold">Select : {{ count }}</div>
 
-    <div class="candidate-list grid w-full grid-container">
-      <div v-for="candidate in position.candidates" :key="candidate.id">
+    <div class="absolute  w-full candidate-list overflow-auto">
+      <div class="h-20" v-for="candidate in position.candidates" :key="candidate.id">
         <CandidateCard
           :candidate="candidate"
           @selectCandidate="selectCandidate"
@@ -27,7 +27,10 @@ export default {
   setup(props) {
     const len = props.position.candidates.length;
     let c = 2;
-    if (len > 3) {
+
+    if (len > 6) {
+      c = 1;
+    } else if (len > 3) {
       c = len / 3;
     }
     let col = Math.ceil(c);
@@ -100,10 +103,12 @@ export default {
 
 <style>
 .candidate-list {
-  height: 65%;
+  height: 70%;
+ width: 97% !important;
+  margin-left:5px;
+  margin-right: 5px;
+  border-radius: 10px;
+  box-shadow:  rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
 }
 
-.grid-container {
-  grid-template-columns: v-bind(gridProperty);
-}
 </style>

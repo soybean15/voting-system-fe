@@ -1,7 +1,6 @@
 <template>
-  <h1>Vote</h1>
 
-  <div class="parent flex">
+  <div class="parent flex mt-4">
     <div class="w-2/6">
       <PositionSideView
         :positions="positions"
@@ -189,10 +188,12 @@ export default {
   background-color: #ffffff;
   margin: auto;
 
-  width: 70%;
-  height: 80%;
+  width: 80%;
+  height: 90%;
   min-width: 300px;
-  border: 1px solid gray;
+ 
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .item {
   display: absolute;

@@ -26,6 +26,9 @@ export const useAuthStore = defineStore('auth', {
                 const data = await axios.get("/api/user")
                 this.authUser = data.data
             } catch (e) {
+                // if(e.response.status ===401){
+                //     router.push('/login')
+                // }
 
 
             }
@@ -36,7 +39,7 @@ export const useAuthStore = defineStore('auth', {
         async onLogin(data) {
             this.authErrors = []
             await this.getToken()
-            const currentRoute = this.$route.path
+            
 
 
             try {
@@ -45,12 +48,13 @@ export const useAuthStore = defineStore('auth', {
                     password: data.password
                 })
 
-                this.router.push(currentRoute)
+                this.router.push('/')
 
             } catch (e) {
                 if (e.response.status === 422) {
                     this.authErrors = e.response.data.errors
                 }
+               
 
             }
 
