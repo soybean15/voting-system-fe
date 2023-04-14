@@ -55,7 +55,7 @@ import ResultModal from "@/views/components/modal/ResultModal.vue"
 import getPositions from "@/data/getPositions";
 
 
-import { onMounted, onUpdated } from "vue";
+import { onMounted, onUpdated ,onUnmounted} from "vue";
 
 export default {
   components: { PositionView, PositionSideView,ResultModal },
@@ -65,6 +65,10 @@ export default {
     
    
     const positions = ref()
+
+    const item = localStorage.getItem('positions');
+
+
 
     
     const activeTab = ref(0);
@@ -78,8 +82,18 @@ export default {
 
     let showResult = ref("hidden")
 
+    onUnmounted(()=>{
+      console.log("unmounted")
 
- 
+      const serializedObject = JSON.stringify(positions.value);
+
+      // Save the string in local storage using localStorage.setItem()
+      localStorage.setItem('positions', serializedObject);
+    })
+
+
+    if(item==null){
+       
     getPositions().then((response) => {
         positions.value = response.data;
         len.value = positions.value.length;
@@ -87,10 +101,20 @@ export default {
 
         addAttribute(positions);
       });
+      
+    }else{
+      
+      positions.value = JSON.parse(item);
+      len.value = positions.value.length;
+    }
+
 
     const addAttribute = (positions) => {
       positions.value.forEach((position) => {
         position.voted = ref(false);
+        position.candidates.forEach((candidate)=>{
+          candidate.isSelected = false
+        })
       });
     };
 

@@ -18,6 +18,7 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 import ElectionView from "./components/election/ElectionView";
+
 import { ref ,onMounted} from 'vue';
 import {useAuthStore, userAuthStore} from '@/stores/auth'
 
@@ -25,7 +26,8 @@ export default {
   name: "HomeView",
   components: {
     HelloWorld,
-    ElectionView
+    ElectionView,
+    
   },
   setup(){
     const authStore = useAuthStore()

@@ -25,7 +25,7 @@ export default {
   props: ["candidate"],
   emits:['selectCandidate'],
   setup(props,{emit}) {
-    props.candidate.isSelected = false;
+   // props.candidate.isSelected = false;
 
 
     const onSelect = ()=>{
