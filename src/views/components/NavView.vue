@@ -2,10 +2,10 @@
   
   <div class=" header">
     
-    <div @click="onHideNav" class="menu onhide"><img class="w-5 cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
-    <div  class="flex flex-col nav md:flex-row bg-green-400 overflow-visible" :class="{hide: onMobile && hideNav}"> 
-      <div class="relative md:hidden w-full ">
-        <div @click="onHideNav" class="menu"><img class="w-5  cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
+    <div @click="onHideNav" class="menu w-6 h-6 onhide  "><img class="w-6 h-6 cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
+    <div  class="flex flex-col nav md:flex-row bg-green-600 overflow-visible" :class="{hide: onMobile && hideNav}"> 
+      <div class="relative md:hidden w-full  ">
+        <div @click="onHideNav" class="menu "><img class="w-5  cursor-pointer " src="@/assets/img/icon/burger-menu.svg"></div>
       </div>
      
       <div class="p-2 m-2">
@@ -109,7 +109,7 @@ export default {
 <style>
 .header{
   height: 100%;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+ 
 }
 
 .menu{
@@ -117,6 +117,7 @@ export default {
   right: 0;
   top: 0;
   z-index: 1;
+  
 }
 .menu.onhide{
   left: 0;
@@ -126,7 +127,7 @@ export default {
 .nav {
   height: 100%;
   position: fixed;
- 
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   top: 0;
   left: 0;
   transition: transform 0.3s ease-out; /* Add a transition effect */

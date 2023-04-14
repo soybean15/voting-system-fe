@@ -1,6 +1,6 @@
 <template>
 
-  <div class="parent flex mt-4">
+  <div class="parent flex mt-4 ">
     <div class="w-2/6">
       <PositionSideView
         :positions="positions"

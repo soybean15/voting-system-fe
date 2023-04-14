@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row md:flex-col h-full">
+  <div class="flex flex-row md:flex-col h-full  bg-green-600">
     <!-- <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>|
