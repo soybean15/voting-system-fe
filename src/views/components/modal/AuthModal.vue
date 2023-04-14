@@ -36,7 +36,7 @@ import ResetPasswordView from '@/views/components/auth/ResetPasswordView.vue'
 import ForgotPasswordView from '@/views/components/auth/ForgotPasswordView.vue'
 import {useAuthStore } from "@/stores/auth"
 
-import { useRoute } from 'vue-router';
+import { onBeforeRouteLeave,useRoute } from 'vue-router';
 import { ref } from 'vue';
 
 export default {
@@ -53,6 +53,18 @@ export default {
         const register =ref(route.query.register)
         authStore.resetErrors()
 
+        let previousRoute =''
+
+        onBeforeRouteLeave((to, from) => {
+        previousRoute = from.path;
+      
+        });
+
+        console.log(previousRoute)
+
+
+
+      
         const onClickRegister=()=>{
             register.value = 'true'
             authStore.routeToRegister

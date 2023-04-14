@@ -36,6 +36,8 @@ export const useAuthStore = defineStore('auth', {
         async onLogin(data) {
             this.authErrors = []
             await this.getToken()
+            const currentRoute = this.$route.path
+
 
             try {
                 await axios.post("/login", {
@@ -43,7 +45,7 @@ export const useAuthStore = defineStore('auth', {
                     password: data.password
                 })
 
-                this.router.push('/')
+                this.router.push(currentRoute)
 
             } catch (e) {
                 if (e.response.status === 422) {
@@ -51,8 +53,6 @@ export const useAuthStore = defineStore('auth', {
                 }
 
             }
-
-
 
 
 
@@ -103,7 +103,8 @@ export const useAuthStore = defineStore('auth', {
             this.authUser = null
         },
         onCloseAuthModal() {
-            this.router.push('/')
+
+            this.router.go(-1)
         },
         routeToRegister() {
 

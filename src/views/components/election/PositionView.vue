@@ -63,7 +63,7 @@ export default {
         }
 
 
-        //check if voted or not
+        //check if voted or not 
         if(count.value==props.position.winner_count){
           props.position.voted = false;
         }else{
