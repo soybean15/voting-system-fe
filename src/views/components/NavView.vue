@@ -3,7 +3,7 @@
   <div class=" header">
     
     <div @click="onHideNav" class="menu w-6 h-6 onhide  "><img class="w-6 h-6 cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
-    <div  class="flex flex-col nav md:flex-row bg-green-600 overflow-visible" :class="{hide: onMobile && hideNav}"> 
+    <div  class="flex flex-col nav md:flex-row bg-neutral-800 overflow-visible" :class="{hide: onMobile && hideNav}"> 
       <div class="relative md:hidden w-full  ">
         <div @click="onHideNav" class="menu "><img class="w-5  cursor-pointer " src="@/assets/img/icon/burger-menu.svg"></div>
       </div>
@@ -57,7 +57,6 @@ import { ref, watch } from "vue";
 export default {
   setup() {
     const authStore = useAuthStore();
-    const user = ref(authStore.user)
    
     const hideNav = ref(true)
 
