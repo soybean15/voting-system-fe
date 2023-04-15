@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '@/views/components/auth/LoginView.vue'
 import ResetPassword from '@/views/components/auth/ResetPasswordView.vue'
 import AuthModal from '@/views/components/modal/AuthModal'
+import StatusView from '@/views/components/status/StatusView'
 const routes = [
   {
     path: '/',
@@ -24,7 +25,6 @@ const routes = [
   {
     path: '/forgot-password',
     name : 'forgotPassword',
-
     component:AuthModal ,
   },
   {
@@ -33,6 +33,14 @@ const routes = [
 
     component:ResetPassword ,
   },
+  {
+    path: '/status/',
+    name : 'status',
+
+    component:StatusView ,
+  },
+  
+
   {
     path: '/about',
     name: 'about',

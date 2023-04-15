@@ -7,11 +7,13 @@ export const useAuthStore = defineStore('auth', {
 
     state: () => ({
         authUser: null,
-        authErrors: []
+        authErrors: [],
+        authStatus: null
     }),
     getters: {
         user: (state) => state.authUser,
-        errors: (state) => state.authErrors
+        errors: (state) => state.authErrors,
+        status:(state)=> state.authStatus
     },
     actions: {
         resetErrors() {
@@ -64,15 +66,23 @@ export const useAuthStore = defineStore('auth', {
         ,
         async handleRegister(data) {
             this.authErrors = []
+            this.authStatus = null
             await this.getToken()
             try {
-                await axios.post('/register', {
+             await axios.post('/register', {
                     name: data.name,
                     email: data.email,
                     password: data.password,
                     password_confirmation: data.password_confirmation
                 })
-                this.router.push('/')
+
+
+                this.authStatus ={
+                    title: 'Welcome to Voting.com',
+                    status :"We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
+
+                } 
+                this.router.push('/status')
 
             } catch (e) {
                 if (e.response.status === 422) {
@@ -85,13 +95,23 @@ export const useAuthStore = defineStore('auth', {
         },
         async handleForgotPassword(email) {
             this.authErrors = []
+            this.authStatus = null
           
             // await this.getToken()
 
             try{
-                await axios.post('/forgot-password', {
+                
+                const data = await axios.post('/forgot-password', {
                     email: email
                 })
+                this.router.push('/status')
+                this.authStatus ={
+                    title: 'Forgot Password',
+                    status :data.data.status
+
+                } 
+                
+               
 
             }catch(e){
                 if (e.response.status === 422) {
