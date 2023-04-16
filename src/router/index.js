@@ -7,6 +7,9 @@ import StatusView from '@/views/components/status/StatusView'
 
 import AdminView from '@/views/AdminView'
 import PositionsView from '@/views/components/admin/PositionsView'
+import Dashboard from '@/views/components/admin/Dashboard'
+import PartylistView from '@/views/components/admin/PartyListView'
+import CandidatesView from '@/views/components/admin/CandidatesView'
 const routes = [
   {
     path: '/',
@@ -50,7 +53,7 @@ const routes = [
       {
         path: '/dashboard',
         name : 'dashboard',
-        component:PositionsView ,
+        component:Dashboard ,
       },
       {
         path: '/positions',
@@ -62,13 +65,13 @@ const routes = [
         path: '/partylist',
         name : 'partylist',
     
-        component:PositionsView ,
+        component:PartylistView ,
       },
       {
         path: '/candidates',
         name : 'candidates',
     
-        component:PositionsView ,
+        component:CandidatesView ,
       },
       
       
