@@ -7,8 +7,8 @@
             Admin
         </div>
     </div>
-    <div class="flex rounded-tl-lg  rounded-bl-lg drop-shadow-lg  w-full h-full bg-onSurface m-4 ">
-      <div class="admin-sidenav w-52">
+    <div class="admin flex rounded-tl-lg  rounded-bl-lg drop-shadow-lg  w-full h-full bg-onSurface m-4 ">
+      <div class="admin-sidenav">
         <div class="flex flex-col  text-sm font-light" >
           <div class="text-white border-b  border-slate-800  p-2 tracking-widest admin-side-tab" v-for="nav in sideNav" :key="nav.name">
             <router-link :to="{ name: nav.route }">{{nav.name}}</router-link>
@@ -41,10 +41,13 @@ export default {
 
 <style>
 .admin-sidenav {
-  width: 20%;
+  width: 15%;
 }
 .admin-side-tab:hover{
     background-color: #101318;
+}
+.admin{
+  z-index: 0;
 }
 
 </style>

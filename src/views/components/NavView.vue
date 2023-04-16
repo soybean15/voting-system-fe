@@ -3,22 +3,20 @@
   <div class=" header">
     
     <div @click="onHideNav" class="menu w-6 h-6 onhide  "><img class="w-6 h-6 cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
-    <div  class="flex flex-col nav md:flex-row  bg-primary overflow-visible" :class="{hide: onMobile && hideNav}"> 
+    <div  class="flex flex-col nav w-32 md:w-full md:flex-row  bg-primary overflow-visible" :class="{hide: onMobile && hideNav}"> 
       <div class="relative md:hidden w-full  ">
         <div @click="onHideNav" class="menu "><img class="w-5  cursor-pointer " src="@/assets/img/icon/burger-menu.svg"></div>
       </div>
      
-      <div class="p-2 m-2">
-        <img
-          class="w-24 border border-green-400 h-24 object-cover rounded-full"
-          src="@/assets/img/vote-logo.jpeg"
-        />
+      <div class="md:flex items-center pt-10 md:pt-0 ">
+        <div class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 md:pb-4 text-base text-gray-100 font-semibold"></div>
+        <div class="ml-1 md:h-24 font-sans flex md:items-end pl-2 md:pl-0 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"><img width="23" src="@/assets/img/icon/vote-logo.svg"/>Voting.com</div>
       </div>
-      <div class="flex-grow md:flex items-center">
+      <div class="flex-grow  mt-4 md:mt-0 md:flex items-center">
         <div v-for="navItem in navItems" :key="navItem.name">
           <router-link :to="{ name: navItem.route_name }">
             <div
-              class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 md:pb-2 text-base text-gray-100 font-semibold"
+              class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 pb-1 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"
               :class="{ hidden: navItem.name == 'Admin' && !authStore.user }"
             >
               {{ navItem.name }}
@@ -30,7 +28,7 @@
         <div class="md:flex items-center" v-if="!authStore.user">
           <div v-for="auth in navAuth" :key="auth.route_name">
             <div
-              class="ml-4 md:h-24 flex items-end md:pl-1 md:pb-2 text-base text-gray-100 font-semibold"
+              class="ml-4 md:h-24 flex items-end md:pl-1 md:pb-4 text-base text-gray-100 font-semibold"
             >
               <router-link :to="{ name: auth.route_name, query:{register:auth.register} }">{{
                 auth.name
@@ -115,7 +113,7 @@ export default {
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
+  z-index: 999 ;
   
 }
 .menu.onhide{
@@ -124,13 +122,15 @@ export default {
   z-index: 0;
 }
 .nav {
-  height: 100%;
+  height:100%;
   position: fixed;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   top: 0;
   left: 0;
   transition: transform 0.3s ease-out; /* Add a transition effect */
   transform: translateX(0%); /* Move the nav off screen by default */
+  z-index: 999 ;
+  
  
 }
 .nav.hide{
@@ -146,7 +146,7 @@ export default {
 @media only screen and (min-width: 768px) {
   /* For desktop: */
   .nav {
-    height: 5.6rem;
+    height: 5rem;
     display: block;
     position:static;
   }

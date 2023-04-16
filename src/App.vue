@@ -7,7 +7,7 @@
       <router-link to="/register">Register</router-link>
       <router-link to="/register">Logout</router-link>
      </nav> -->
-     <div> <NavView/></div>
+     <div > <NavView/></div>
     
 
     <div class="grow" ><router-view/></div>
