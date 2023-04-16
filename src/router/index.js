@@ -4,6 +4,9 @@ import LoginView from '@/views/components/auth/LoginView.vue'
 import ResetPassword from '@/views/components/auth/ResetPasswordView.vue'
 import AuthModal from '@/views/components/modal/AuthModal'
 import StatusView from '@/views/components/status/StatusView'
+
+import AdminView from '@/views/AdminView'
+import PositionsView from '@/views/components/admin/PositionsView'
 const routes = [
   {
     path: '/',
@@ -39,6 +42,24 @@ const routes = [
 
     component:StatusView ,
   },
+  {
+    path: '/admin',
+    name : 'admin',
+    component:AdminView ,
+    children:[
+      {
+        path: '/positions',
+        name : 'positions',
+    
+        component:PositionsView ,
+      },
+      
+
+    ],
+
+ 
+  },
+
   
 
   {
