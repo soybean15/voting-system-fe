@@ -48,11 +48,29 @@ const routes = [
     component:AdminView ,
     children:[
       {
+        path: '/dashboard',
+        name : 'dashboard',
+        component:PositionsView ,
+      },
+      {
         path: '/positions',
         name : 'positions',
     
         component:PositionsView ,
       },
+      {
+        path: '/partylist',
+        name : 'partylist',
+    
+        component:PositionsView ,
+      },
+      {
+        path: '/candidates',
+        name : 'candidates',
+    
+        component:PositionsView ,
+      },
+      
       
 
     ],

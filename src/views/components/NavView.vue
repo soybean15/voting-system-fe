@@ -3,7 +3,7 @@
   <div class=" header">
     
     <div @click="onHideNav" class="menu w-6 h-6 onhide  "><img class="w-6 h-6 cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
-    <div  class="flex  flex-col nav md:flex-row bg-neutral-800 overflow-visible" :class="{hide: onMobile && hideNav}"> 
+    <div  class="flex flex-col nav md:flex-row  bg-primary overflow-visible" :class="{hide: onMobile && hideNav}"> 
       <div class="relative md:hidden w-full  ">
         <div @click="onHideNav" class="menu "><img class="w-5  cursor-pointer " src="@/assets/img/icon/burger-menu.svg"></div>
       </div>
