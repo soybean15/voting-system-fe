@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-full ">
-    {{ authStore.status }}
+
   
     <div class="text-white mt-4 w-full flex justify-end">
         <div></div>
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class="admin-body">
+      <div class="admin-body w-full">
         <router-view></router-view>
       </div>
     </div>
@@ -27,12 +27,20 @@
 <script>
 import PositionsView from "@/views/components/admin/PositionsView";
 import {useAuthStore} from '@/stores/auth'
+import { onMounted } from 'vue';
 export default {
   components: { PositionsView },
   setup() {
 
     const authStore = useAuthStore()
+   
     authStore.checkRole()
+
+    
+
+    
+    
+  //  authStore.checkRole()
    
     const sideNav = [
         { name: "Dashboard", route: 'dashboard' },

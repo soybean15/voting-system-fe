@@ -49,9 +49,10 @@ const routes = [
     path: '/admin',
     name : 'admin',
     component:AdminView ,
+    redirect : {name: 'dashboard'},
     children:[
       {
-        path: '/dashboard',
+        path: 'dashboard',
         name : 'dashboard',
         component:Dashboard ,
       },

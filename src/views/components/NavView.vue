@@ -10,14 +10,14 @@
      
       <div class="md:flex items-center pt-10 md:pt-0 ">
         <div class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 md:pb-4 text-base text-gray-100 font-semibold"></div>
-        <div class="ml-1 md:h-24 font-sans flex md:items-end pl-2 md:pl-0 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"><img width="23" src="@/assets/img/icon/vote-logo.svg"/>Voting.com</div>
+        <div class="ml-1 md:h-24 font-sans flex md:items-end pl-2 md:pl-0 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"><img width="23" src="@/assets/img/icon/vote-logo.svg"/>Vote.com</div>
       </div>
       <div class="flex-grow  mt-4 md:mt-0 md:flex items-center">
         <div v-for="navItem in navItems" :key="navItem.name">
           <router-link :to="{ name: navItem.route_name }">
             <div
               class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 pb-1 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"
-              :class="{ hidden: navItem.name == 'Admin' && !authStore.isAdmin}"
+              :class="{ hidden: navItem.name == 'Admin' && !authStore.isAdmin &&  !authStore.user }"
             >
               {{ navItem.name }}
             </div>
@@ -39,7 +39,7 @@
         <div class="flex items-center" v-else>
           <div
           @click="authStore.handleLogout"
-            class="ml-4 md:h-24 flex items-end md:pl-1 md:pb-2 text-xl text-gray-100 semi-bold"
+            class=" cursor-pointer ml-4 md:h-24 flex items-end md:pl-1 md:pb-2 text-xl text-gray-100 semi-bold"
           >
             Logout
           </div>
@@ -51,11 +51,15 @@
 
 <script>
 import { useAuthStore } from "@/stores/auth";
-import { ref, watch } from "vue";
+import { ref, watch,onMounted } from "vue";
 export default {
   setup() {
     const authStore = useAuthStore();
-    authStore.checkRole()
+    // authStore.checkRole()
+    onMounted( async ()=>{
+      await authStore.getUser()
+
+    })
     const hideNav = ref(true)
 
    

@@ -30,6 +30,7 @@ export const useAuthStore = defineStore('auth', {
             await this.getToken()
             try {
                 const data = await axios.get("/api/user")
+               
                 this.authUser = data.data
             } catch (e) {
                 // if(e.response.status ===401){
@@ -48,10 +49,11 @@ export const useAuthStore = defineStore('auth', {
                
                 this.authIsAdmin = data.data.status == 1
               
-                if(!this.authIsAdmin){
+                if(!this.authIsAdmin ){
                     router.push('/')
                 }
             } catch (e) {
+                router.push('/')
                 // if(e.response.status ===401){
                 //     router.push('/login')
                 // }
@@ -150,6 +152,9 @@ export const useAuthStore = defineStore('auth', {
         async handleLogout() {
             await axios.post('/logout')
             this.authUser = null
+            this.authStatus =null
+            this.authIsAdmin = null
+            this.router.push('/')
         },
         onCloseAuthModal() {
 
