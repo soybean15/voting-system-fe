@@ -1,5 +1,7 @@
 <template>
   <div class="flex flex-col h-full ">
+    {{ authStore.status }}
+  
     <div class="text-white mt-4 w-full flex justify-end">
         <div></div>
         <div class="flex p-2 w-64 rounded-tl-lg drop-shadow-lg  rounded-bl-lg text-left bg-onSurface tracking-widest font-thin font-sans" >
@@ -24,9 +26,14 @@
 
 <script>
 import PositionsView from "@/views/components/admin/PositionsView";
+import {useAuthStore} from '@/stores/auth'
 export default {
   components: { PositionsView },
   setup() {
+
+    const authStore = useAuthStore()
+    authStore.checkRole()
+   
     const sideNav = [
         { name: "Dashboard", route: 'dashboard' },
         { name: "Positions", route: 'positions' },
@@ -34,7 +41,7 @@ export default {
         { name: "Canditates", route: 'candidates' },
     ];
 
-    return {sideNav}
+    return {sideNav,authStore}
   },
 };
 </script>

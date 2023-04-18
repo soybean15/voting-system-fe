@@ -8,12 +8,16 @@ export const useAuthStore = defineStore('auth', {
     state: () => ({
         authUser: null,
         authErrors: [],
-        authStatus: null
+        authStatus: null,
+        authIsAdmin : null
+    
     }),
     getters: {
         user: (state) => state.authUser,
         errors: (state) => state.authErrors,
-        status:(state)=> state.authStatus
+        status:(state)=> state.authStatus,
+        isAdmin:(state)=>state.authIsAdmin
+        
     },
     actions: {
         resetErrors() {
@@ -36,6 +40,27 @@ export const useAuthStore = defineStore('auth', {
             }
 
         },
+        async checkRole() {
+            await this.getToken()
+            this.authIsAdmin = null
+            try {
+                const data = await axios.get("/api/admin")
+               
+                this.authIsAdmin = data.data.status == 1
+              
+                if(!this.authIsAdmin){
+                    router.push('/')
+                }
+            } catch (e) {
+                // if(e.response.status ===401){
+                //     router.push('/login')
+                // }
+
+
+            }
+
+        },
+
 
 
         async onLogin(data) {

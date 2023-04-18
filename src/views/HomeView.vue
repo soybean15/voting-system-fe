@@ -27,7 +27,7 @@ import StatusView from "@/views/components/status/StatusView";
 import AdminView from "./AdminView.vue"
 
 import { ref ,onMounted} from 'vue';
-import {useAuthStore, userAuthStore} from '@/stores/auth'
+import {useAuthStore} from '@/stores/auth'
 
 export default {
   name: "HomeView",
