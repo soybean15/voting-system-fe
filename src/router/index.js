@@ -57,19 +57,19 @@ const routes = [
         component:Dashboard ,
       },
       {
-        path: '/positions',
+        path: 'positions',
         name : 'positions',
     
         component:PositionsView ,
       },
       {
-        path: '/partylist',
+        path: 'partylist',
         name : 'partylist',
     
         component:PartylistView ,
       },
       {
-        path: '/candidates',
+        path: 'candidates',
         name : 'candidates',
     
         component:CandidatesView ,

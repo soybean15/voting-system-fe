@@ -7,18 +7,34 @@ export const useVoteStore = defineStore('vote', {
   state: () => ({
     statePositions: [],
     statePartyList: [],
+    voteStatus:null
+
 
   }),
   getters: {
     positions: (state) => state.statePositions,
     partyList: (state) => state.statePartyList,
+    status: (state)=> state.voteStatus
 
   },
   actions: {
     async getPartyList() {
       const data = await axios.get("/api/partylist")
       this.statePartyList = data.data
+      console.log(this.statePartyList)
     },
+
+    async handleAddPartyList(partyList){
+      const data = await axios.post('api/partylist',{
+        name:partyList.name,
+        image:partyList.image
+      })
+      this.voteStatus = data.data
+
+    },
+    
+
+
     async getPositions() {
 
       await axios.get("/api/candidate").then(

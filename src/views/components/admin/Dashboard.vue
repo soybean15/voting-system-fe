@@ -1,6 +1,6 @@
 <template>
     <div class="w-full flex flex-col ">
-        <span class="text-left pl-6 text-xl text-white font-bold pt-2">Hello {{ authStore.user.name }}</span>
+        <span class="text-left pl-6 text-xl text-white font-bold pt-2" v-if="authStore.user">Hello Admin {{ authStore.user.name }}</span>
 
         <div class="flex p-4 justify-start ">
             <div class="admin-card relative w-40 h-20 m-2">
@@ -27,12 +27,18 @@
 
 <script>
 import {useAuthStore} from '@/stores/auth'
+import { onMounted } from 'vue'
 export default {
     
 
     setup(){
         const authStore = useAuthStore()
    
+       
+
+        onMounted(()=>{
+            //authStore.getUser()
+        })
 
         return {authStore}
         
@@ -47,6 +53,7 @@ export default {
     background-color: #452d72;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-weight: bolder;
 }
 
 </style>
