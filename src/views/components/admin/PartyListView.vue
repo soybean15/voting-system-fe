@@ -15,12 +15,30 @@
         </div>
       
     </div>
-    <div>
-        <div class="flex-col" v-for="partyList in voteStore.partyList.data" :key="partyList.id">
+    <div class="pl-6 mt-2">
+        <div class="flex mb-2">
+            
+             <button class="btn-green-800 text-xs p-1 flex items-center rounded-sm">
+                <img width="20" src="@/assets/img/icon/add-icon.svg"/>
+                <div class="pl-1">Add Partylist</div>
+            </button>
+        </div>
 
-            <div>
-                <img width="20" :src="partyList.image"/>
-                {{ partyList.name }}
+       
+        <div class=" border-b border-t border-slate-800  font-semibold text-sm flex mr-6  p-2 ">
+            <div class="w-12"></div>
+                <div class="flex grow items-center pl-4 text-white  w-40  ">PartyList Name</div>
+                <div class="flex grow items-center pl-4 text-white  ">Number of Members</div>
+                <div class="flex grow items-center pl-4 text-white  ">Actions</div>
+            </div>
+
+        <div class="flex-col " v-for="partyList in voteStore.partyList.data" :key="partyList.id">
+
+            <div class=" border-b text-sm border-slate-800  flex mr-6  p-2 ">
+                <img class="w-12  rounded-full" :src="partyList.image"/>
+                <div class="flex grow items-center pl-4 text-white  w-40 ">{{ partyList.name }}</div>
+                <div class="flex grow items-center pl-4 text-white  ">number of member</div>
+                <div class="flex grow items-center pl-4 text-white  ">Actions</div>
             </div>
 
 

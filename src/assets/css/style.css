@@ -13,12 +13,22 @@
     @apply bg-green-500 text-white;
 }
 
+.btn-green-800 {
+    @apply bg-green-800 text-white;
+}
+
+
 .btn-blue:hover {
     @apply bg-blue-700;
 }
 .btn-green:hover {
     @apply bg-green-700;
 }
+
+.btn-green-800:hover {
+    @apply bg-green-700;
+}
+
 
 .modal-overlay {
     position: fixed;
@@ -39,3 +49,6 @@
   .bg-onSurface{
     background-color: #1d222b;
   }
+.center{
+    top: 50%;
+}
