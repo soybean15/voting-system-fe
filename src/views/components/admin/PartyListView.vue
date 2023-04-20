@@ -1,6 +1,7 @@
 <template>
   <div class="w-full flex flex-col">
-
+    {{ isAdd }}
+            
     <div class="flex space-between">
         <span class="text-left pl-6 text-xl text-white font-bold pt-2" >Party List</span>
         <span class="grow"></span>
@@ -18,8 +19,8 @@
     </div>
     <div class="pl-6 mt-2">
         <div class="flex mb-2">
-            
-             <button class="btn-green-800 text-xs p-1 flex items-center rounded-sm">
+          
+             <button @click="onAddPartylist" class="btn-green-800 text-xs p-1 flex items-center rounded-sm">
                 <img width="20" src="@/assets/img/icon/add-icon.svg"/>
                 <div class="pl-1">Add Partylist</div>
             </button>
@@ -54,7 +55,7 @@
         </div>
 
     </div>
-    <AddPartyList/>
+    <AddPartyList :class="{hidden:isAdd}" @onAddPartylist="onAddPartylist"/>
 
    
 
@@ -65,7 +66,7 @@
 
 <script>
 import { useVoteStore } from '@/stores/vote';
-import { onUnmounted } from 'vue';
+import { onUnmounted, ref } from 'vue';
 import AddPartyList from '@/views/components/admin/modals/AddPartyList.vue'
 
 export default {
@@ -74,8 +75,15 @@ export default {
         const voteStore = useVoteStore()
         voteStore.getPartyList()
 
+        const isAdd = ref(true)
+        const onAddPartylist= ()=>{
+            isAdd.value = !isAdd.value
+        }
 
-        return {voteStore}
+
+        
+
+        return {voteStore,isAdd,onAddPartylist}
         
     }
 
