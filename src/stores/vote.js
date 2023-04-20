@@ -21,7 +21,8 @@ export const useVoteStore = defineStore('vote', {
     async getPartyList() {
       const data = await axios.get("/api/partylist")
       this.statePartyList = data.data
-      console.log(this.statePartyList)
+      
+     
     },
 
     async handleAddPartyList(partyList){

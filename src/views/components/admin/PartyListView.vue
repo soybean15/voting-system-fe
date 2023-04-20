@@ -1,5 +1,6 @@
 <template>
   <div class="w-full flex flex-col">
+
     <div class="flex space-between">
         <span class="text-left pl-6 text-xl text-white font-bold pt-2" >Party List</span>
         <span class="grow"></span>
@@ -27,24 +28,33 @@
        
         <div class=" border-b border-t border-slate-800  font-semibold text-sm flex mr-6  p-2 ">
             <div class="w-12"></div>
-                <div class="flex grow items-center pl-4 text-white  w-40  ">PartyList Name</div>
-                <div class="flex grow items-center pl-4 text-white  ">Number of Members</div>
-                <div class="flex grow items-center pl-4 text-white  ">Actions</div>
+                <div class="flex grow items-center pl-4 text-white  w-32  ">PartyList Name</div>
+                <div class="flex grow items-center  text-white  w-20  place-content-center">Number of Members</div>
+                <div class="flex grow items-center pl-4 text-white  w-20 place-content-center ">Actions</div>
             </div>
 
         <div class="flex-col " v-for="partyList in voteStore.partyList.data" :key="partyList.id">
 
             <div class=" border-b text-sm border-slate-800  flex mr-6  p-2 ">
                 <img class="w-12  rounded-full" :src="partyList.image"/>
-                <div class="flex grow items-center pl-4 text-white  w-40 ">{{ partyList.name }}</div>
-                <div class="flex grow items-center pl-4 text-white  ">number of member</div>
-                <div class="flex grow items-center pl-4 text-white  ">Actions</div>
+                <div class="flex grow items-center pl-4 text-white  w-32 ">{{ partyList.name }}</div>
+                <div class="flex grow items-center text-white w-20 place-content-center ">{{ partyList.candidates.length }}</div>
+                <div class="flex grow items-center pl-4 text-white  w-20 place-content-center">
+                    <button class="m-2">
+                        Edit
+                    </button>
+                    <button class="m-2">
+                        Delete
+
+                    </button>
+                </div>
             </div>
 
 
         </div>
 
     </div>
+    <AddPartyList/>
 
    
 
@@ -56,7 +66,10 @@
 <script>
 import { useVoteStore } from '@/stores/vote';
 import { onUnmounted } from 'vue';
+import AddPartyList from '@/views/components/admin/modals/AddPartyList.vue'
+
 export default {
+    components:{AddPartyList},
     setup(){
         const voteStore = useVoteStore()
         voteStore.getPartyList()
