@@ -10,6 +10,7 @@
 
             <div class="admin-card relative w-40 h-20  m-2">
                 <div class="absolute top-1 left-1 text-sm text-white">Party List</div>
+                <div class="absolute bottom-5 left-1 text-xl text-stone-300">{{voteStore.dashboard.partylist.length}}</div>
                 
             </div>
             <div class="admin-card relative  w-40 h-20 m-2">
@@ -27,20 +28,22 @@
 
 <script>
 import {useAuthStore} from '@/stores/auth'
+import {useVoteStore} from '@/stores/vote'
 import { onMounted } from 'vue'
 export default {
     
 
     setup(){
         const authStore = useAuthStore()
-   
+        const voteStore = useVoteStore()
+        voteStore.getDashboard()
        
 
         onMounted(()=>{
             //authStore.getUser()
         })
 
-        return {authStore}
+        return {authStore,voteStore}
         
 
     }

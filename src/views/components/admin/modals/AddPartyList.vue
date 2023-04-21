@@ -1,29 +1,42 @@
 <template>
   <div class="modal-overlay-2 flex ">
     
-    <div class="modal flex-col justify-items-start" >
-        <div class="flex">
+    <div class="admin-modal bg-onSurface flex-col justify-items-start font-color-primary" >
+        <div class="relative w-full">
+            <img @click="onAdd" class="h-7 absolute top-2 right-2 cursor-pointer" src="@/assets/img/icon/close-icon.svg">
+
+        </div>
+        <div class="flex p-4 text-base font-bold">
             Add New PartyList
         </div>
-        <form  @submit.prevent="voteStore.handleAddPartyList(form)">
+        <div class="p-2 pt-0">
+
+            <form  @submit.prevent="voteStore.handleAddPartyList(form)">
             <div class="flex-col">
-                <div class="flex">
-                    <input v-model="form.name" type="text">
+                <div class="flex-col m-2">
+                    <!-- <div class="flex text-sm">PartyList Name:</div> -->
+                    <div class="text-rose-900" v-if="voteStore.errors.name">{{ voteStore.errors.name[0] }}</div>
+                    <input class="w-full rounded-md border-2 border-slate-600 p-1 text-black" v-model="form.name" placeholder="Partylist name" type="text">
                 </div>
-                <div>
+                <div class="flex m-2">
+                    <div>
+
+                    </div>
+                  
                     <input ref="form.image" type="file" name="photo">
                 </div>
-                <div class="">
-                    <input type="submit" value="Save">
+                <div class="flex flex-row-reverse ">
+                    <input class="btn btn-green mr-2" type="submit" value="Save ->">
+                   
                 </div>
 
-                <div class="">
-                   <button @click="onAdd">CLose</button>
-                </div>
+                
               
             </div>
             
         </form>
+        </div>
+      
 
     </div>
 
@@ -56,10 +69,14 @@ export default {
 </script>
 
 <style>
-.modal{
-    width: 40%;
+.admin-modal{
+    width: 30%;
     margin-top: 10px;
     background: white;
+    border-radius: 10px;
+    height: 30%;
+   
+
 }
 
 </style>

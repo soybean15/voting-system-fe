@@ -1,7 +1,6 @@
 <template>
   <div class="w-full flex flex-col">
-    {{ isAdd }}
-            
+
     <div class="flex space-between">
         <span class="text-left pl-6 text-xl text-white font-bold pt-2" >Party List</span>
         <span class="grow"></span>
