@@ -10,7 +10,7 @@
 
             <div class="admin-card relative w-40 h-20  m-2">
                 <div class="absolute top-1 left-1 text-sm text-white">Party List</div>
-                <div class="absolute bottom-5 left-1 text-xl text-stone-300">{{voteStore.dashboard.partylist.length}}</div>
+                <div class="absolute bottom-5 left-1 text-xl text-stone-300" v-if="voteStore.dashboard">{{voteStore.dashboard.partylist.length}}</div>
                 
             </div>
             <div class="admin-card relative  w-40 h-20 m-2">
