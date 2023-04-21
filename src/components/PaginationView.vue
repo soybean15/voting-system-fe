@@ -1,32 +1,41 @@
 <template>
   <div class="flex">
-    <div v-for="page in totalPages" :key="page">
-        <button :class="{'active-page': currentPage==page}" @click="handleClickPage(page)" class="btn btn-blue text-xs"  >{{ page }}</button>
+    <button @click="handlePrevious" class="page-button text-xs">Previous</button>
+    <div v-for="page in showedPage" :key="page">
+        <button @click="handleClickPage(page)" class="page-button text-xs"  :class="{'page-active': currentPage==page}"   >{{ page }}</button>
     </div>
+    <button  @click="handleNext" class="page-button text-xs">Next</button>
   </div>
   {{ currentPage }}
+  {{ pages }}
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 export default {
   props: ["totalPages"],
   emits: ['onClickPage','onNext','onPrevious'],
   setup(props,{emit}) {
 
+    let totalPages = props.totalPages
     let currentPage = ref()
-    if(props.totalPages>0){
+    let perPage  =5
+
+    if(totalPages>0){
         currentPage.value=1
     }
 
-    const totalPages = ref([]);
+    const pages = ref([]);
     const createArrayFromOneToN =(n)=> {
       
       for (let i = 1; i <= n; i++) {
-        totalPages.value.push(i);
+        pages.value.push(i);
       }
     }
-    createArrayFromOneToN(props.totalPages)
+
+
+    createArrayFromOneToN(totalPages)
+
 
    
 
@@ -35,15 +44,56 @@ export default {
         currentPage.value =page
     }
 
-    return {totalPages,handleClickPage,currentPage}
+    const handleNext=()=>{
+        if(currentPage.value<totalPages){
+             currentPage.value++
+        }
+       
+    }
+    const handlePrevious=() =>{
+        if(currentPage.value>1){
+            currentPage.value--
+        }
+        
+    }
+
+   
+    const showedPage= computed(()=>{
+
+        const start = (currentPage.value - 1) * perPage;
+        const end = start + perPage;
+        const pageToShow = pages.value.slice(start, end);
+        return pageToShow;
+    })
+
+    return {
+        showedPage,
+        handleClickPage,
+        currentPage,
+        handleNext,
+        handlePrevious,
+        pages
+    }
 
   },
 };
 </script>
 
 <style scoped>
-.active-page{
-    background-color: red;
+.page-button{
+    background-color: rgba(0, 0, 0, 0.041);
+    padding: .5em;
+    margin :2px;
+    color:rgb(119, 119, 119);
+    border:1px solid;
+    border-radius: 5px;
+    
 }
+.page-active{   
+    background-color: rgba(54, 54, 54, 0.281);
+   
+}
+
+
 
 </style>
