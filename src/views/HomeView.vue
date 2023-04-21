@@ -13,7 +13,7 @@
       </div>
     </div> -->
 
-    <PaginationView></PaginationView>
+    <PaginationView :totalPages="9"/>
     
     <!-- <StatusView/> -->
     <!-- <AdminView/> -->
