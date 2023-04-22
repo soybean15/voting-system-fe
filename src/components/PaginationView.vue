@@ -28,16 +28,16 @@
 <script>
 import { computed, ref,watchEffect } from "vue";
 export default {
-  props: ["totalPages","perPage"],
+  props: ["totalPages","perGroupPage","links"],
   emits: ["onClickPage", "onNext", "onPrevious"],
   setup(props, { emit }) {
     let totalPages = props.totalPages;
     let currentPage = ref();
-    let perPage = props.perPage;
+    let perGroupPage = props.perGroupPage;
     let first = ref(0);
-    let last = ref(first.value + perPage);
+    let last = ref(first.value + perGroupPage);
 
-    let remaining = totalPages%perPage
+    let remaining = totalPages%perGroupPage
     let lastPage = (totalPages-remaining)+1
     console.log('lastPage '+lastPage)
 
@@ -48,6 +48,12 @@ export default {
       currentPage.value = 1;
     }
 
+
+
+
+    const links = ref(props.links)
+
+  
     const pages = ref([]);
     const createArrayFromOneToN = (n) => {
       for (let i = 1; i <= n; i++) {
@@ -58,7 +64,8 @@ export default {
     createArrayFromOneToN(totalPages);
 
     const handleClickPage = (page) => {
-      emit("onClickPage");
+      emit("onClickPage",links.value[page].url);
+      console.log("from pageination"+links.value[page].url)
       currentPage.value = page;
     };
 
@@ -72,19 +79,21 @@ export default {
 
         if (currentPage.value > last.value) {
           first.value += perPage;
-          last.value = first.value + perPage;
+          last.value = first.value + perGroupPage;
         }
 
       }
     };
 
     const handlePrevious = () => {
+
+
       if (currentPage.value > 1) {
         currentPage.value--;
 
         if (currentPage.value <= first.value) {
           first.value -= perPage;
-          last.value = first.value + perPage;
+          last.value = first.value + perGroupPage;
         }
 
       
@@ -93,7 +102,7 @@ export default {
 
     const showedPage = computed(() => {
       const start = first.value;
-      const end = start + perPage;
+      const end = start + perGroupPage;
       console.log("start " + start);
       const pageToShow = pages.value.slice(start, end);
 
@@ -105,7 +114,7 @@ export default {
 
 
     watchEffect(()=>{
-      if(currentPage.value >perPage){
+      if(currentPage.value >perGroupPage){
           onFirst.value =false
         }else{
           onFirst.value =true

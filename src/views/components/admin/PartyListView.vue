@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full flex flex-col">
+
+  <div class="w-full flex flex-col" >
+    
     <div class="flex space-between">
       <span class="text-left pl-6 text-xl text-white font-bold pt-2"
         >Party List</span
@@ -47,7 +49,15 @@
         <div class="grow"></div>
 
         <div class="mr-10" v-if="voteStore.partyList.data">
-          <PaginationViewVue :perPage="5" :totalPages="voteStore.partyList.data.last_page	" />
+
+          <PaginationViewVue 
+          :perGroupPage="5" 
+          :totalPages="voteStore.partyList.data.last_page	" 
+          :links=" voteStore.partyList.data.links"
+          @onClickPage="onClickPage"  
+          />
+
+
         </div>
        
       </div>
@@ -111,7 +121,7 @@ export default {
   components: { AddPartyList ,PaginationViewVue},
   setup() {
     const voteStore = useVoteStore();
-    voteStore.getPartyList();
+    voteStore.getPartyList(null);
 
     const isAdd = ref(true);
     const onAddPartylist = () => {
@@ -119,10 +129,21 @@ export default {
     };
 
 
+    const onClickPage=(path)=>{
+      voteStore.getPartyList(path);
+      //console.log(path)
+
+    }
+
+
+
+
+
+
 
     
 
-    return { voteStore, isAdd, onAddPartylist };
+    return { voteStore, isAdd, onAddPartylist,onClickPage };
   },
 };
 </script>
