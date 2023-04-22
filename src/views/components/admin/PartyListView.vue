@@ -44,6 +44,12 @@
           <div class="pl-1">Add Partylist</div>
         
         </button>
+        <div class="grow"></div>
+
+        <div class="mr-10" v-if="voteStore.partyList.data">
+          <PaginationViewVue :perPage="5" :totalPages="voteStore.partyList.data.last_page	" />
+        </div>
+       
       </div>
 
       <div
@@ -99,9 +105,10 @@
 import { useVoteStore } from "@/stores/vote";
 import { onUnmounted, ref } from "vue";
 import AddPartyList from "@/views/components/admin/modals/AddPartyList.vue";
+import PaginationViewVue from "@/components/PaginationView.vue";
 
 export default {
-  components: { AddPartyList },
+  components: { AddPartyList ,PaginationViewVue},
   setup() {
     const voteStore = useVoteStore();
     voteStore.getPartyList();

@@ -1,8 +1,12 @@
 <template>
   <div class="flex" v-if="currentPage">
-    <button @click="handlePrevious" class="page-button text-xs">
+    <div v-if="!onFirst">
+      <button @click="handlePrevious" class="page-button text-xs">
       Previous
     </button>
+
+    </div>
+
     <div v-for="page in showedPage" :key="page">
       <button
         @click="handleClickPage(page)"
@@ -12,23 +16,33 @@
         {{ page }}
       </button>
     </div>
-    <button @click="handleNext" class="page-button text-xs">Next</button>
+
+  <div v-if="!onLast">
+      <button @click="handleNext" class="page-button text-xs">Next</button>
+    </div>
+    
   </div>
-  {{ currentPage }}
-  {{ pages }}
+
 </template>
 
 <script>
-import { computed, ref } from "vue";
+import { computed, ref,watchEffect } from "vue";
 export default {
-  props: ["totalPages"],
+  props: ["totalPages","perPage"],
   emits: ["onClickPage", "onNext", "onPrevious"],
   setup(props, { emit }) {
     let totalPages = props.totalPages;
     let currentPage = ref();
-    let perPage = 5;
+    let perPage = props.perPage;
     let first = ref(0);
     let last = ref(first.value + perPage);
+
+    let remaining = totalPages%perPage
+    let lastPage = (totalPages-remaining)+1
+    console.log('lastPage '+lastPage)
+
+    const onFirst=ref(true)
+    const onLast = ref(false)
 
     if (totalPages > 0) {
       currentPage.value = 1;
@@ -48,6 +62,10 @@ export default {
       currentPage.value = page;
     };
 
+
+
+
+
     const handleNext = () => {
       if (currentPage.value < totalPages) {
         currentPage.value++;
@@ -56,8 +74,10 @@ export default {
           first.value += perPage;
           last.value = first.value + perPage;
         }
+
       }
     };
+
     const handlePrevious = () => {
       if (currentPage.value > 1) {
         currentPage.value--;
@@ -66,6 +86,8 @@ export default {
           first.value -= perPage;
           last.value = first.value + perPage;
         }
+
+      
       }
     };
 
@@ -78,6 +100,27 @@ export default {
       return pageToShow;
     });
 
+
+
+
+
+    watchEffect(()=>{
+      if(currentPage.value >perPage){
+          onFirst.value =false
+        }else{
+          onFirst.value =true
+        }
+
+
+        if(currentPage.value >=lastPage){
+          onLast.value =true
+        }else{
+          onLast.value =false
+        }
+
+
+    })
+
     return {
       showedPage,
       handleClickPage,
@@ -85,6 +128,8 @@ export default {
       handleNext,
       handlePrevious,
       pages,
+      onFirst,
+      onLast
     };
   },
 };
