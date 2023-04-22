@@ -1,5 +1,5 @@
 <template>
-
+{{ voteStore.isAdd  }}
   <div class="w-full flex flex-col" >
     
     <div class="flex space-between">
@@ -101,32 +101,44 @@
               class="flex grow items-center pl-4 text-white w-20 place-content-center"
             >
               <button class="m-2">Edit</button>
-              <button class="m-2">Delete</button>
+              <button class="m-2" @click="voteStore.handleDeletePartyList(partyList.id)">Delete</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <AddPartyList :class="{ hidden: isAdd }" @onAddPartylist="onAddPartylist" />
+    <AddPartyList :class="{ hidden: !voteStore.onAdd }" @onAddPartylist="onAddPartylist" @onSavePartylist="onSavePartylist"/>
   </div>
 </template>
 
 <script>
-import { useVoteStore } from "@/stores/vote";
-import { onUnmounted, ref } from "vue";
+import { useVoteStore as usePartylistStore } from "@/stores/partylist";
+import { onMounted, onUnmounted, onUpdated, ref } from "vue";
 import AddPartyList from "@/views/components/admin/modals/AddPartyList.vue";
 import PaginationViewVue from "@/components/PaginationView.vue";
 
 export default {
   components: { AddPartyList ,PaginationViewVue},
   setup() {
-    const voteStore = useVoteStore();
-    voteStore.getPartyList(null);
+    const voteStore = usePartylistStore();
+    
+    onMounted(()=>{
+      voteStore.getPartyList(null);
 
-    const isAdd = ref(true);
-    const onAddPartylist = () => {
-      isAdd.value = !isAdd.value;
+    })
+
+    // const isAdd = ref(true);
+    // const onAddPartylist = () => {
+    //   isAdd.value = !isAdd.value;
+    // };
+
+     const onAddPartylist = () => {
+      voteStore.setOnAdd()
     };
+
+    const onSavePartylist=()=>{
+      voteStore.getPartyList(null);
+    }
 
 
     const onClickPage=(path)=>{
@@ -143,7 +155,7 @@ export default {
 
     
 
-    return { voteStore, isAdd, onAddPartylist,onClickPage };
+    return { voteStore,  onAddPartylist,onClickPage,onSavePartylist };
   },
 };
 </script>

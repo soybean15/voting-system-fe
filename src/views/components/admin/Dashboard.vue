@@ -28,7 +28,7 @@
 
 <script>
 import {useAuthStore} from '@/stores/auth'
-import {useVoteStore} from '@/stores/vote'
+import {useVoteStore} from '@/stores/partylist'
 import { onMounted } from 'vue'
 export default {
     

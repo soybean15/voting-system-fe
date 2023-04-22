@@ -1,6 +1,6 @@
 <template>
   <div class="modal-overlay-2 flex ">
-    
+    {{ voteStore.errors.name }}
     <div class="admin-modal bg-onSurface flex-col justify-items-start font-color-primary" >
         <div class="relative w-full">
             <img @click="onAdd" class="h-7 absolute top-2 right-2 cursor-pointer" src="@/assets/img/icon/close-icon.svg">
@@ -15,7 +15,7 @@
             <div class="flex-col">
                 <div class="flex-col m-2">
                     <!-- <div class="flex text-sm">PartyList Name:</div> -->
-                    <div class="text-rose-900" v-if="voteStore.errors.name">{{ voteStore.errors.name[0] }}</div>
+                    <div class="text-rose-500 text-xs" v-if="voteStore.errors.name">{{ voteStore.errors.name[0] }}</div>
                     <input class="w-full rounded-md border-2 border-slate-600 p-1 text-black" v-model="form.name" placeholder="Partylist name" type="text">
                 </div>
                 <div class="flex m-2">
@@ -23,7 +23,7 @@
 
                     </div>
                   
-                    <input ref="form.image" type="file" name="photo">
+                    <input ref="imageInput" type="file" name="photo" @change="onFileChange">
                 </div>
                 <div class="flex flex-row-reverse ">
                     <input class="btn btn-green mr-2" type="submit" value="Save ->">
@@ -45,9 +45,10 @@
 </template>
 
 <script>
-import { useVoteStore } from '@/stores/vote';
+import { useVoteStore as usePartylistStore } from '@/stores/partylist';
+import { ref } from 'vue';
 export default {
-    emits:['onAddPartylist'],
+    emits:['onAddPartylist','onSavePartylist'],
     
     setup(props,{emit}){
 
@@ -56,13 +57,24 @@ export default {
         }
 
 
-        const voteStore = useVoteStore()
-        const form = {
+        const voteStore = usePartylistStore()
+        const form = ref({
             name: "",
             image: null
+        })
+
+        const onFileChange = (event) => {
+            form.value.image = event.target.files[0];
+        };
+
+        const onSave=()=>{
+            emit('onSavePartylist')
         }
 
-        return {form ,voteStore,onAdd}
+
+        
+
+        return {form ,voteStore,onAdd,onFileChange,onSave}
     }
 
 }
@@ -74,7 +86,7 @@ export default {
     margin-top: 10px;
     background: white;
     border-radius: 10px;
-    height: 30%;
+    height: 13em;
    
 
 }
