@@ -26,7 +26,7 @@
                     <input ref="imageInput" type="file" name="photo" @change="onFileChange">
                 </div>
                 <div class="flex flex-row-reverse ">
-                    <input class="btn btn-green mr-2" type="submit" value="Save ->">
+                    <input @click="onSave" class="btn btn-green mr-2" type="submit" value="Save ->">
                    
                 </div>
 
@@ -46,7 +46,7 @@
 
 <script>
 import { useVoteStore as usePartylistStore } from '@/stores/partylist';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 export default {
     emits:['onAddPartylist','onSavePartylist'],
     
@@ -63,12 +63,20 @@ export default {
             image: null
         })
 
+ 
+
         const onFileChange = (event) => {
             form.value.image = event.target.files[0];
         };
 
         const onSave=()=>{
             emit('onSavePartylist')
+
+            if(!voteStore.loading){
+
+            }
+            
+           
         }
 
 

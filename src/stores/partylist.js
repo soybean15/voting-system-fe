@@ -11,9 +11,10 @@ export const useVoteStore = defineStore('vote', {
     stateStatus: null,
     stateError: [],
     voteDashboard: null,
-    stateOnAdd :false
+    stateOnAdd: false,
+    stateLoading: false
 
-    
+
 
 
   }),
@@ -22,17 +23,26 @@ export const useVoteStore = defineStore('vote', {
     partyList: (state) => state.statePartyList,
     status: (state) => state.stateStatus,
     errors: (state) => state.stateError,
-    onAdd: (state)=> state.stateOnAdd
+    onAdd: (state) => state.stateOnAdd,
+    loading: (state) => state.stateLoading
 
   },
   actions: {
     async getPartyList(path) {
 
+      this.stateLoading = true
+
       if (!path) {
         path = '/api/partylist'
+
       }
+
       const data = await axios.get(path)
+
       this.statePartyList = data.data
+      this.clearStatus()
+      this.stateLoading = false
+
 
 
 
@@ -41,7 +51,9 @@ export const useVoteStore = defineStore('vote', {
     async handleAddPartyList(partyList) {
       this.stateError = []
 
-      
+      this.stateLoading = true
+
+
       try {
         const data = await axios.post('api/partylist', {
           name: partyList.name,
@@ -54,11 +66,11 @@ export const useVoteStore = defineStore('vote', {
           }
 
         )
-        
-        
+        this.stateLoading = false
+
         this.stateStatus = data.data
-        this.stateOnAdd=false
-       
+        this.stateOnAdd = false
+
         partyList = []
 
       } catch (error) {
@@ -66,33 +78,35 @@ export const useVoteStore = defineStore('vote', {
           this.stateError = error.response.data.errors
         }
       }
-     
+
 
 
     },
     async handleDeletePartyList(partyListId) {
       this.stateError = []
-      
-    
       const index = this.statePartyList.data.data.findIndex(partylist => partylist.id === partyListId);
 
-     
       if (index !== -1) {
-      try {
-        const data = await axios.delete('api/partylist/' + partyListId)
-        this.stateStatus = data.data
-        this.statePartyList.data.data.splice(index, 1);
+        try {
+          const data = await axios.delete('api/partylist/' + partyListId)
+          this.stateStatus = data.data
+          this.statePartyList.data.data.splice(index, 1);
 
 
-      } catch (error) {
-        if (error.response.status === 422) {
-          this.stateError = error.response.data.errors
+        } catch (error) {
+          if (error.response.status === 422) {
+            this.stateError = error.response.data.errors
+          }
         }
-      }
       }
 
     }
     ,
+
+    clearStatus() {
+
+      this.stateStatus = []
+    },
 
 
     async getDashboard() {
@@ -127,8 +141,8 @@ export const useVoteStore = defineStore('vote', {
     },
 
 
-    setOnAdd(){
-      this.stateOnAdd =!this.stateOnAdd
+    setOnAdd() {
+      this.stateOnAdd = !this.stateOnAdd
     }
   }
 

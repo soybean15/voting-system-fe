@@ -1,7 +1,6 @@
 <template>
-{{ voteStore.isAdd  }}
-  <div class="w-full flex flex-col" >
-    
+  {{ voteStore.isAdd }}
+  <div class="w-full flex flex-col">
     <div class="flex space-between">
       <span class="text-left pl-6 text-xl text-white font-bold pt-2"
         >Party List</span
@@ -44,22 +43,39 @@
         >
           <img width="20" src="@/assets/img/icon/add-icon.svg" />
           <div class="pl-1">Add Partylist</div>
-        
         </button>
-        <div class="grow"></div>
+        <div class="grow">
+          <div v-if="voteStore.status">
+            <div
+              class="relative border border-lime-900 border-4 rounded-md ml-40 mr-40 bg-emerald-300 p-2" 
+            >
+              {{ voteStore.status.message }}
+              <div
+                @click="voteStore.clearStatus"
+                class="absolute right-2 top-2 cursor-pointer"
+              >
+                X
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <div class="mr-10" v-if="voteStore.partyList.data">
 
-          <PaginationViewVue 
-          :perGroupPage="5" 
-          :totalPages="voteStore.partyList.data.last_page	" 
-          :links=" voteStore.partyList.data.links"
-          @onClickPage="onClickPage"  
+        <div>
+            <div class="mr-10" v-if="voteStore.partyList.data ">
+          <PaginationViewVue
+            :perGroupPage="5"
+            :totalPages="itemLen"
+            :links="voteStore.partyList.data.links"
+            @onClickPage="onClickPage"
+            
           />
-
+        </div>
 
         </div>
-       
+
+
+      
       </div>
 
       <div
@@ -81,7 +97,7 @@
         </div>
       </div>
 
-      <div v-if="voteStore.partyList.data">
+      <div v-if="voteStore.partyList.data && !voteStore.loading">
         <div
           class="flex-col"
           v-for="partyList in voteStore.partyList.data.data"
@@ -101,61 +117,81 @@
               class="flex grow items-center pl-4 text-white w-20 place-content-center"
             >
               <button class="m-2">Edit</button>
-              <button class="m-2" @click="voteStore.handleDeletePartyList(partyList.id)">Delete</button>
+              <button
+                class="m-2"
+                @click="voteStore.handleDeletePartyList(partyList.id)"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <div v-else>Loading..</div>
     </div>
-    <AddPartyList :class="{ hidden: !voteStore.onAdd }" @onAddPartylist="onAddPartylist" @onSavePartylist="onSavePartylist"/>
+
+    <div v-if="voteStore.onAdd">
+      <AddPartyList
+      
+      @onAddPartylist="onAddPartylist"
+      @onSavePartylist="onSavePartylist"
+    />
+
+    </div>
+  
   </div>
 </template>
 
 <script>
 import { useVoteStore as usePartylistStore } from "@/stores/partylist";
-import { onMounted, onUnmounted, onUpdated, ref } from "vue";
+import { computed, onMounted, onUnmounted, onUpdated, ref } from "vue";
 import AddPartyList from "@/views/components/admin/modals/AddPartyList.vue";
 import PaginationViewVue from "@/components/PaginationView.vue";
 
 export default {
-  components: { AddPartyList ,PaginationViewVue},
+  components: { AddPartyList, PaginationViewVue },
   setup() {
     const voteStore = usePartylistStore();
-    
-    onMounted(()=>{
-      voteStore.getPartyList(null);
 
-    })
+
+    const showPagination =ref(true)
+    onMounted(() => {
+      voteStore.getPartyList(null);
+    });
 
     // const isAdd = ref(true);
     // const onAddPartylist = () => {
     //   isAdd.value = !isAdd.value;
     // };
+  
 
-     const onAddPartylist = () => {
-      voteStore.setOnAdd()
+    const onAddPartylist = () => {
+      voteStore.setOnAdd();
+      
+     
+      
     };
 
-    const onSavePartylist=()=>{
+    const onSavePartylist = () => {
       voteStore.getPartyList(null);
-    }
+     
+     
+    };
 
+    const itemLen = ref(
+      computed(() => {
+        return voteStore.partyList.data.last_page;
+      })
+    );
 
-    const onClickPage=(path)=>{
+    const onClickPage = (path) => {
       voteStore.getPartyList(path);
       //console.log(path)
+    };
 
-    }
+   
 
-
-
-
-
-
-
-    
-
-    return { voteStore,  onAddPartylist,onClickPage,onSavePartylist };
+    return { voteStore, onClickPage, onSavePartylist, onAddPartylist, itemLen };
   },
 };
 </script>

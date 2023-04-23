@@ -23,13 +23,14 @@
     
   </div>
 
+
 </template>
 
 <script>
-import { computed, ref,watchEffect } from "vue";
+import { computed, onMounted, onUpdated, ref,watch,watchEffect } from "vue";
 export default {
   props: ["totalPages","perGroupPage","links"],
-  emits: ["onClickPage", "onNext", "onPrevious"],
+  emits: ["onClickPage", "onNext", "onPrevious", ],
   setup(props, { emit }) {
     let totalPages = props.totalPages;
     let currentPage = ref();
@@ -47,6 +48,12 @@ export default {
     if (totalPages > 0) {
       currentPage.value = 1;
     }
+
+   onMounted(()=>{
+    pages.value=[]
+    createArrayFromOneToN(totalPages);
+    console.log("hello")
+   })
 
 
 
@@ -74,6 +81,7 @@ export default {
 
 
     const handleNext = () => {
+      
       if (currentPage.value < totalPages) {
         currentPage.value++;
 
@@ -112,8 +120,12 @@ export default {
 
 
 
+    const forceRender = ref()
 
     watchEffect(()=>{
+      totalPages = props.totalPages
+    
+     
       if(currentPage.value >perGroupPage){
           onFirst.value =false
         }else{
@@ -127,9 +139,19 @@ export default {
           onLast.value =false
         }
 
+        
 
     })
 
+   
+    watch(forceRender,()=>{
+      console.log("from watch ")
+      pages.value=[]
+       createArrayFromOneToN(totalPages);
+
+    })
+    
+   
     return {
       showedPage,
       handleClickPage,
@@ -138,7 +160,8 @@ export default {
       handlePrevious,
       pages,
       onFirst,
-      onLast
+      onLast,
+      
     };
   },
 };
