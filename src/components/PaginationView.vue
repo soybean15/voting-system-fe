@@ -52,7 +52,7 @@ export default {
    onMounted(()=>{
     pages.value=[]
     createArrayFromOneToN(totalPages);
-    console.log("hello")
+    
    })
 
 

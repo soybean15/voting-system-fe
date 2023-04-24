@@ -11,8 +11,14 @@ export const useVoteStore = defineStore('vote', {
     stateStatus: null,
     stateError: [],
     voteDashboard: null,
-    stateOnAdd: false,
-    stateLoading: false
+    stateOpenModal: false,
+    stateLoading: false,
+    stateForm: {
+      name: '',
+      image: null
+    },
+    stateOnAdd:true
+    
 
 
 
@@ -23,8 +29,9 @@ export const useVoteStore = defineStore('vote', {
     partyList: (state) => state.statePartyList,
     status: (state) => state.stateStatus,
     errors: (state) => state.stateError,
-    onAdd: (state) => state.stateOnAdd,
-    loading: (state) => state.stateLoading
+    onAdd: (state) => state.stateOpenModal,
+    loading: (state) => state.stateLoading,
+    form: (state) => state.stateForm
 
   },
   actions: {
@@ -48,7 +55,7 @@ export const useVoteStore = defineStore('vote', {
 
     },
 
-    async handleAddPartyList(partyList) {
+    async handleAddPartyList() {
       this.stateError = []
 
       this.stateLoading = true
@@ -56,8 +63,8 @@ export const useVoteStore = defineStore('vote', {
 
       try {
         const data = await axios.post('api/partylist', {
-          name: partyList.name,
-          image: partyList.image
+          name: this.stateForm.name,
+          image: this.stateForm.image
         },
           {
             headers: {
@@ -68,10 +75,9 @@ export const useVoteStore = defineStore('vote', {
         )
         this.stateLoading = false
 
-        this.stateStatus = data.data
-        this.stateOnAdd = false
-
-        partyList = []
+        this.stateStatus = data.data.status
+       
+        this.statePartyList = data.data
 
       } catch (error) {
         if (error.response.status === 422) {
@@ -103,9 +109,32 @@ export const useVoteStore = defineStore('vote', {
     }
     ,
 
+    async handleEditPartyList() {
+      this.stateError = []
+     
+      const formData = new FormData();
+
+      formData.append('name', this.stateForm.name);
+      formData.append('image', this.stateForm.image);
+    
+      const data = await axios.post('api/partylist/'+this.stateForm.id+'?_method=PUT', formData
+      ,
+      )
+
+
+
+      this.stateLoading = false
+
+      this.stateStatus = data.data.status
+      this.stateOnAdd = false
+      this.statePartyList = data.data
+
+
+    },
+
     clearStatus() {
 
-      this.stateStatus = []
+      this.stateStatus = null
     },
 
 
@@ -141,10 +170,46 @@ export const useVoteStore = defineStore('vote', {
     },
 
 
-    setOnAdd() {
-      this.stateOnAdd = !this.stateOnAdd
+    openAddEditModal(id, name, image) {
+
+      this.stateForm = {
+        id:id,
+        name: name,
+        image: image
+      }
+      console.log(image)
+
+      if(image==null){
+        this.stateOnAdd =true
+      }else{
+        this.stateOnAdd =false
+      }
+      
+      this.stateOpenModal = !this.stateOpenModal
+    },
+
+    closeAddEditModal() {
+
+      this.stateOpenModal = !this.stateOpenModal
+    },
+
+    modalAction( ){
+      if(this.stateOnAdd){
+        this.handleAddPartyList()
+      }else{
+        this.handleEditPartyList()
+      }
+
+      this.stateOpenModal = false
     }
+
+
+
+
+
   }
+
+
 
 
 })
