@@ -18,7 +18,12 @@ export const useVoteStore = defineStore('vote', {
       image: null
     },
     stateOnAdd:true,
-    statePagination:[]
+    statePagination:{
+      pages:[],
+      links:[],
+      currentPage:1
+    }
+
     
 
 
@@ -33,7 +38,7 @@ export const useVoteStore = defineStore('vote', {
     onAdd: (state) => state.stateOpenModal,
     loading: (state) => state.stateLoading,
     form: (state) => state.stateForm,
-    paginationPages:(state)=>state.statePagination
+    paginationPages:(state)=>state.statePagination.pages
 
   },
   actions: {
@@ -52,7 +57,7 @@ export const useVoteStore = defineStore('vote', {
       this.clearStatus()
       this.stateLoading = false
 
-
+      //console.log(this.statePartyList)
 
 
     },
@@ -125,14 +130,13 @@ export const useVoteStore = defineStore('vote', {
       ,
       )
 
-
-
       this.stateLoading = false
 
       this.stateStatus = data.data.status
       this.stateOnAdd = false
       this.statePartyList = data.data
-
+      console.log(this.statePartyList)
+      this.getPaginationPages()
 
     },
 
@@ -208,20 +212,23 @@ export const useVoteStore = defineStore('vote', {
     },
     
     getPaginationPages(){
-      this.statePagination=[]
+      this.statePagination.pages=[]
       for (let i = 1; i <=this.statePartyList.data.last_page; i++) {
-        this.statePagination.push(i);
+        this.statePagination.pages.push(i);
       }
-      console.log(this.statePagination)
+      console.log(this.statePagination.pages)
+
+
+      this.statePagination.links =  this.statePartyList.data.links
     },
 
 
 
     handleClickPage(page) {
-      let links = this.statePartyList.data.links
+      let links =this.statePagination.links 
      // emit("onClickPage",links.value[page].url);
       this.getPartyList(links[page].url)
-      console.log(links[page].url)
+      console.log("from store:" +links[page].url)
      
      
     }
