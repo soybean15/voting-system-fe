@@ -26,7 +26,7 @@
                     <input ref="imageInput" type="file" name="photo" @change="onFileChange">
                 </div>
                 <div class="flex flex-row-reverse ">
-                    <input @click="onSave" class="btn btn-green mr-2" type="submit" value="Save ->">
+                    <input @click="onSave()" class="btn btn-green mr-2" type="submit" value="Save ->">
                    
                 </div>
 
@@ -67,9 +67,11 @@ export default {
         };
 
         const onSave=()=>{
-            emit('onSavePartylist')
-
-           
+          
+     
+            emit('onSavePartylist')          
+            
+            
         }
 
 

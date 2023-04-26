@@ -20,6 +20,7 @@ export const useVoteStore = defineStore('vote', {
     stateOnAdd:true,
     statePagination:{
       pages:[],
+      lastPage:null,
       links:[],
       currentPage:1
     }
@@ -54,11 +55,13 @@ export const useVoteStore = defineStore('vote', {
       const data = await axios.get(path)
 
       this.statePartyList = data.data
-      this.clearStatus()
+      
       this.stateLoading = false
 
-      //console.log(this.statePartyList)
+      this.statePagination.lastPage = this.statePartyList.data.last_page
 
+      //console.log(this.statePartyList)
+     
 
     },
 
@@ -81,9 +84,7 @@ export const useVoteStore = defineStore('vote', {
 
         )
         this.stateLoading = false
-
-        this.stateStatus = data.data.status
-       
+        this.stateStatus = data.data.status      
         this.statePartyList = data.data
 
         this.getPaginationPages()
@@ -99,21 +100,24 @@ export const useVoteStore = defineStore('vote', {
     },
     async handleDeletePartyList(partyListId) {
       this.stateError = []
-      const index = this.statePartyList.data.data.findIndex(partylist => partylist.id === partyListId);
 
-      if (index !== -1) {
+    
         try {
           const data = await axios.delete('api/partylist/' + partyListId)
           this.stateStatus = data.data
-          this.statePartyList.data.data.splice(index, 1);
+         
+          await this.getPartyList(null)
+          this. getPaginationPages()
+          console.log(this.stateStatus)
 
+         
 
         } catch (error) {
           if (error.response.status === 422) {
             this.stateError = error.response.data.errors
           }
         }
-      }
+      
 
     }
     ,
@@ -126,16 +130,18 @@ export const useVoteStore = defineStore('vote', {
       formData.append('name', this.stateForm.name);
       formData.append('image', this.stateForm.image);
     
-      const data = await axios.post('api/partylist/'+this.stateForm.id+'?_method=PUT', formData
-      ,
+      const data = await axios.post(
+        'api/partylist/'+this.stateForm.id+'?_method=PUT', 
+        formData
       )
 
       this.stateLoading = false
 
       this.stateStatus = data.data.status
       this.stateOnAdd = false
-      this.statePartyList = data.data
-      console.log(this.statePartyList)
+
+
+      this.updatePagination(this.statePagination.currentPage)
       this.getPaginationPages()
 
     },
@@ -216,19 +222,22 @@ export const useVoteStore = defineStore('vote', {
       for (let i = 1; i <=this.statePartyList.data.last_page; i++) {
         this.statePagination.pages.push(i);
       }
-      console.log(this.statePagination.pages)
-
-
+    
       this.statePagination.links =  this.statePartyList.data.links
     },
 
 
 
-    handleClickPage(page) {
+    updatePagination(page) {
       let links =this.statePagination.links 
-     // emit("onClickPage",links.value[page].url);
+
+       if(this.statePartyList.data.last_page==1){
+        page = 1
+      }
+  
       this.getPartyList(links[page].url)
-      console.log("from store:" +links[page].url)
+
+      this.statePagination.currentPage=page
      
      
     }

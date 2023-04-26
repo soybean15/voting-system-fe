@@ -69,7 +69,7 @@ export default {
 
     const handleClickPage = (page) => {
 
-      store.handleClickPage(page)
+      store.updatePagination(page)
      
     
       currentPage.value = page;
