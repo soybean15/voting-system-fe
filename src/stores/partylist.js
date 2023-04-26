@@ -17,15 +17,15 @@ export const useVoteStore = defineStore('vote', {
       name: '',
       image: null
     },
-    stateOnAdd:true,
-    statePagination:{
-      pages:[],
-      lastPage:null,
-      links:[],
-      currentPage:1
-    }
+    stateOnAdd: true,
+    statePagination: {
+      pages: [],
+      lastPage: null,
+      links: [],
+      currentPage: 1
+    },
+ 
 
-    
 
 
 
@@ -39,7 +39,8 @@ export const useVoteStore = defineStore('vote', {
     onAdd: (state) => state.stateOpenModal,
     loading: (state) => state.stateLoading,
     form: (state) => state.stateForm,
-    paginationPages:(state)=>state.statePagination.pages
+    paginationPages: (state) => state.statePagination.pages,
+   
 
   },
   actions: {
@@ -55,13 +56,13 @@ export const useVoteStore = defineStore('vote', {
       const data = await axios.get(path)
 
       this.statePartyList = data.data
-      
+
       this.stateLoading = false
 
       this.statePagination.lastPage = this.statePartyList.data.last_page
 
       //console.log(this.statePartyList)
-     
+
 
     },
 
@@ -84,14 +85,17 @@ export const useVoteStore = defineStore('vote', {
 
         )
         this.stateLoading = false
-        this.stateStatus = data.data.status      
+        this.stateStatus = data.data.status
         this.statePartyList = data.data
 
         this.getPaginationPages()
-
+        this.closeAddEditModal()
+     
+            
       } catch (error) {
         if (error.response.status === 422) {
           this.stateError = error.response.data.errors
+         
         }
       }
 
@@ -101,48 +105,58 @@ export const useVoteStore = defineStore('vote', {
     async handleDeletePartyList(partyListId) {
       this.stateError = []
 
-    
-        try {
-          const data = await axios.delete('api/partylist/' + partyListId)
-          this.stateStatus = data.data
-         
-          await this.getPartyList(null)
-          this. getPaginationPages()
-          console.log(this.stateStatus)
 
-         
+      try {
+        const data = await axios.delete('api/partylist/' + partyListId)
+        this.stateStatus = data.data
 
-        } catch (error) {
-          if (error.response.status === 422) {
-            this.stateError = error.response.data.errors
-          }
+        this.updatePagination(this.statePagination.currentPage)
+        this.getPaginationPages()
+       
+
+
+
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.stateError = error.response.data.errors
         }
-      
+      }
+
 
     }
     ,
 
     async handleEditPartyList() {
       this.stateError = []
-     
-      const formData = new FormData();
+      try {
 
-      formData.append('name', this.stateForm.name);
-      formData.append('image', this.stateForm.image);
-    
-      const data = await axios.post(
-        'api/partylist/'+this.stateForm.id+'?_method=PUT', 
-        formData
-      )
+        const formData = new FormData();
 
-      this.stateLoading = false
+        formData.append('name', this.stateForm.name);
+        formData.append('image', this.stateForm.image);
 
-      this.stateStatus = data.data.status
-      this.stateOnAdd = false
+        const data = await axios.post(
+          'api/partylist/' + this.stateForm.id + '?_method=PUT',
+          formData
+        )
+
+        this.stateLoading = false
+
+        this.stateStatus = data.data.status
+        this.stateOnAdd = false
 
 
-      this.updatePagination(this.statePagination.currentPage)
-      this.getPaginationPages()
+        this.updatePagination(this.statePagination.currentPage)
+        this.getPaginationPages()
+        this.closeAddEditModal()
+       
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.stateError = error.response.data.errors
+          
+        }
+      }
+
 
     },
 
@@ -187,18 +201,17 @@ export const useVoteStore = defineStore('vote', {
     openAddEditModal(id, name, image) {
 
       this.stateForm = {
-        id:id,
+        id: id,
         name: name,
         image: image
       }
-      console.log(image)
 
-      if(image==null){
-        this.stateOnAdd =true
-      }else{
-        this.stateOnAdd =false
+      if (image == null) {
+        this.stateOnAdd = true
+      } else {
+        this.stateOnAdd = false
       }
-      
+
       this.stateOpenModal = !this.stateOpenModal
     },
 
@@ -207,39 +220,50 @@ export const useVoteStore = defineStore('vote', {
       this.stateOpenModal = !this.stateOpenModal
     },
 
-    modalAction( ){
-      if(this.stateOnAdd){
-        this.handleAddPartyList()
-      }else{
-        this.handleEditPartyList()
+     modalAction() {
+      if (this.stateOnAdd) {
+         this.handleAddPartyList()
+      } else {
+         this.handleEditPartyList()
       }
 
-      this.stateOpenModal = false
+      // if(this.hasError){
+      //   console.log(this.hasError)
+        
+      //   this.stateOpenModal = false
+      // }
+
+      
+
+
+
+
+
     },
-    
-    getPaginationPages(){
-      this.statePagination.pages=[]
-      for (let i = 1; i <=this.statePartyList.data.last_page; i++) {
+
+    getPaginationPages() {
+      this.statePagination.pages = []
+      for (let i = 1; i <= this.statePartyList.data.last_page; i++) {
         this.statePagination.pages.push(i);
       }
-    
-      this.statePagination.links =  this.statePartyList.data.links
+
+      this.statePagination.links = this.statePartyList.data.links
     },
 
 
 
     updatePagination(page) {
-      let links =this.statePagination.links 
+      let links = this.statePagination.links
 
-       if(this.statePartyList.data.last_page==1){
+      if (this.statePartyList.data.last_page == 1) {
         page = 1
       }
-  
+
       this.getPartyList(links[page].url)
 
-      this.statePagination.currentPage=page
-     
-     
+      this.statePagination.currentPage = page
+
+
     }
 
 

@@ -150,16 +150,10 @@ export default {
   setup() {
     const voteStore = usePartylistStore();
 
-    const showPagination = ref(true);
+    
     onMounted(() => {
       voteStore.getPartyList(null);
     });
-
-    // const isAdd = ref(true);
-    // const onAddPartylist = () => {
-    //   isAdd.value = !isAdd.value;
-    // };
-
 
 
 
@@ -180,7 +174,7 @@ export default {
 
     const onClickPage = (path) => {
       voteStore.getPartyList(path);
-      //console.log(path)
+      
     };
 
     return { voteStore, onClickPage, onSavePartylist,  itemLen };

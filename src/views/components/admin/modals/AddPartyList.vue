@@ -1,6 +1,6 @@
 <template>
   <div class="modal-overlay-2 flex ">
-    {{ voteStore.errors.name }}
+   
     <div class="admin-modal bg-onSurface flex-col justify-items-start font-color-primary" >
         <div class="relative w-full">
             <img @click="voteStore.closeAddEditModal" class="h-7 absolute top-2 right-2 cursor-pointer" src="@/assets/img/icon/close-icon.svg">
@@ -48,13 +48,11 @@
 import { useVoteStore as usePartylistStore } from '@/stores/partylist';
 import { onMounted, ref } from 'vue';
 export default {
-    emits:['onAddPartylist','onSavePartylist'],
+    emits:['onSavePartylist'],
     
     setup(props,{emit}){
 
-        const onAdd =()=>{
-            emit('onAddPartylist')
-        }
+
 
 
         const voteStore = usePartylistStore()
@@ -66,18 +64,16 @@ export default {
             voteStore.form.image = event.target.files[0];
         };
 
-        const onSave=()=>{
-          
-     
-            emit('onSavePartylist')          
-            
-            
+        const onSave=()=>{  
+            emit('onSavePartylist')  
+       
+   
         }
 
 
         
 
-        return {voteStore,onAdd,onFileChange,onSave}
+        return {voteStore,onFileChange,onSave}
     }
 
 }
