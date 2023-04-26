@@ -69,10 +69,6 @@ export default {
         const onSave=()=>{
             emit('onSavePartylist')
 
-            if(!voteStore.loading){
-
-            }
-            
            
         }
 

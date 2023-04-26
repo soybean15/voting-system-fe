@@ -17,7 +17,8 @@ export const useVoteStore = defineStore('vote', {
       name: '',
       image: null
     },
-    stateOnAdd:true
+    stateOnAdd:true,
+    statePagination:[]
     
 
 
@@ -31,7 +32,8 @@ export const useVoteStore = defineStore('vote', {
     errors: (state) => state.stateError,
     onAdd: (state) => state.stateOpenModal,
     loading: (state) => state.stateLoading,
-    form: (state) => state.stateForm
+    form: (state) => state.stateForm,
+    paginationPages:(state)=>state.statePagination
 
   },
   actions: {
@@ -78,6 +80,8 @@ export const useVoteStore = defineStore('vote', {
         this.stateStatus = data.data.status
        
         this.statePartyList = data.data
+
+        this.getPaginationPages()
 
       } catch (error) {
         if (error.response.status === 422) {
@@ -201,6 +205,25 @@ export const useVoteStore = defineStore('vote', {
       }
 
       this.stateOpenModal = false
+    },
+    
+    getPaginationPages(){
+      this.statePagination=[]
+      for (let i = 1; i <=this.statePartyList.data.last_page; i++) {
+        this.statePagination.push(i);
+      }
+      console.log(this.statePagination)
+    },
+
+
+
+    handleClickPage(page) {
+      let links = this.statePartyList.data.links
+     // emit("onClickPage",links.value[page].url);
+      this.getPartyList(links[page].url)
+      console.log(links[page].url)
+     
+     
     }
 
 

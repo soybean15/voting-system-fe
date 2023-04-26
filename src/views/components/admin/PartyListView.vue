@@ -64,9 +64,10 @@
           <div class="mr-10" v-if="voteStore.partyList.data">
             <PaginationViewVue
               :perGroupPage="5"
-              :totalPages="itemLen"
               :links="voteStore.partyList.data.links"
+              :totalPages = 'itemLen'
               @onClickPage="onClickPage"
+              :store="voteStore"
             />
           </div>
         </div>
@@ -138,9 +139,7 @@ import { useVoteStore as usePartylistStore } from "@/stores/partylist";
 import {
   computed,
   onMounted,
-  onUnmounted,
-  onUpdated,
-  ReactiveFlags,
+
   ref,
 } from "vue";
 import AddPartyList from "@/views/components/admin/modals/AddPartyList.vue";

@@ -7,7 +7,7 @@
 
     </div>
 
-    <div v-for="page in showedPage" :key="page">
+    <div v-for="page in store.paginationPages" :key="page">
       <button
         @click="handleClickPage(page)"
         class="page-button text-xs"
@@ -28,10 +28,18 @@
 
 <script>
 import { computed, onMounted, onUpdated, ref,watch,watchEffect } from "vue";
+
+import {useVoteStore} from '@/stores/partylist'
+
 export default {
-  props: ["totalPages","perGroupPage","links"],
+  props: ["totalPages","perGroupPage","links","store"],
   emits: ["onClickPage", "onNext", "onPrevious", ],
   setup(props, { emit }) {
+
+
+    const store = props.store
+    store.getPaginationPages()
+
     let totalPages = props.totalPages;
     let currentPage = ref();
     let perGroupPage = props.perGroupPage;
@@ -49,11 +57,7 @@ export default {
       currentPage.value = 1;
     }
 
-   onMounted(()=>{
-    pages.value=[]
-    createArrayFromOneToN(totalPages);
-    
-   })
+ 
 
 
 
@@ -61,18 +65,13 @@ export default {
     const links = ref(props.links)
 
   
-    const pages = ref([]);
-    const createArrayFromOneToN = (n) => {
-      for (let i = 1; i <= n; i++) {
-        pages.value.push(i);
-      }
-    };
 
-    createArrayFromOneToN(totalPages);
 
     const handleClickPage = (page) => {
-      emit("onClickPage",links.value[page].url);
-      console.log("from pageination"+links.value[page].url)
+
+      store.handleClickPage(page)
+     
+    
       currentPage.value = page;
     };
 
@@ -158,9 +157,9 @@ export default {
       currentPage,
       handleNext,
       handlePrevious,
-      pages,
       onFirst,
       onLast,
+       store
       
     };
   },
