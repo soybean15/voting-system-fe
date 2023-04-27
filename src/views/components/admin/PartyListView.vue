@@ -1,5 +1,5 @@
 <template>
-  {{ voteStore.isAdd }}
+ 
   <div class="w-full flex flex-col">
     <div class="flex space-between">
       <span class="text-left pl-6 text-xl text-white font-bold pt-2"

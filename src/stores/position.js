@@ -3,19 +3,28 @@ import axios from "axios"
 
 
 
-export const useAuthStore = defineStore('auth', {
+export const usePositionStore = defineStore('position', {
 
 
     state: () => ({
-        statePositions:[]    
+        statePositions:[],
+        stateOpenModal:false 
     }),
     getters: {
-        positions: (state) => state.statePositions,    
+        positions: (state) => state.statePositions, 
+        openModal: (state)=> state.stateOpenModal   
     },
     actions: {
         async getPositions(){
             const data = await axios.get('api/candidate')
             this.statePositions = data.data
+        },
+
+
+
+
+        openCloseModal(){
+            this.stateOpenModal = !this.stateOpenModal
         }
 
     }

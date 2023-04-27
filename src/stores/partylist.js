@@ -3,7 +3,7 @@ import axios from "axios"
 import { ref } from 'vue'
 
 
-export const useVoteStore = defineStore('vote', {
+export const useVoteStore = defineStore('partylist', {
 
   state: () => ({
     statePositions: [],
