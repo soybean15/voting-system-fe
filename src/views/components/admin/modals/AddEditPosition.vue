@@ -11,11 +11,12 @@
             Add New Position
         </div>
 
-        <form >
+        <form  @submit.prevent="positionStore.handleAddPosition" >
             <div class="flex-col">
                 <div class="flex-col m-2">
                     <!-- <div class="flex text-sm">PartyList Name:</div> -->
                     <div class="text-rose-500 text-xs"></div>
+                    <div class="text-rose-500 text-xs" v-if="positionStore.errors.name">{{ positionStore.errors.name[0] }}</div>
                     <input class="w-full rounded-md border-2 border-slate-600 p-1 text-black" v-model="positionStore.form.name" placeholder="Position name" type="text">
                 </div>  
 
@@ -24,6 +25,7 @@
                     <div class="text-rose-500 text-xs"></div>
 
                     <div class="flex">
+                        <div class="text-rose-500 text-xs" v-if="positionStore.errors.voteCount">{{ positionStore.errors.voteCount[0] }}</div>
                         <input class="w-40 rounded-md border-2 border-slate-600 p-1 text-black" v-model="positionStore.form.voteCount" placeholder="Winner Count" min="1" type="number">
                     </div>
                     

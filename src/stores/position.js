@@ -9,7 +9,7 @@ export const usePositionStore = defineStore('position', {
     state: () => ({
         statePositions:[],
         stateOpenModal:false,
-        stateError:null ,
+        stateError:[] ,
         stateStatus:null,
         stateForm: {
             name: '',
@@ -19,7 +19,8 @@ export const usePositionStore = defineStore('position', {
     getters: {
         positions: (state) => state.statePositions, 
         onOpenModal: (state)=> state.stateOpenModal,
-        form :(state)=>state.stateForm 
+        form :(state)=>state.stateForm ,
+        errors:(state)=>state.stateError
     },
     actions: {
         async getPositions(){
@@ -28,10 +29,15 @@ export const usePositionStore = defineStore('position', {
         },
 
         async handleAddPosition(){
-            this.stateError =null
+            this.stateError =[]
             this.stateStatus = null
             try{
-                const data = await axios.post('/api/candidate')
+                const data = await axios.post('/api/candidate',{
+                    name:this.stateForm.name,
+                    voteCount: this.stateForm.voteCount
+                })
+                this.stateStatus = data.data
+                this.stateOpenModal = !this.stateOpenModal
 
             }catch(error){
                 if (error.response.status === 422) {
