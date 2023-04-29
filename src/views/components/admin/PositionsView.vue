@@ -46,8 +46,21 @@
         </button>
     </div>
 
-    {{ positionStore.positions }}
+    <div class="p-6">
 
+      
+      
+      <div v-if="positionStore.positions.data">
+        <div class="flex-col" v-for="position in positionStore.positions.data.data" :key="position.id">
+            <div class="border-b text-sm border-slate-800 flex mr-6 p-2">
+              <div class="text-white font-bold text-xl">{{ position.name }}</div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+  
     
 
 
