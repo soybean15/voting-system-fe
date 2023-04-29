@@ -7,6 +7,7 @@
       <span class="grow"></span>
       <div class="relative">
         <div
+       
           class="absolute inset-y-0 left-0 top-1 flex items-center pl-7 pointer-events-none"
         >
           <svg
@@ -34,9 +35,25 @@
         </div>
       </div>
     </div>
+
+    <div class="flex pl-6 mt-2">
+      <button
+          @click="positionStore.openCloseModal"
+          class="btn-green-800 text-xs p-1 flex items-center rounded-sm"
+        >
+          <img width="20" src="@/assets/img/icon/add-icon.svg" />
+          <div class="pl-1">Add Position</div>
+        </button>
+    </div>
+
+    {{ positionStore.positions }}
+
+    
+
+
   </div>
 
-  <!-- <AddEditPositionVue /> -->
+  <AddEditPositionVue  :class="{'hidden':!positionStore.onOpenModal}" />
 </template>
 
 <script>
@@ -47,6 +64,7 @@ export default {
   components: { AddEditPositionVue },
   setup() {
     const positionStore = usePositionStore();
+
     onMounted(() => {
       positionStore.getPositions();
     });

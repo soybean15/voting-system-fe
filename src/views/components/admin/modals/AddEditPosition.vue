@@ -4,7 +4,7 @@
       class="admin-modal bg-onSurface flex-col justify-items-start font-color-primary"
     >
     <div class="relative w-full">
-            <img  class="h-7 absolute top-2 right-2 cursor-pointer" src="@/assets/img/icon/close-icon.svg">
+            <img @click="positionStore.openCloseModal"  class="h-7 absolute top-2 right-2 cursor-pointer" src="@/assets/img/icon/close-icon.svg">
 
         </div>
         <div class="flex p-4 text-base font-bold">
@@ -16,15 +16,15 @@
                 <div class="flex-col m-2">
                     <!-- <div class="flex text-sm">PartyList Name:</div> -->
                     <div class="text-rose-500 text-xs"></div>
-                    <input class="w-full rounded-md border-2 border-slate-600 p-1 text-black"  placeholder="Position name" type="text">
-                </div>
+                    <input class="w-full rounded-md border-2 border-slate-600 p-1 text-black" v-model="positionStore.form.name" placeholder="Position name" type="text">
+                </div>  
 
                 <div class="flex-col m-2 place-content-start">
                     <!-- <div class="flex text-sm">PartyList Name:</div> -->
                     <div class="text-rose-500 text-xs"></div>
 
                     <div class="flex">
-                        <input class="w-40 rounded-md border-2 border-slate-600 p-1 text-black"  placeholder="Winner Count" min="1" type="number">
+                        <input class="w-40 rounded-md border-2 border-slate-600 p-1 text-black" v-model="positionStore.form.voteCount" placeholder="Winner Count" min="1" type="number">
                     </div>
                     
                 </div>
@@ -46,7 +46,16 @@
 </template>
 
 <script>
-export default {};
+import { usePositionStore } from '@/stores/position';
+
+export default{
+    setup(){
+        const positionStore= usePositionStore()
+
+        return {positionStore}
+
+    }
+}
 </script>
 
 <style>

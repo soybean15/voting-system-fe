@@ -7,14 +7,19 @@ export const usePositionStore = defineStore('position', {
 
 
     state: () => ({
-        statePositions:null,
+        statePositions:[],
         stateOpenModal:false,
         stateError:null ,
         stateStatus:null,
+        stateForm: {
+            name: '',
+            voteCount: ''
+          }
     }),
     getters: {
         positions: (state) => state.statePositions, 
-        openModal: (state)=> state.stateOpenModal   
+        onOpenModal: (state)=> state.stateOpenModal,
+        form :(state)=>state.stateForm 
     },
     actions: {
         async getPositions(){
