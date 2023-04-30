@@ -24,7 +24,7 @@
             <div class="flex m-2">
               <div>
 
-                <VDropDownVue/>
+                <VDropDownVue :items="candidateStore.partylist"/>
               </div>
 
               <input

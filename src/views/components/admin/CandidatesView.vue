@@ -1,6 +1,6 @@
 <template>
 
-    <AddEditCandidate/>
+    <AddEditCandidate />
   
 </template>
 
@@ -16,7 +16,7 @@ export default {
         candidateStore.getCandidates()
         console.log('from candidate vue')
 
-        console.log(candidateStore.candidates)
+        console.log(candidateStore.partylist)
 
     }
 }
