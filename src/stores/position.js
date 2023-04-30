@@ -14,13 +14,15 @@ export const usePositionStore = defineStore('position', {
         stateForm: {
             name: '',
             voteCount: ''
-        }
+        },
+        stateSelectedPosition:null
     }),
     getters: {
         positions: (state) => state.statePositions,
         onOpenModal: (state) => state.stateOpenModal,
         form: (state) => state.stateForm,
-        errors: (state) => state.stateError
+        errors: (state) => state.stateError,
+        selectedPosition:(state)=>state.stateSelectedPosition
     },
     actions: {
         async getPositions() {
@@ -58,9 +60,15 @@ export const usePositionStore = defineStore('position', {
 
 
 
-
         openCloseModal() {
             this.stateOpenModal = !this.stateOpenModal
+        },
+        onSelectedItem(item){
+            if(this.stateSelectedPosition!=null){
+                this.stateSelectedPosition.selected =false
+            }
+            item.selected = true
+            this.stateSelectedPosition  =item
         }
 
     }

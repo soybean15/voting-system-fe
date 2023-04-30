@@ -46,12 +46,11 @@
         </button>
     </div>
 
-    <div class="p-6">
+    <div class="p-6 flex w-full">
 
       
-      
-      <div v-if="positionStore.positions.data">
-        <div class="flex-col" v-for="position in positionStore.positions.data" :key="position.id">
+      <div class="w-5/12" v-if="positionStore.positions.data">
+        <div @click="positionStore.onSelectedItem(position)" class="flex-col  " v-for="position in positionStore.positions.data" :key="position.id">
            
             <div class="border-b text-sm border-slate-800 flex-col mr-6 p-2">
               <div class="text-white flex font-bold text-xl">{{ position.name }} {{position.selected  }}</div>
@@ -59,6 +58,16 @@
               <div class="text-slate-300 text-sm flex">Candidates: {{ position.cadidates }}</div>
             </div>
         </div>
+      </div>
+      <div class="w-full bg-red-500">
+
+        <div v-if="positionStore.selectedPosition">
+          <div v-for="candidate in positionStore.selectedPosition.candidates" :key="candidate.id">
+          
+          </div>
+        </div>
+        
+
       </div>
 
     </div>
