@@ -50,7 +50,8 @@
 
       
       <div class="w-5/12" v-if="positionStore.positions.data">
-        <div @click="positionStore.onSelectedItem(position)" :class="{'active':position.selected}" class="flex-col position-item   cursor-pointer" v-for="position in positionStore.positions.data" :key="position.id">
+     
+        <div @click="positionStore.onSelectedItem(position)" :class="{'active':position.selected}" class="flex-col position-item   cursor-pointer" v-for="position in positionStore.positions.data.positions.data" :key="position.id">
            
             <div class="border-b text-sm border-slate-800 flex-col mr-6 p-2">
               <div class="text-white flex font-bold text-xl">{{ position.name }} {{position.selected  }}</div>

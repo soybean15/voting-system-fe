@@ -8,6 +8,7 @@ export const usePositionStore = defineStore('position', {
 
     state: () => ({
         statePositions: [],
+        stateCandidates:[],
         stateOpenModal: false,
         stateError: [],
         stateStatus: null,
@@ -28,14 +29,14 @@ export const usePositionStore = defineStore('position', {
         async getPositions() {
             const data = await axios.get('api/candidate')
             this.statePositions = data.data
+           console.log(this.statePositions)
 
+            // const updatedPosition = this.statePositions.data.positions.map(position => {
+            //     return { ...position, selected:false };
+            // });
 
-            const updatedPosition = this.statePositions.data.data.map(position => {
-                return { ...position, selected:false };
-            });
-
-             this.statePositions = { ...data.data, data: updatedPosition };
-            console.log(this.statePositions)
+            //  this.statePositions = { ...data.data, data: updatedPosition };
+           
         },
 
         async handleAddPosition() {
