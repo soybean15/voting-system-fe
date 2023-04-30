@@ -28,6 +28,22 @@ export const useCandidateStore = defineStore('candidate', {
             await positionStore.getPositions()
             this.stateCandidates = positionStore.positions.data.candidates
           
+        },
+        async addCandidate(){
+            this.stateErrors=[]
+            this.stateStatus=null
+            try{
+                const data = await axios.post('api/candidate/add')
+                this.stateStatus = data.data
+
+            }catch(error){
+                if (error.response.status === 422) {
+                    this.stateError = error.response.data.errors
+                   
+                }
+            }
+            
+           
         }
 
 
