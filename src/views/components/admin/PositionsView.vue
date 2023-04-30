@@ -50,7 +50,7 @@
 
       
       <div class="w-5/12" v-if="positionStore.positions.data">
-        <div @click="positionStore.onSelectedItem(position)" class="flex-col  " v-for="position in positionStore.positions.data" :key="position.id">
+        <div @click="positionStore.onSelectedItem(position)" :class="{'active':position.selected}" class="flex-col position-item   cursor-pointer" v-for="position in positionStore.positions.data" :key="position.id">
            
             <div class="border-b text-sm border-slate-800 flex-col mr-6 p-2">
               <div class="text-white flex font-bold text-xl">{{ position.name }} {{position.selected  }}</div>
@@ -100,4 +100,8 @@ export default {
 </script>
 
 <style>
+.position-item.active{
+  background-color: #101318;
+}
+  
 </style>
