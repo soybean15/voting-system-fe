@@ -52,8 +52,11 @@
       
       <div v-if="positionStore.positions.data">
         <div class="flex-col" v-for="position in positionStore.positions.data.data" :key="position.id">
-            <div class="border-b text-sm border-slate-800 flex mr-6 p-2">
-              <div class="text-white font-bold text-xl">{{ position.name }}</div>
+           
+            <div class="border-b text-sm border-slate-800 flex-col mr-6 p-2">
+              <div class="text-white flex font-bold text-xl">{{ position.name }}</div>
+              <div class="text-slate-300 text-sm flex">Winner count: {{ position.winner_count }}</div>
+              <div class="text-slate-300 text-sm flex">Candidates: {{ position.cadidates }}</div>
             </div>
         </div>
       </div>

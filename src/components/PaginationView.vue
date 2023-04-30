@@ -34,7 +34,7 @@ import {useVoteStore} from '@/stores/partylist'
 export default {
   props: ["totalPages","perGroupPage","links","store"],
   emits: ["onClickPage", "onNext", "onPrevious", ],
-  setup(props, { emit }) {
+  setup(props, { emit }) {   
 
 
     const store = props.store
@@ -70,8 +70,6 @@ export default {
     const handleClickPage = (page) => {
 
       store.updatePagination(page)
-     
-    
       currentPage.value = page;
     };
 
