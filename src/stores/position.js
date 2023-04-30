@@ -7,19 +7,19 @@ export const usePositionStore = defineStore('position', {
 
 
     state: () => ({
-        statePositions: [],
+        stateVoting: [],
         stateCandidates:[],
         stateOpenModal: false,
         stateError: [],
         stateStatus: null,
         stateForm: {
             name: '',
-            voteCount: ''
+            winnerCount: ''
         },
         stateSelectedPosition:null
     }),
     getters: {
-        positions: (state) => state.statePositions,
+        vote: (state) => state.stateVoting,
         onOpenModal: (state) => state.stateOpenModal,
         form: (state) => state.stateForm,
         errors: (state) => state.stateError,
@@ -28,8 +28,8 @@ export const usePositionStore = defineStore('position', {
     actions: {
         async getPositions() {
             const data = await axios.get('api/candidate')
-            this.statePositions = data.data
-           console.log(this.statePositions)
+            this.stateVoting = data.data
+           
 
             // const updatedPosition = this.statePositions.data.positions.map(position => {
             //     return { ...position, selected:false };
@@ -45,7 +45,7 @@ export const usePositionStore = defineStore('position', {
             try {
                 const data = await axios.post('/api/candidate', {
                     name: this.stateForm.name,
-                    voteCount: this.stateForm.voteCount
+                    winnerCount: this.stateForm.winnerCount
                 })
                 this.stateStatus = data.data
                 this.stateOpenModal = !this.stateOpenModal

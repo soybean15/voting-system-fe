@@ -9,6 +9,7 @@ export const useCandidateStore = defineStore('candidate', {
 
     state: () => ({
         stateCandidates:[],
+        statePartylist:[],
         stateErrors:[],
         stateStatus:null,
  
@@ -16,7 +17,8 @@ export const useCandidateStore = defineStore('candidate', {
     getters: {
         candidates:(state)=>state.stateCandidates,
         errors:(state)=>state.stateErrors,
-        status:(state)=> state.stateStatus
+        status:(state)=> state.stateStatus,
+        partylist:(state)=>state.statePartylist
       
     },
     actions: {
@@ -26,7 +28,8 @@ export const useCandidateStore = defineStore('candidate', {
             
             const positionStore = usePositionStore()
             await positionStore.getPositions()
-            this.stateCandidates = positionStore.positions.data.candidates
+            this.stateCandidates = positionStore.vote.data.candidates
+            this.statePartylist = positionStore.vote.data.partylist
           
         },
         async addCandidate(){
