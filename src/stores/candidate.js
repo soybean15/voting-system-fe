@@ -39,13 +39,20 @@ export const useCandidateStore = defineStore('candidate', {
             this.statePartylist = positionStore.vote.data.partylist
           
         },
-        async addCandidate(){
+        async handleAddCandidate(){
             this.stateErrors=[]
             this.stateStatus=null
             try{
                 const data = await axios.post('api/candidate/add', {
                     name: this.stateForm.name,
-                    image: this.stateForm.image
+                    image: this.stateForm.image,
+                    party_list_id : this.partylist_id,
+                    
+                  },
+                  {
+                    headers: {
+                      'Content-Type': 'multipart/form-data'
+                    }
                   })
                 this.stateStatus = data.data
 

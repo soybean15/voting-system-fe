@@ -11,13 +11,14 @@
       </div>
       <div class="flex p-4 text-base font-bold">Add Candidate</div>
       <div class="p-2 pt-0">
-        <form>
+        <form  @submit.prevent="candidateStore.handleAddCandidate">
           <div class="flex-col">
             <div class="flex-col m-2">
               <div class="text-rose-500 text-xs"></div>
               <input
                 class="w-full rounded-md border-2 border-slate-600 p-1 text-black"
-                placeholder="Cadidate name"
+                placeholder="Candidate name"
+                v-model="candidateStore.form.name"
                 type="text"
               />
             </div>
