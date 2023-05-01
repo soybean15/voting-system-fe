@@ -58,7 +58,6 @@ export default {
         const voteStore = usePartylistStore()
  
 
- 
 
         const onFileChange = (event) => {
             voteStore.form.image = event.target.files[0];

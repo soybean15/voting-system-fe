@@ -53,7 +53,13 @@ export default {
   setup() {
     const candidateStore = useCandidateStore();
 
-    return { candidateStore };
+
+
+        const onFileChange = (event) => {
+          candidateStore.form.image = event.target.files[0];
+        };
+
+    return { candidateStore,onFileChange };
   },
 };
 </script>

@@ -12,13 +12,20 @@ export const useCandidateStore = defineStore('candidate', {
         statePartylist:[],
         stateErrors:[],
         stateStatus:null,
+        stateForm: {
+            name:'',
+            image:'',
+            partylist_id:''
+
+        }
  
     }),
     getters: {
         candidates:(state)=>state.stateCandidates,
         errors:(state)=>state.stateErrors,
         status:(state)=> state.stateStatus,
-        partylist:(state)=>state.statePartylist
+        partylist:(state)=>state.statePartylist,
+        form:(state)=>state.stateForm
       
     },
     actions: {
@@ -36,7 +43,10 @@ export const useCandidateStore = defineStore('candidate', {
             this.stateErrors=[]
             this.stateStatus=null
             try{
-                const data = await axios.post('api/candidate/add')
+                const data = await axios.post('api/candidate/add', {
+                    name: this.stateForm.name,
+                    image: this.stateForm.image
+                  })
                 this.stateStatus = data.data
 
             }catch(error){
