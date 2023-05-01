@@ -3,7 +3,7 @@
     <div
       class="admin-modal bg-onSurface flex-col justify-items-start font-color-primary"
     >
-      <div class="relative w-full">
+      <div @click="candidateStore.openCloseModal" class="relative w-full">
         <img
           class="h-7 absolute top-2 right-2 cursor-pointer"
           src="@/assets/img/icon/close-icon.svg"

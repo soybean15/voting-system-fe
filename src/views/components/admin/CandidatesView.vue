@@ -1,4 +1,5 @@
 <template>
+  {{ candidateStore.onOpenModal }}
 
      <div class="w-full flex flex-col">
     <div class="flex space-between">
@@ -9,6 +10,7 @@
       <div class="relative">
         <div
        
+        
           class="absolute inset-y-0 left-0 top-1 flex items-center pl-7 pointer-events-none"
         >
           <svg
@@ -39,7 +41,7 @@
 
     <div class="flex pl-6 mt-2">
       <button
-          @click="positionStore.openCloseModal"
+          @click="candidateStore.openCloseModal"
           class="btn-green-800 text-xs p-1 flex items-center rounded-sm"
         >
           <img width="20" src="@/assets/img/icon/add-icon.svg" />
@@ -50,7 +52,7 @@
 
     <div class="m-6">
         <div class="flex-col">
-            <div class="flex" v-for="candidate in candidateStore.candidates.data" :key="candidate.id">
+            <div class="flex items-center border-b text-sm border-slate-800" v-for="candidate in candidateStore.candidates.data" :key="candidate.id">
                 <img class="rounded-full w-20 h-20" :src="candidate.image"/>
 
                 <div class="text-white">{{ candidate.name }}</div>
@@ -64,7 +66,10 @@
 
     </div>
 
-    <!-- <AddEditCandidate /> -->
+    <AddEditCandidate :class="{'hidden':!candidateStore.onOpenModal}"/>
+  
+
+   
     
 </template>
 

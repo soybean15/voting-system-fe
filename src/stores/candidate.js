@@ -17,7 +17,8 @@ export const useCandidateStore = defineStore('candidate', {
             image:'',
             partylist_id:''
 
-        }
+        },
+        stateOpenModal:false
  
     }),
     getters: {
@@ -25,7 +26,8 @@ export const useCandidateStore = defineStore('candidate', {
         errors:(state)=>state.stateErrors,
         status:(state)=> state.stateStatus,
         partylist:(state)=>state.statePartylist,
-        form:(state)=>state.stateForm
+        form:(state)=>state.stateForm,
+        onOpenModal:(state)=>state.stateOpenModal
       
     },
     actions: {
@@ -64,10 +66,15 @@ export const useCandidateStore = defineStore('candidate', {
             }
             
            
-        }
-
+        },
+        openCloseModal() {
+            this.stateOpenModal = !this.stateOpenModal
+            console.log(this.stateOpenModal)
+        },
 
     },
+
+
     // setup(){
     //     const positionStore = usePositionStore()
         
