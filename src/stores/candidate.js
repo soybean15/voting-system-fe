@@ -18,7 +18,13 @@ export const useCandidateStore = defineStore('candidate', {
             partylist_id:''
 
         },
-        stateOpenModal:false
+        stateOpenModal:false,
+        statePagination: {
+            pages: [],
+            lastPage: null,
+            links: [],
+            currentPage: 1
+          }
  
     }),
     getters: {
@@ -69,8 +75,28 @@ export const useCandidateStore = defineStore('candidate', {
             
            
         },
+        async handleDeleteCandidate(id){
+            this.stateStatus=null
 
+            try {
+                const data = await axios.delete('api/candidate/' + id)
+                this.stateStatus = data.data
         
+                this.updatePagination(this.statePagination.currentPage)
+                this.getPaginationPages()
+               
+        
+        
+        
+              } catch (error) {
+                if (error.response.status === 422) {
+                  this.stateError = error.response.data.errors
+                }
+              }
+        
+        
+        },
+
 
 
         openCloseModal() {
