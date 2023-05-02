@@ -57,6 +57,8 @@ export const useCandidateStore = defineStore('candidate', {
                     }
                   })
                 this.stateStatus = data.data
+                this.openCloseModal()
+                this.getCandidates()
 
             }catch(error){
                 if (error.response.status === 422) {
@@ -67,6 +69,10 @@ export const useCandidateStore = defineStore('candidate', {
             
            
         },
+
+        
+
+
         openCloseModal() {
             this.stateOpenModal = !this.stateOpenModal
             console.log(this.stateOpenModal)

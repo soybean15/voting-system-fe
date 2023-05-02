@@ -233,11 +233,6 @@ export const useVoteStore = defineStore('partylist', {
       //   this.stateOpenModal = false
       // }
 
-      
-
-
-
-
 
     },
 

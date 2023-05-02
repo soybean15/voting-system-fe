@@ -25,7 +25,7 @@
             <div class="flex m-2">
               <div>
 
-                <VDropDownVue :items="candidateStore.partylist"/>
+                <VDropDownVue :items="candidateStore.partylist" @onSelectedItem="onSelectedItem"/>
               </div>
 
               <input
@@ -60,7 +60,12 @@ export default {
           candidateStore.form.image = event.target.files[0];
         };
 
-    return { candidateStore,onFileChange };
+        const onSelectedItem=(item)=>{
+          candidateStore.form.partylist_id = item.div
+          console.log("onselected "+item.id)
+        }
+
+    return { candidateStore,onFileChange,onSelectedItem };
   },
 };
 </script>
