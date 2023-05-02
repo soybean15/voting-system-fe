@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from "axios"
-import { usePositionStore } from './position';
+
+
 
 
 
@@ -8,93 +9,112 @@ export const useCandidateStore = defineStore('candidate', {
 
 
     state: () => ({
-        stateCandidates:[],
-        statePartylist:[],
-        stateErrors:[],
-        stateStatus:null,
+        stateCandidates: [],
+        statePartylist: [],
+        stateErrors: [],
+        stateStatus: null,
         stateForm: {
-            name:'',
-            image:'',
-            partylist_id:''
+            name: '',
+            image: '',
+            partylist_id: ''
 
         },
-        stateOpenModal:false,
+        stateOpenModal: false,
         statePagination: {
             pages: [],
             lastPage: null,
             links: [],
             currentPage: 1
-          }
- 
+        }
+
     }),
     getters: {
-        candidates:(state)=>state.stateCandidates,
-        errors:(state)=>state.stateErrors,
-        status:(state)=> state.stateStatus,
-        partylist:(state)=>state.statePartylist,
-        form:(state)=>state.stateForm,
-        onOpenModal:(state)=>state.stateOpenModal
-      
+        candidates: (state) => state.stateCandidates,
+        errors: (state) => state.stateErrors,
+        status: (state) => state.stateStatus,
+        partylist: (state) => state.statePartylist,
+        form: (state) => state.stateForm,
+        onOpenModal: (state) => state.stateOpenModal,
+        paginationPages: (state) => state.statePagination.pages,
+
     },
     actions: {
 
-         async getCandidates(){
+        async getCandidates(path) {
 
-            
-            const positionStore = usePositionStore()
-            await positionStore.getPositions()
-            this.stateCandidates = positionStore.vote.data.candidates
-            this.statePartylist = positionStore.vote.data.partylist
-          
+            this.stateErrors = []
+            this.stateStatus = null
+
+            if (!path) {
+                path = '/api/candidates'
+        
+              }
+        
+            try {
+                const data = await axios.get(path)
+                
+                this.stateCandidates = data.data.data.candidates
+                console.log(  "this.stateCandidates")
+                console.log(  this.stateCandidates)
+            } catch (error) {
+                if (error.response.status === 422) {
+                    this.stateError = error.response.data.errors
+
+                }
+            }
+
+
+
         },
-        async handleAddCandidate(){
-            this.stateErrors=[]
-            this.stateStatus=null
-            try{
+        async handleAddCandidate() {
+            this.stateErrors = []
+            this.stateStatus = null
+            try {
                 const data = await axios.post('api/candidate/add', {
                     name: this.stateForm.name,
                     image: this.stateForm.image,
-                    party_list_id : this.partylist_id,
-                    
-                  },
-                  {
-                    headers: {
-                      'Content-Type': 'multipart/form-data'
-                    }
-                  })
+                    party_list_id: this.partylist_id,
+
+                },
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
                 this.stateStatus = data.data
                 this.openCloseModal()
+                this.getPaginationPages()
                 this.getCandidates()
 
-            }catch(error){
+            } catch (error) {
                 if (error.response.status === 422) {
                     this.stateError = error.response.data.errors
-                   
+
                 }
             }
-            
-           
+
+
         },
-        async handleDeleteCandidate(id){
-            this.stateStatus=null
+        async handleDeleteCandidate(id) {
+            this.stateStatus = null
 
             try {
                 const data = await axios.delete('api/candidate/' + id)
                 this.stateStatus = data.data
-        
+
                 this.updatePagination(this.statePagination.currentPage)
                 this.getPaginationPages()
-               
-        
-        
-        
-              } catch (error) {
+
+
+
+
+            } catch (error) {
                 if (error.response.status === 422) {
-                  this.stateError = error.response.data.errors
+                    this.stateError = error.response.data.errors
                 }
-              }
-        
-        
+            }
+
+
         },
 
 
@@ -103,19 +123,36 @@ export const useCandidateStore = defineStore('candidate', {
             this.stateOpenModal = !this.stateOpenModal
             console.log(this.stateOpenModal)
         },
+        getPaginationPages() {
+
+            this.statePagination.pages = []
+            for (let i = 1; i <= this.stateCandidates.last_page; i++) {
+                this.statePagination.pages.push(i);
+            }
+            console.log(this.statePagination.pages)
+
+            this.statePagination.links = this.stateCandidates.links
+        },
+
+
+        updatePagination(page) {
+            let links = this.statePagination.links
+
+            if (this.stateCandidates.last_page == 1) {
+                page = 1
+            }
+
+            this.getCandidates(links[page].url)
+
+            this.statePagination.currentPage = page
+
+
+        }
 
     },
 
 
-    // setup(){
-    //     const positionStore = usePositionStore()
-        
 
-    //     console.log("from candidate")
-    //     console.log(this.stateCandidates)
 
-    //     return {positionStore}
-
-    // }
 
 });

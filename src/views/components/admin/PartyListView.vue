@@ -145,6 +145,7 @@ import {
 import AddPartyList from "@/views/components/admin/modals/AddPartyList.vue";
 import PaginationViewVue from "@/components/PaginationView.vue";
 
+
 export default {
   components: { AddPartyList, PaginationViewVue },
   setup() {

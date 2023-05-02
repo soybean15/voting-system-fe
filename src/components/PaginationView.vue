@@ -1,4 +1,7 @@
 <template>
+
+  {{ totalPages }}
+ 
   <div class="flex" v-if="currentPage">
     <div v-if="!onFirst">
       <button @click="handlePrevious" class="page-button text-xs">
@@ -35,6 +38,8 @@ export default {
   props: ["totalPages","perGroupPage","links","store"],
   emits: ["onClickPage", "onNext", "onPrevious", ],
   setup(props, { emit }) {   
+
+    console.log('totalPages '+props.totalPages)
 
 
     const store = props.store

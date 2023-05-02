@@ -47,9 +47,24 @@
           <img width="20" src="@/assets/img/icon/add-icon.svg" />
           <div class="pl-1">Add Candidate</div>
         </button>
+        
+
+         
+        <div class="mr-10" v-if="candidateStore.candidates.data" >
+        
+            <PaginationViewVue
+              :perGroupPage="5"
+              :links="candidateStore.candidates.links"
+              :totalPages = "candidateStore.candidates.last_page"
+              @onClickPage="onClickPage"
+              :store="candidateStore"
+            />
+          </div>
+
     </div>
 
-    <div class="m-6">
+   
+    <div class="m-6" >
         <div class="flex-col">
          
               
@@ -71,7 +86,7 @@
                   <div class="flex w-1/4 text-md font-thin text-white">
                     
                     <button>Edit</button>
-                    <button>Delete</button>
+                    <button @click="candidateStore.handleDeleteCandidate(candidate.id)">Delete</button>
 
                   </div>
                 </div>
@@ -95,15 +110,21 @@
 <script>
 import { useCandidateStore } from '@/stores/candidate';
 import AddEditCandidate from '@/views/components/admin/modals/AddEditCandidate'
+import PaginationViewVue from '@/components/PaginationView.vue';
 
 export default {
-    components:{AddEditCandidate},
+    components:{AddEditCandidate,PaginationViewVue},
 
     setup(){
         const candidateStore = useCandidateStore()
-        candidateStore.getCandidates()
+        candidateStore.getCandidates(null)
+
+        const onClickPage = ()=>{
+
+        }
+        
       
-        return {candidateStore}
+        return {candidateStore,onClickPage}
 
     }
 }
