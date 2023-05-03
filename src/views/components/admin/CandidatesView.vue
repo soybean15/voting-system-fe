@@ -41,7 +41,7 @@
 
     <div class="flex pl-6 mt-2">
       <button
-          @click="candidateStore.openCloseModal"
+          @click="candidateStore.openAddEditModal(null)"
           class="btn-green-800 text-xs p-1 flex items-center rounded-sm"
         >
           <img width="20" src="@/assets/img/icon/add-icon.svg" />
@@ -86,7 +86,8 @@
                   <div class="flex w-1/4 text-md font-thin text-white">{{ candidate.position_name }}</div>
                   <div class="flex w-1/4 text-md font-thin text-white">
                     
-                    <button>Edit</button>
+                    <!--  -->
+                    <button @click="candidateStore.openAddEditModal(candidate.id, candidate.name, candidate.image,candidate.party_list)">Edit</button>
                     <button @click="candidateStore.handleDeleteCandidate(candidate.id)">Delete</button>
 
                   </div>
@@ -101,7 +102,11 @@
 
     </div>
 
-    <AddEditCandidate :class="{'hidden':!candidateStore.onOpenModal}"/>
+    <div v-if="candidateStore.onOpenModal">
+      <AddEditCandidate />
+    </div>
+
+   
   
 
    
@@ -119,7 +124,7 @@ export default {
     setup(){
         const candidateStore = useCandidateStore()
         candidateStore.getCandidates(null)
-
+      
         const onClickPage = ( )=>{
         
         }

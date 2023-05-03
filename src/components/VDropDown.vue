@@ -1,4 +1,6 @@
 <template>
+
+
   <div class="relative inline-block text-left">
   <button @click="isOpen = !isOpen" type="button" class="inline-flex justify-center w-ful rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="options-menu" aria-expanded="false" aria-haspopup="true">
     {{selectedName}}
@@ -23,14 +25,16 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 export default {
 
-    props:['items'],
+    props:['items','store'],
     emits:['onSelectedItem'],
     setup(props,{emit}){
         const isOpen = ref(false)
-        const selectedName = ref('Partylist')
+
+
+        const selectedName = ref(props.store.form.item_name)
 
         const onSelectedItem=(item)=>{
             emit('onSelectedItem',item)

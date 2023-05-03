@@ -16,7 +16,8 @@ export const useCandidateStore = defineStore('candidate', {
         stateForm: {
             name: '',
             image: '',
-            partylist_id: ''
+            partylist_id: '',
+            party_list:null
 
         },
         stateOpenModal: false,
@@ -25,7 +26,8 @@ export const useCandidateStore = defineStore('candidate', {
             lastPage: null,
             links: [],
             currentPage: 1
-        }
+        },
+        stateOnAdd : true
 
     }),
     getters: {
@@ -47,15 +49,17 @@ export const useCandidateStore = defineStore('candidate', {
 
             if (!path) {
                 path = '/api/candidates'
-        
-              }
-        
+
+            }
+
             try {
                 const data = await axios.get(path)
-                
+
                 this.stateCandidates = data.data.data.candidates
-                this.statePartylist=data.data.data.partylist
+                this.statePartylist = data.data.data.partylist
                 this.getPaginationPages()
+                console.log(this.stateCandidates)
+
 
             } catch (error) {
                 if (error.response.status === 422) {
@@ -75,7 +79,7 @@ export const useCandidateStore = defineStore('candidate', {
                     name: this.stateForm.name,
                     party_list_id: this.stateForm.partylist_id,
                     image: this.stateForm.image,
-                  
+
 
                 },
                     {
@@ -85,12 +89,12 @@ export const useCandidateStore = defineStore('candidate', {
                     })
                 this.stateStatus = data.data
                 this.openCloseModal()
-               this.getCandidates()
+                this.getCandidates()
 
             } catch (error) {
                 if (error.response.status === 422) {
                     this.stateErrors = error.response.data.errors
-                   
+
 
                 }
             }
@@ -113,12 +117,71 @@ export const useCandidateStore = defineStore('candidate', {
             } catch (error) {
                 if (error.response.status === 422) {
                     this.stateErrors = error.response.data.errors
-                    
+
                 }
             }
 
 
         },
+
+        async handleEditCandidate() {
+            this.stateError = []
+            this.stateStatus = null
+            try {
+
+                const formData = new FormData();
+
+                formData.append('name', this.stateForm.name);
+                formData.append('image', this.stateForm.image);
+                formData.append('party_list_id', this.stateForm.party_list.id);
+
+                const data = await axios.post(
+                    'api/candidate/' + this.stateForm.id + '?_method=PUT',
+                    formData
+                )
+
+
+
+                this.stateStatus = data.data.status
+                this.stateOnAdd = false
+
+
+                this.updatePagination(this.statePagination.currentPage)
+                this.getPaginationPages()
+                this.closeAddEditModal()
+
+            } catch (error) {
+                if (error.response.status === 422) {
+                    this.stateError = error.response.data.errors
+
+                }
+            }
+
+
+        },
+
+
+        openAddEditModal(id, name, image,party_list) {
+
+            
+            if (image == null) {
+
+                this.stateOnAdd = true
+            } else {
+                this.stateForm = {
+                    id: id,
+                    name: name,
+                    image: image,
+                    party_list : party_list,
+                    item_name: party_list.name
+                }
+    
+                this.stateOnAdd = false
+            }
+
+            this.stateOpenModal = !this.stateOpenModal
+        },
+
 
 
 
@@ -127,17 +190,17 @@ export const useCandidateStore = defineStore('candidate', {
             console.log(this.stateOpenModal)
         },
         getPaginationPages() {
-           
+
 
             this.statePagination.pages = []
-            if(this.stateCandidates.data.length > 0){
+            if (this.stateCandidates.data.length > 0) {
                 for (let i = 1; i <= this.stateCandidates.last_page; i++) {
                     this.statePagination.pages.push(i);
                 }
             }
-          
-          
-            
+
+
+
 
             this.statePagination.links = this.stateCandidates.links
         },
@@ -155,7 +218,17 @@ export const useCandidateStore = defineStore('candidate', {
             this.statePagination.currentPage = page
 
 
-        }
+        },
+        modalAction() {
+            if (this.stateOnAdd) {
+               this.handleAddCandidate()
+            } else {
+               this.handleEditCandidate()
+            }
+      
+      
+          },
+
 
     },
 
