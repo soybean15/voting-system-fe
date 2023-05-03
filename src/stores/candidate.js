@@ -17,7 +17,8 @@ export const useCandidateStore = defineStore('candidate', {
             name: '',
             image: '',
             partylist_id: '',
-            party_list:null
+            party_list:null,
+            item_name:'PartyList'
 
         },
         stateOpenModal: false,
@@ -45,7 +46,7 @@ export const useCandidateStore = defineStore('candidate', {
         async getCandidates(path) {
 
             this.stateErrors = []
-            this.stateStatus = null
+          
 
             if (!path) {
                 path = '/api/candidates'
@@ -58,8 +59,7 @@ export const useCandidateStore = defineStore('candidate', {
                 this.stateCandidates = data.data.data.candidates
                 this.statePartylist = data.data.data.partylist
                 this.getPaginationPages()
-                console.log(this.stateCandidates)
-
+              
 
             } catch (error) {
                 if (error.response.status === 422) {
@@ -88,6 +88,9 @@ export const useCandidateStore = defineStore('candidate', {
                         }
                     })
                 this.stateStatus = data.data
+            
+
+  
                 this.openCloseModal()
                 this.getCandidates()
 
@@ -127,14 +130,17 @@ export const useCandidateStore = defineStore('candidate', {
         async handleEditCandidate() {
             this.stateError = []
             this.stateStatus = null
+          
             try {
 
                 const formData = new FormData();
 
                 formData.append('name', this.stateForm.name);
                 formData.append('image', this.stateForm.image);
-                formData.append('party_list_id', this.stateForm.party_list.id);
+                let party_list_id = this.stateForm.party_list ==null ? '' :this.stateForm.party_list.id
+                formData.append('party_list_id', party_list_id);
 
+                console.log('from edit '+this.stateForm.id)
                 const data = await axios.post(
                     'api/candidate/' + this.stateForm.id + '?_method=PUT',
                     formData
@@ -142,17 +148,17 @@ export const useCandidateStore = defineStore('candidate', {
 
 
 
-                this.stateStatus = data.data.status
+                this.stateStatus = data.data
                 this.stateOnAdd = false
 
 
                 this.updatePagination(this.statePagination.currentPage)
                 this.getPaginationPages()
-                this.closeAddEditModal()
+                this.openCloseModal()
 
             } catch (error) {
                 if (error.response.status === 422) {
-                    this.stateError = error.response.data.errors
+                    this.stateErrors = error.response.data.errors
 
                 }
             }
@@ -168,18 +174,20 @@ export const useCandidateStore = defineStore('candidate', {
 
                 this.stateOnAdd = true
             } else {
+                let partylist_name = party_list==null?'Partylist':party_list.name
                 this.stateForm = {
                     id: id,
                     name: name,
                     image: image,
                     party_list : party_list,
-                    item_name: party_list.name
+                    item_name: partylist_name
                 }
     
                 this.stateOnAdd = false
             }
 
             this.stateOpenModal = !this.stateOpenModal
+          
         },
 
 
@@ -187,7 +195,15 @@ export const useCandidateStore = defineStore('candidate', {
 
         openCloseModal() {
             this.stateOpenModal = !this.stateOpenModal
-            console.log(this.stateOpenModal)
+            this.stateForm={
+                name: '',
+                image: '',
+                partylist_id: '',
+                party_list:null,
+                item_name:'PartyList'
+    
+            }
+        
         },
         getPaginationPages() {
 
@@ -228,6 +244,11 @@ export const useCandidateStore = defineStore('candidate', {
       
       
           },
+          clearStatus() {
+
+            this.stateStatus = null
+          },
+      
 
 
     },

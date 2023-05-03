@@ -48,7 +48,22 @@
           <div class="pl-1">Add Candidate</div>
         </button>
 
-        <div class="grow"></div>
+        <div class="grow">
+
+          <div v-if="candidateStore.status">
+          
+            <div class="relative border border-lime-900 border-4 rounded-md ml-40 mr-40 bg-emerald-300 p-2"
+            >
+              {{ candidateStore.status.message }}
+              <div
+                @click="candidateStore.clearStatus"
+                class="absolute right-2 top-2 cursor-pointer"
+              >
+                X
+              </div>
+            </div>
+          </div>
+        </div>
         
          
         <div class="mr-10" v-if="candidateStore.candidates.data" >

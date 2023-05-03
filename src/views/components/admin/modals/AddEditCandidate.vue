@@ -63,7 +63,7 @@ export default {
     };
 
     const onSelectedItem = (item) => {
-      candidateStore.form.partylist_id = item.id;
+      candidateStore.form.party_list = item;
       console.log(candidateStore.form);
     };
 

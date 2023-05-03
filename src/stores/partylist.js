@@ -130,6 +130,7 @@ export const useVoteStore = defineStore('partylist', {
 
     async handleEditPartyList() {
       this.stateError = []
+      console.log(this.stateForm.image)
       try {
 
         const formData = new FormData();
