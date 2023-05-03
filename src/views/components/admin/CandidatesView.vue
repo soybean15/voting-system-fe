@@ -102,8 +102,8 @@
                   <div class="flex w-1/4 text-md font-thin text-white">
                     
                     <!--  -->
-                    <button @click="candidateStore.openAddEditModal(candidate.id, candidate.name, candidate.image,candidate.party_list)">Edit</button>
-                    <button @click="candidateStore.handleDeleteCandidate(candidate.id)">Delete</button>
+                    <button class="mr-8" @click="candidateStore.openAddEditModal(candidate.id, candidate.name, candidate.image,candidate.party_list)"><img width="20" src="@/assets/img/icon/edit-icon.svg" /></button>
+                    <button @click="candidateStore.handleDeleteCandidate(candidate.id)"><img width="20" src="@/assets/img/icon/delete-icon.svg" /></button>
 
                   </div>
                 </div>
