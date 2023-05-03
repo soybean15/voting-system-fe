@@ -54,8 +54,8 @@ export const useCandidateStore = defineStore('candidate', {
                 const data = await axios.get(path)
                 
                 this.stateCandidates = data.data.data.candidates
-                console.log(  "this.stateCandidates")
-                console.log(  this.stateCandidates)
+                this.statePartylist=data.data.data.partylist
+
             } catch (error) {
                 if (error.response.status === 422) {
                     this.stateError = error.response.data.errors
@@ -72,8 +72,9 @@ export const useCandidateStore = defineStore('candidate', {
             try {
                 const data = await axios.post('api/candidate/add', {
                     name: this.stateForm.name,
+                    party_list_id: this.stateForm.partylist_id,
                     image: this.stateForm.image,
-                    party_list_id: this.partylist_id,
+                  
 
                 },
                     {

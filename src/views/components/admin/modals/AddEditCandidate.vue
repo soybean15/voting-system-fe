@@ -61,8 +61,8 @@ export default {
         };
 
         const onSelectedItem=(item)=>{
-          candidateStore.form.partylist_id = item.div
-          console.log("onselected "+item.id)
+          candidateStore.form.partylist_id = item.id
+          console.log(candidateStore.form)
         }
 
     return { candidateStore,onFileChange,onSelectedItem };

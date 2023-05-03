@@ -47,6 +47,8 @@
           <img width="20" src="@/assets/img/icon/add-icon.svg" />
           <div class="pl-1">Add Candidate</div>
         </button>
+
+        <div class="grow"></div>
         
 
          
@@ -80,7 +82,7 @@
               <img class="rounded-full w-10 h-10" :src="candidate.image"/>
 
                 <div class="flex w-full items-center ml-4 ">
-                  <div class="flex w-1/4 text-xl font-semibold text-white">{{ candidate.name }}</div>
+                  <div class="flex w-1/4 text-md font-semibold text-white">{{ candidate.name }}</div>
                   <div class="flex w-1/4 text-md font-thin text-white">{{ candidate.party_list_name }}</div>
                   <div class="flex w-1/4 text-md font-thin text-white">{{ candidate.position_name }}</div>
                   <div class="flex w-1/4 text-md font-thin text-white">
@@ -119,8 +121,8 @@ export default {
         const candidateStore = useCandidateStore()
         candidateStore.getCandidates(null)
 
-        const onClickPage = ()=>{
-
+        const onClickPage = ( )=>{
+        
         }
         
       

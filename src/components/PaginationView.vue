@@ -1,6 +1,5 @@
 <template>
 
-  {{ totalPages }}
  
   <div class="flex" v-if="currentPage">
     <div v-if="!onFirst">
