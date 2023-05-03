@@ -1,6 +1,6 @@
 <template>
 
- 
+
   <div class="flex" v-if="currentPage">
     <div v-if="!onFirst">
       <button @click="handlePrevious" class="page-button text-xs">

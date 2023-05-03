@@ -50,7 +50,6 @@
 
         <div class="grow"></div>
         
-
          
         <div class="mr-10" v-if="candidateStore.candidates.data" >
         

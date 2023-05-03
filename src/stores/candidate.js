@@ -55,6 +55,7 @@ export const useCandidateStore = defineStore('candidate', {
                 
                 this.stateCandidates = data.data.data.candidates
                 this.statePartylist=data.data.data.partylist
+                this.getPaginationPages()
 
             } catch (error) {
                 if (error.response.status === 422) {
@@ -84,8 +85,7 @@ export const useCandidateStore = defineStore('candidate', {
                     })
                 this.stateStatus = data.data
                 this.openCloseModal()
-                this.getPaginationPages()
-                this.getCandidates()
+               this.getCandidates()
 
             } catch (error) {
                 if (error.response.status === 422) {
@@ -125,12 +125,17 @@ export const useCandidateStore = defineStore('candidate', {
             console.log(this.stateOpenModal)
         },
         getPaginationPages() {
+           
 
             this.statePagination.pages = []
-            for (let i = 1; i <= this.stateCandidates.last_page; i++) {
-                this.statePagination.pages.push(i);
+            if(this.stateCandidates.data.length > 0){
+                for (let i = 1; i <= this.stateCandidates.last_page; i++) {
+                    this.statePagination.pages.push(i);
+                }
             }
-            console.log(this.statePagination.pages)
+          
+           console.log(this.stateCandidates)
+            
 
             this.statePagination.links = this.stateCandidates.links
         },

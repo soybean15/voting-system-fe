@@ -60,7 +60,7 @@ export const useVoteStore = defineStore('partylist', {
       this.stateLoading = false
 
       this.statePagination.lastPage = this.statePartyList.data.last_page
-
+     
       //console.log(this.statePartyList)
 
 
@@ -88,8 +88,10 @@ export const useVoteStore = defineStore('partylist', {
         this.stateStatus = data.data.status
         this.statePartyList = data.data
 
-        this.getPaginationPages()
+  
         this.closeAddEditModal()
+        this.getPaginationPages()
+
      
             
       } catch (error) {
@@ -238,10 +240,13 @@ export const useVoteStore = defineStore('partylist', {
 
     getPaginationPages() {
       this.statePagination.pages = []
-      for (let i = 1; i <= this.statePartyList.data.last_page; i++) {
-        this.statePagination.pages.push(i);
+      if(this.statePartyList.data.data.length>0){
+        for (let i = 1; i <= this.statePartyList.data.last_page; i++) {
+          this.statePagination.pages.push(i);
+        }
+  
       }
-
+   
       this.statePagination.links = this.statePartyList.data.links
     },
 
