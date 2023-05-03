@@ -59,7 +59,7 @@ export const useCandidateStore = defineStore('candidate', {
 
             } catch (error) {
                 if (error.response.status === 422) {
-                    this.stateError = error.response.data.errors
+                    this.stateErrors = error.response.data.errors
 
                 }
             }
@@ -89,7 +89,8 @@ export const useCandidateStore = defineStore('candidate', {
 
             } catch (error) {
                 if (error.response.status === 422) {
-                    this.stateError = error.response.data.errors
+                    this.stateErrors = error.response.data.errors
+                   
 
                 }
             }
@@ -111,7 +112,8 @@ export const useCandidateStore = defineStore('candidate', {
 
             } catch (error) {
                 if (error.response.status === 422) {
-                    this.stateError = error.response.data.errors
+                    this.stateErrors = error.response.data.errors
+                    
                 }
             }
 
@@ -134,7 +136,7 @@ export const useCandidateStore = defineStore('candidate', {
                 }
             }
           
-           console.log(this.stateCandidates)
+          
             
 
             this.statePagination.links = this.stateCandidates.links

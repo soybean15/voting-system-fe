@@ -38,7 +38,7 @@ export default {
   emits: ["onClickPage", "onNext", "onPrevious", ],
   setup(props, { emit }) {   
 
-    console.log('totalPages '+props.totalPages)
+
 
 
     const store = props.store
@@ -52,7 +52,7 @@ export default {
 
     let remaining = totalPages%perGroupPage
     let lastPage = (totalPages-remaining)+1
-    console.log('lastPage '+lastPage)
+    
 
     const onFirst=ref(true)
     const onLast = ref(false)

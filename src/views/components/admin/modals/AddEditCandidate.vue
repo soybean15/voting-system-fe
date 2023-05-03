@@ -11,10 +11,10 @@
       </div>
       <div class="flex p-4 text-base font-bold">Add Candidate</div>
       <div class="p-2 pt-0">
-        <form  @submit.prevent="candidateStore.handleAddCandidate">
+        <form @submit.prevent="candidateStore.handleAddCandidate">
           <div class="flex-col">
             <div class="flex-col m-2">
-              <div class="text-rose-500 text-xs"></div>
+              <div class="text-rose-500 text-xs" v-if="candidateStore.errors.name">{{ candidateStore.errors.name[0] }}</div>
               <input
                 class="w-full rounded-md border-2 border-slate-600 p-1 text-black"
                 placeholder="Candidate name"
@@ -22,18 +22,21 @@
                 type="text"
               />
             </div>
-            <div class="flex m-2">
-              <div>
-
-                <VDropDownVue :items="candidateStore.partylist" @onSelectedItem="onSelectedItem"/>
+            <div class="flex-col m-2">
+              <div class="flex">
+                <VDropDownVue
+                  :items="candidateStore.partylist"
+                  @onSelectedItem="onSelectedItem"
+                />
               </div>
-
-              <input
-                ref="imageInput"
-                type="file"
-                name="photo"
-                @change="onFileChange"
-              />
+              <div class="flex mt-2">
+                <input
+                  ref="imageInput"
+                  type="file"
+                  name="photo"
+                  @change="onFileChange"
+                />
+              </div>
             </div>
             <div class="flex flex-row-reverse">
               <input class="btn btn-green mr-2" type="submit" value="Save ->" />
@@ -54,21 +57,25 @@ export default {
   setup() {
     const candidateStore = useCandidateStore();
 
+    const onFileChange = (event) => {
+      candidateStore.form.image = event.target.files[0];
+    };
 
+    const onSelectedItem = (item) => {
+      candidateStore.form.partylist_id = item.id;
+      console.log(candidateStore.form);
+    };
 
-        const onFileChange = (event) => {
-          candidateStore.form.image = event.target.files[0];
-        };
-
-        const onSelectedItem=(item)=>{
-          candidateStore.form.partylist_id = item.id
-          console.log(candidateStore.form)
-        }
-
-    return { candidateStore,onFileChange,onSelectedItem };
+    return { candidateStore, onFileChange, onSelectedItem };
   },
 };
 </script>
 
-<style>
+<style scoped>
+.admin-modal{
+
+    height: 16em;
+   
+
+}
 </style>
