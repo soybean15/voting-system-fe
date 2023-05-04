@@ -48,10 +48,11 @@
 
     <div class="p-6 flex w-full">
 
+
       
-      <div class="w-5/12" v-if="positionStore.vote.data">
+      <div class="w-5/12" v-if="positionStore.positions">
      
-        <div @click="positionStore.onSelectedItem(position)" :class="{'active':position.selected}" class="flex-col position-item   cursor-pointer" v-for="position in positionStore.vote.data.positions.data" :key="position.id">
+        <div @click="positionStore.onSelectedItem(position)" :class="{'active':position.selected}" class="flex-col position-item   cursor-pointer" v-for="position in positionStore.positions.data" :key="position.id">
            
             <div class="border-b text-sm border-slate-800 flex-col mr-6 p-2">
               <div class="text-white flex font-bold text-xl">{{ position.name }} {{position.selected  }}</div>
@@ -60,12 +61,16 @@
             </div>
         </div>
       </div>
-      <div class="w-full bg-red-500">
+      <div class="relative w-full bg-red-500">
 
         <div v-if="positionStore.selectedPosition">
           <div v-for="candidate in positionStore.selectedPosition.candidates" :key="candidate.id">
-          
+            <div>{{ candidate.name }}</div>
           </div>
+        </div>
+
+        <div class=" absolute bottom-5 right-5 shadow-lg rounded-2xl w-20 h-20 bg-green-500 cursor-pointer">
+          <img src="@/assets/img/icon/add-icon.svg" />
         </div>
         
 
@@ -79,6 +84,7 @@
 
   </div>
 
+  <AddCandidates/>
   <AddEditPositionVue  :class="{'hidden':!positionStore.onOpenModal}" />
 </template>
 
@@ -86,8 +92,9 @@
 import { usePositionStore } from "@/stores/position";
 import { onMounted } from "vue";
 import AddEditPositionVue from "@/views/components/admin/modals/AddEditPosition.vue";
+import AddCandidates from "@/views/components/admin/modals/AddCandidates.vue"
 export default {
-  components: { AddEditPositionVue },
+  components: { AddEditPositionVue, AddCandidates },
   setup() {
     const positionStore = usePositionStore();
 
