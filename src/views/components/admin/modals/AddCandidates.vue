@@ -3,8 +3,9 @@
     <div
       class="admin-modal bg-onSurface flex-col justify-items-start font-color-primary"
     >
-      <div class="relative w-full">
+      <div  class="relative w-full">
         <img
+            @click="positionStore.openCloseInsertCandidateModal"
           class="h-7 absolute top-2 right-2 cursor-pointer"
           src="@/assets/img/icon/close-icon.svg"
         />
@@ -32,7 +33,7 @@
       </div>
 
       
-      <button btn btn-green>Submit</button>
+      <button @click="positionStore.handleInsertCandidates" class="btn btn-green">Submit</button>
     </div>
   </div>
 </template>

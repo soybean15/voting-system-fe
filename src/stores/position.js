@@ -11,13 +11,15 @@ export const usePositionStore = defineStore('position', {
         statePositions:null,
         stateCandidates:[],
         stateOpenModal: false,
+        stateOpenAddCandidateModal:false,
         stateError: [],
         stateStatus: null,
         stateForm: {
             name: '',
             winnerCount: ''
         },
-        stateSelectedPosition:null
+        stateSelectedPosition:null,
+        stateSelectedCandidates:[]
     }),
     getters: {
         vote: (state) => state.stateVoting,
@@ -26,7 +28,8 @@ export const usePositionStore = defineStore('position', {
         errors: (state) => state.stateError,
         selectedPosition:(state)=>state.stateSelectedPosition,
         positions:(state)=>state.statePositions,
-        candidates:(state)=>state.stateCandidates
+        candidates:(state)=>state.stateCandidates,
+        openAddCandidateModal:(state)=>state.stateOpenAddCandidateModal
     },
     actions: {
         async getPositions() {
@@ -37,7 +40,7 @@ export const usePositionStore = defineStore('position', {
             this.stateCandidates = data.data.data.candidates
 
 
-            console.log(this.statePositions.data.positions)
+
 
             // const updatedPosition = this.statePositions.data.positions.map(position => {
             //     return { ...position, selected:false };
@@ -66,11 +69,22 @@ export const usePositionStore = defineStore('position', {
             }
 
         },
+        async handleInsertCandidates(){
+            console.log(this.selectedPosition.id)
+
+            const data = await axios.post('api/candidates/position/'+this.selectedPosition.id+'/insert',{
+                candidates:this.stateSelectedCandidates
+            })
+
+        },
 
 
 
         openCloseModal() {
             this.stateOpenModal = !this.stateOpenModal
+        },
+        openCloseInsertCandidateModal(){
+            this.stateOpenAddCandidateModal = !this.stateOpenAddCandidateModal
         },
         onSelectedItem(item){
             if(this.stateSelectedPosition!=null){
@@ -80,11 +94,17 @@ export const usePositionStore = defineStore('position', {
             this.stateSelectedPosition  =item
         },
         onSelectedCandidate(candidate){
-            if(candidate.isSelected == null){
+            if(candidate.isSelected == null || !candidate.isSelected ){
                 candidate.isSelected =true
+                this.stateSelectedCandidates.push(candidate.id)
             }else{
-                candidate.isSelected= !candidate.isSelected 
+                candidate.isSelected= false
+
+                this.stateSelectedCandidates = this.stateSelectedCandidates.filter(function(item) {
+                    return item !== candidate.id
+                })
             }
+            console.log(this.stateSelectedCandidates)
         }
 
     }

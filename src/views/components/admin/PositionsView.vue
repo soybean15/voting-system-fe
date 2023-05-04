@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <div class=" absolute bottom-5 right-5 shadow-lg rounded-2xl w-20 h-20 bg-green-500 cursor-pointer">
+        <div @click="positionStore.openCloseInsertCandidateModal" class=" absolute bottom-5 right-5 shadow-lg rounded-2xl w-20 h-20 bg-green-500 cursor-pointer">
           <img src="@/assets/img/icon/add-icon.svg" />
         </div>
         
@@ -84,7 +84,11 @@
 
   </div>
 
-  <AddCandidates/>
+  <div v-if="positionStore.openAddCandidateModal">
+    <AddCandidates/>
+  </div>
+
+
   <AddEditPositionVue  :class="{'hidden':!positionStore.onOpenModal}" />
 </template>
 
