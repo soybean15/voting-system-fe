@@ -35,13 +35,13 @@
             <div class="flex">
               <div
                 class="text-rose-500 text-xs"
-                v-if="positionStore.errors.voteCount"
+                v-if="positionStore.errors.winner_count"
               >
-                {{ positionStore.errors.voteCount[0] }}
+                {{ positionStore.errors.winner_count[0] }}
               </div>
               <input
                 class="w-40 rounded-md border-2 border-slate-600 p-1 text-black"
-                v-model="positionStore.form.voteCount"
+                v-model="positionStore.form.winner_count"
                 placeholder="Winner Count"
                 min="1"
                 type="number"

@@ -43,6 +43,19 @@
         <img width="20" src="@/assets/img/icon/add-icon.svg" />
         <div class="pl-1">Add Position</div>
       </button>
+      
+
+      <div v-if="positionStore.positions">
+        <PaginationViewVue
+              :perGroupPage="5"
+              :links="positionStore.positions.links"
+              :totalPages = "positionStore.positions.last_page"
+              @onClickPage="onClickPage"
+              :store="positionStore"
+            />
+      </div>
+  
+      
     </div>
 
     <div class="p-6 flex w-full">
@@ -141,16 +154,21 @@ import { usePositionStore } from "@/stores/position";
 import { onMounted } from "vue";
 import AddEditPositionVue from "@/views/components/admin/modals/AddEditPosition.vue";
 import AddCandidates from "@/views/components/admin/modals/AddCandidates.vue";
+import PaginationViewVue from "@/components/PaginationView.vue";
 export default {
-  components: { AddEditPositionVue, AddCandidates },
+  components: { AddEditPositionVue, AddCandidates,PaginationViewVue },
   setup() {
     const positionStore = usePositionStore();
 
     onMounted(() => {
-      positionStore.getPositions();
+      positionStore.getPositions(null);
     });
 
-    return { positionStore };
+    const onClickPage = ( )=>{
+        
+      }
+
+    return { positionStore,onClickPage };
   },
 };
 </script>
