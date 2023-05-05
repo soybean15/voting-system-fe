@@ -61,17 +61,33 @@
             </div>
         </div>
       </div>
-      <div class="relative w-full candidates-panel">
+      <div class="relative w-full h-80 candidates-panel ">
 
-        <div v-if="positionStore.selectedPosition">
-          {{ positionStore.selectedPosition }}
-          <div v-for="candidate in positionStore.selectedPosition.candidates" :key="candidate.id">
-            <div>{{ candidate.name }}</div>
+        <div class="overflow-y-scroll h-full" v-if="positionStore.selectedPosition">
+          
+          <div class=" grid grid-cols-2 md:grid-cols-3" v-if="positionStore.selectedPosition.candidates.length > 0">
+
+         
+            <div class="p-2 flex items-center " :style="{ backgroundImage: 'url(' + candidate.party_list_image + ')' }" v-for="candidate in positionStore.selectedPosition.candidates" :key="candidate.id">
+              
+              <div class="mr-2" ><img class="rounded-full w-14 h-14" :src="candidate.image"></div>
+              <div class="flex text-white ">{{ candidate.name }}</div>
+            </div>
+
           </div>
+          <div v-else>
+            No Candidates
+          </div>
+          
+   
+        </div>
+        <div v-else>
+          <div >Candidates</div>
+
         </div>
 
         <div v-if="positionStore.selectedPosition">
-          <div @click="positionStore.openCloseInsertCandidateModal" class=" absolute bottom-5 right-5 shadow-lg rounded-2xl w-20 h-20 bg-green-500 cursor-pointer">
+          <div @click="positionStore.openCloseInsertCandidateModal" class=" absolute bottom-5 right-5 shadow-lg rounded-xl w-10 h-10 bg-green-500 cursor-pointer">
           <img src="@/assets/img/icon/add-icon.svg" />
         </div>
         
@@ -110,6 +126,7 @@ export default {
     onMounted(() => {
       positionStore.getPositions();
     });
+
 
     return { positionStore };
   },

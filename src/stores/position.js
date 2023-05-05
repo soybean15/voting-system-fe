@@ -92,6 +92,7 @@ export const usePositionStore = defineStore('position', {
             }
             item.selected = true
             this.stateSelectedPosition  =item
+            console.log(this.stateSelectedPosition)
         },
         onSelectedCandidate(candidate){
             if(candidate.isSelected == null || !candidate.isSelected ){
