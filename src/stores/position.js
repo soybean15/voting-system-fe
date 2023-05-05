@@ -40,7 +40,7 @@ export const usePositionStore = defineStore('position', {
             this.stateCandidates = data.data.data.candidates
 
 
-
+            console.log(this.statePositions)
 
             // const updatedPosition = this.statePositions.data.positions.map(position => {
             //     return { ...position, selected:false };
