@@ -84,9 +84,15 @@ export const usePositionStore = defineStore('position', {
             const data = await axios.post('api/candidates/position/' + this.selectedPosition.id + '/insert', {
                 candidates: this.stateSelectedCandidates
             })
+            this.stateSelectedCandidates =[]
             this.openCloseInsertCandidateModal()
-            this.getPositions()
-
+           
+            console.log(data.data)
+            this.stateSelectedPosition.candidates = data.data.candidates
+         
+            console.log(this.statePositions)
+            console.log(this.stateSelectedPosition)
+            
         },
         async handleDeletePosition() {
             this.stateStatus = null
