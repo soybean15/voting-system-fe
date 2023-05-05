@@ -54,25 +54,30 @@
      
         <div @click="positionStore.onSelectedItem(position)" :class="{'active':position.selected}" class="flex-col position-item   cursor-pointer" v-for="position in positionStore.positions.data" :key="position.id">
            
-            <div class="border-b text-sm border-slate-800 flex-col mr-6 p-2">
+            <div class="border-b text-sm border-slate-800 flex-col  p-2">
               <div class="text-white flex font-bold text-xl">{{ position.name }} {{position.selected  }}</div>
               <div class="text-slate-300 text-sm flex">Winner count: {{ position.winner_count }}</div>
               <div class="text-slate-300 text-sm flex">Candidates: {{ position.cadidates }}</div>
             </div>
         </div>
       </div>
-      <div class="relative w-full bg-red-500">
+      <div class="relative w-full candidates-panel">
 
         <div v-if="positionStore.selectedPosition">
+          {{ positionStore.selectedPosition }}
           <div v-for="candidate in positionStore.selectedPosition.candidates" :key="candidate.id">
             <div>{{ candidate.name }}</div>
           </div>
         </div>
 
-        <div @click="positionStore.openCloseInsertCandidateModal" class=" absolute bottom-5 right-5 shadow-lg rounded-2xl w-20 h-20 bg-green-500 cursor-pointer">
+        <div v-if="positionStore.selectedPosition">
+          <div @click="positionStore.openCloseInsertCandidateModal" class=" absolute bottom-5 right-5 shadow-lg rounded-2xl w-20 h-20 bg-green-500 cursor-pointer">
           <img src="@/assets/img/icon/add-icon.svg" />
         </div>
         
+        </div>
+
+
 
       </div>
 
@@ -113,6 +118,9 @@ export default {
 
 <style>
 .position-item.active{
+  background-color: #101318;
+}
+.candidates-panel{
   background-color: #101318;
 }
   
