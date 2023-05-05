@@ -71,7 +71,7 @@
             <div class="text-white flex font-bold text-xl">
               <div class="grow flex"> {{ position.name }} </div>
               <div class="pr-2"><img class="w-5 h-5 cursor-pointer " src="@/assets/img/icon/edit-icon.svg"/></div>
-              <div><img class="w-5 h-5 cursor-pointer" src="@/assets/img/icon/delete-icon.svg"/></div>
+              <div><img @click="positionStore.handleDeletePosition" class="w-5 h-5 cursor-pointer" src="@/assets/img/icon/delete-icon.svg"/></div>
             </div>
             <div class="text-slate-300 text-sm flex">
               Winner count: {{ position.winner_count }}
@@ -118,8 +118,8 @@
                     <div class="flex font-light">{{ candidate.party_list_name }}</div>
                   </div>
                 </div>
-                <div class="absolute right-2 bottom-12 z-40 shadow-lg cursor-pointer">
-                  <img class="w-4 h-4" src="@/assets/img/icon/delete-icon.svg"/>
+                <div  class="absolute right-2 bottom-12 z-40 shadow-lg cursor-pointer">
+                  <img  class="w-4 h-4" src="@/assets/img/icon/delete-icon.svg"/>
                 </div>
               </div>
             </div>
@@ -167,8 +167,11 @@ export default {
     const onClickPage = ( )=>{
         
       }
+      const onClick =()=>{
+        console.log("hello")
+      }
 
-    return { positionStore,onClickPage };
+    return { positionStore,onClickPage ,onClick};
   },
 };
 </script>

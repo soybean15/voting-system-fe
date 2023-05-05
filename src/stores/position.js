@@ -84,11 +84,13 @@ export const usePositionStore = defineStore('position', {
             const data = await axios.post('api/candidates/position/' + this.selectedPosition.id + '/insert', {
                 candidates: this.stateSelectedCandidates
             })
+            this.openCloseInsertCandidateModal()
+            this.getPositions()
 
         },
         async handleDeletePosition() {
             this.stateStatus = null
-
+             console.log("delete this "+this.selectedPosition.id)
             try {
                 const data = await axios.delete('api/candidate/position/' + this.selectedPosition.id)
 
@@ -117,7 +119,7 @@ export const usePositionStore = defineStore('position', {
             }
             item.selected = true
             this.stateSelectedPosition = item
-            console.log(this.stateSelectedPosition)
+            
         },
         onSelectedCandidate(candidate) {
             if (candidate.isSelected == null || !candidate.isSelected) {
@@ -130,7 +132,7 @@ export const usePositionStore = defineStore('position', {
                     return item !== candidate.id
                 })
             }
-            console.log(this.stateSelectedCandidates)
+            
         },
         getPaginationPages() {
 
@@ -141,8 +143,7 @@ export const usePositionStore = defineStore('position', {
                     this.statePagination.pages.push(i);
                 }
             }
-            console.log(this.statePagination)
-
+          
 
 
 
