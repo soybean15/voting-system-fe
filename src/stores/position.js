@@ -54,6 +54,11 @@ export const usePositionStore = defineStore('position', {
 
 
             this.getPaginationPages()
+            this.stateForm= {
+                name: '',
+                winner_count: ''
+            }
+
 
 
         },
@@ -70,6 +75,7 @@ export const usePositionStore = defineStore('position', {
                 this.stateOpenModal = !this.stateOpenModal
                 this.getPositions()
 
+              
             } catch (error) {
                 if (error.response.status === 422) {
                     this.stateError = error.response.data.errors
@@ -87,20 +93,42 @@ export const usePositionStore = defineStore('position', {
             this.stateSelectedCandidates =[]
             this.openCloseInsertCandidateModal()
            
-            console.log(data.data)
+           
             this.stateSelectedPosition.candidates = data.data.candidates
+            this.stateCandidates = data.data.vacant_candidates
          
-            console.log(this.statePositions)
-            console.log(this.stateSelectedPosition)
+          
             
         },
         async handleDeletePosition() {
             this.stateStatus = null
-             console.log("delete this "+this.selectedPosition.id)
+             
             try {
                 const data = await axios.delete('api/candidate/position/' + this.selectedPosition.id)
 
                 this.stateStatus =data.data
+                this.getPositions()
+                this.stateSelectedPosition = null
+               
+            } catch (error) {
+                if (error.response.status === 422) {
+                    this.stateErrors = error.response.data.errors
+
+                }
+            }
+
+            
+        },
+        async handleRemoveCandidate  (id) {
+            this.stateStatus = null
+             console.log('heer')
+            try {
+                const data = await axios.delete('api/candidate/position/' + id+'/remove')
+
+                this.stateStatus =data.data
+                this.stateSelectedPosition.candidates = data.data.candidates
+                this.stateCandidates = data.data.vacant_candidates
+               
             } catch (error) {
                 if (error.response.status === 422) {
                     this.stateErrors = error.response.data.errors
