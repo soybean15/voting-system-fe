@@ -159,7 +159,7 @@
               </div>
             </div>
           </div>
-          <div class="p-8 text-white text-lg" v-else>No Candidates</div>
+          <div class="p-8 text-white text-lg" v-else>No Candidates yet </div>
         </div>
         <div v-else>
           <div>Candidates</div>

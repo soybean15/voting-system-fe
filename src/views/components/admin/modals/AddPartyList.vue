@@ -22,6 +22,7 @@
                     <div>
 
                     </div>
+                    
                   
                     <input ref="imageInput" type="file" name="photo" @change="onFileChange">
                 </div>

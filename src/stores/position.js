@@ -179,6 +179,7 @@ export const usePositionStore = defineStore('position', {
 
 
         openCloseModal(onEdit) {
+            this.clearStatus()
             if(onEdit){
                 this.stateForm.name = this.stateSelectedPosition.name
                 this.stateForm.winner_count = this.stateSelectedPosition.winner_count
@@ -187,9 +188,11 @@ export const usePositionStore = defineStore('position', {
             this.stateOpenModal = !this.stateOpenModal
         },
         openCloseInsertCandidateModal() {
+            this.clearStatus()
             this.stateOpenAddCandidateModal = !this.stateOpenAddCandidateModal
         },
         onSelectedItem(item) {
+            this.clearStatus()
             if (this.stateSelectedPosition != null) {
                 this.stateSelectedPosition.selected = false
             }
@@ -198,6 +201,7 @@ export const usePositionStore = defineStore('position', {
             
         },
         onSelectedCandidate(candidate) {
+            this.clearStatus()
             if (candidate.isSelected == null || !candidate.isSelected) {
                 candidate.isSelected = true
                 this.stateSelectedCandidates.push(candidate.id)
