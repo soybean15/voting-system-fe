@@ -126,12 +126,17 @@
               <!-- <div :style="{  backgroundImage: 'url(' + candidate.party_list_image + ')'  }" class="absolute w-full h-full item-background"></div> -->
               <div class="relative w-full">
                 <div
-                  class="ml-4 absolute bg-onSurface w-full h-full z-0 drop-shadow-lg"
+                  class="ml-4 absolute right-10 bg-onSurface w-full h-full z-0 drop-shadow-lg"
                 ></div>
-                <img
+                <div class=" item-background w-full ">
+                  <div class="grow"></div>
+                  <img
                   :src="candidate.party_list_image"
-                  class="w-40 h-40 item-background opacity-40 rounded-full drop-shadow-lg"
+                  class="w-20 h-20 opacity-80 rounded-full drop-shadow-lg"
                 />
+
+                </div>
+              
                 <div class="absolute item flex items-center pl-2">
                   <div class="mr-1">
                     <img
@@ -147,13 +152,13 @@
                   </div>
                 </div>
                 <div
-                  class="absolute right-2 bottom-12 z-40 shadow-lg cursor-pointer"
+                  class="absolute right-1 top-0 z-50 shadow-lg cursor-pointer"
                 >
                 <!-- @click="positionStore.handleRemoveCandidate(candidate.id)" -->
                   <img
                     @click="openCustomModal('removeCandidate',candidate)"
-                    class="w-4 h-4"
-                    src="@/assets/img/icon/delete-icon.svg"
+                    class="w-5 h-5"
+                    src="@/assets/img/icon/remove-icon.svg"
                   />
                 </div>
               </div>
