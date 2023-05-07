@@ -103,7 +103,7 @@
                     
                     <!--  -->
                     <button class="mr-8" @click="candidateStore.openAddEditModal(candidate.id, candidate.name, candidate.image,candidate.party_list)"><img width="20" src="@/assets/img/icon/edit-icon.svg" /></button>
-                    <button @click="candidateStore.handleDeleteCandidate(candidate.id)"><img width="20" src="@/assets/img/icon/delete-icon.svg" /></button>
+                    <button @click="openCustomModal('deleteCandidate',candidate)"><img width="20" src="@/assets/img/icon/delete-icon.svg" /></button>
 
                   </div>
                 </div>
@@ -123,6 +123,14 @@
 
    
   
+    <div v-if="alertDialog.isOpen">
+    <MessageDialogModal
+      @onCloseModal = onClose
+      @onProceed = onProceed
+      :alertDialog= alertDialog
+
+    />
+  </div>
 
    
     
@@ -132,9 +140,11 @@
 import { useCandidateStore } from '@/stores/candidate';
 import AddEditCandidate from '@/views/components/admin/modals/AddEditCandidate'
 import PaginationViewVue from '@/components/PaginationView.vue';
+import MessageDialogModal from "@/views/components/admin/modals/MessageDialogModal";
+import { ref } from 'vue';
 
 export default {
-    components:{AddEditCandidate,PaginationViewVue},
+    components:{AddEditCandidate,PaginationViewVue,MessageDialogModal},
 
     setup(){
         const candidateStore = useCandidateStore()
@@ -143,9 +153,56 @@ export default {
         const onClickPage = ( )=>{
         
         }
+
+
+        
+
+
+
+
+
+
+    const alertDialog = ref(
+      {
+        isOpen:false,
+        prompt:'',
+        action:null,
+        id:null
+      }
+    );
+
+    const openCustomModal =(action,item)=>{
+   
+      if(action == 'deleteCandidate' ){
+        alertDialog.value.prompt = 'Are you sure you want to delete '+ item.name + '? '
+      }
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+      alertDialog.value.action= action
+      alertDialog.value.id =item.id
+    }
+
+    const onClose=()=>{
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+    }
+    
+    const onProceed=()=>{
+      if(alertDialog.value.action == 'deleteCandidate'){
+        
+        candidateStore.handleDeleteCandidate(alertDialog.value.id)
+      }
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+    }
+
         
       
-        return {candidateStore,onClickPage}
+        return {
+          candidateStore,
+          onClickPage,
+          alertDialog,
+          onClose,
+          onProceed,
+          openCustomModal
+        }
 
     }
 }

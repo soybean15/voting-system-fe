@@ -74,10 +74,11 @@ export const useCandidateStore = defineStore('candidate', {
         async handleAddCandidate() {
             this.stateErrors = []
             this.stateStatus = null
+            console.log(this.stateForm)
             try {
                 const data = await axios.post('api/candidate/add', {
                     name: this.stateForm.name,
-                    party_list_id: this.stateForm.partylist_id,
+                    party_list_id: this.stateForm.party_list ==null ? '' :this.stateForm.party_list.id,
                     image: this.stateForm.image,
 
 

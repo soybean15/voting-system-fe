@@ -111,12 +111,12 @@
             <div
               class="flex grow items-center pl-4 text-white w-20 place-content-center"
             >
-              <button @click="voteStore.openAddEditModal(partyList.id,partyList.name, partyList.image)" class="m-2">Edit</button>
+              <button @click="voteStore.openAddEditModal(partyList.id,partyList.name, partyList.image)" class="m-2"><img width="20" src="@/assets/img/icon/edit-icon.svg" /></button>
               <button
                 class="m-2"
-                @click="voteStore.handleDeletePartyList(partyList.id)"
+                @click="openCustomModal('deletePartylist',partyList)"
               >
-                Delete
+              <img width="20" src="@/assets/img/icon/delete-icon.svg" />
               </button>
             </div>
           </div>
@@ -132,6 +132,16 @@
       />
     </div>
   </div>
+
+
+  <div v-if="alertDialog.isOpen">
+    <MessageDialogModal
+      @onCloseModal = onClose
+      @onProceed = onProceed
+      :alertDialog= alertDialog
+
+    />
+  </div>
 </template>
 
 <script>
@@ -144,10 +154,10 @@ import {
 } from "vue";
 import AddPartyList from "@/views/components/admin/modals/AddPartyList.vue";
 import PaginationViewVue from "@/components/PaginationView.vue";
-
+import MessageDialogModal from "@/views/components/admin/modals/MessageDialogModal";
 
 export default {
-  components: { AddPartyList, PaginationViewVue },
+  components: { AddPartyList, PaginationViewVue,MessageDialogModal },
   setup() {
     const voteStore = usePartylistStore();
 
@@ -178,7 +188,52 @@ export default {
       
     };
 
-    return { voteStore, onClickPage, onSavePartylist,  itemLen };
+
+
+
+
+
+    const alertDialog = ref(
+      {
+        isOpen:false,
+        prompt:'',
+        action:null,
+        id:null
+      }
+    );
+
+    const openCustomModal =(action,item)=>{
+   
+      if(action == 'deletePartylist' ){
+        alertDialog.value.prompt = 'Are you sure you want to delete '+ item.name + '? '
+      }
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+      alertDialog.value.action= action
+      alertDialog.value.id =item.id
+    }
+
+    const onClose=()=>{
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+    }
+    const onProceed=()=>{
+      if(alertDialog.value.action == 'deletePartylist'){
+        
+        voteStore.handleDeletePartyList(alertDialog.value.id)
+      }
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+    }
+
+
+    return { 
+      voteStore, 
+      onClickPage, 
+      onSavePartylist,  
+      itemLen,
+      alertDialog,
+      onClose,
+      onProceed,
+      openCustomModal
+     };
   },
 };
 </script>
