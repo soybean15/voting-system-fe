@@ -12,7 +12,7 @@
       </div>
       <div class="flex p-4 text-base font-bold">Add New Position</div>
 
-      <form @submit.prevent="positionStore.handleAddPosition">
+      <form @submit.prevent="positionStore.modalAction">
         <div class="flex-col">
           <div class="flex-col m-2">
             <!-- <div class="flex text-sm">PartyList Name:</div> -->

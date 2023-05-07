@@ -88,13 +88,27 @@ export const usePositionStore = defineStore('position', {
         async handleEditPosition() {
             this.stateError = []
             this.stateStatus = null
+            console.log('this is edit position')
             try {
-                const data = await axios.put('api/candidate/position/'+this.stateSelectedPosition,id+'/edit', {
+                const data = await axios.post('api/candidate/position/'+this.stateSelectedPosition.id, {
                     name: this.stateForm.name,
                     winner_count: this.stateForm.winner_count
                 })
                 this.stateStatus = data.data
                 this.stateOpenModal = !this.stateOpenModal
+                this.stateSelectedPosition = data.data.position
+                
+                this.statePositions.data.forEach(element => {
+                  
+                   if(element.id == this.selectedPosition.id){
+                    //element =data.data.position
+                    Object.assign( element,data.data.position);
+                   }
+                   
+                 
+                    
+                });
+                
              
 
               
@@ -107,7 +121,7 @@ export const usePositionStore = defineStore('position', {
 
         },
         async handleInsertCandidates() {
-            console.log(this.selectedPosition.id)
+            
 
             const data = await axios.post('api/candidates/position/' + this.selectedPosition.id + '/insert', {
                 candidates: this.stateSelectedCandidates
@@ -143,7 +157,7 @@ export const usePositionStore = defineStore('position', {
         },
         async handleRemoveCandidate  (id) {
             this.stateStatus = null
-             console.log('heer')
+            
             try {
                 const data = await axios.delete('api/candidate/position/' + id+'/remove')
 
@@ -226,7 +240,9 @@ export const usePositionStore = defineStore('position', {
 
         },
         modalAction(){
-            if(onEdit){
+           
+            if(this.stateOnEdit){
+                console.log('onEdit '+this.stateOnEdit)
                 this.handleEditPosition()
             }else{
                 this.handleAddPosition()
