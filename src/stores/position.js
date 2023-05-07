@@ -26,6 +26,7 @@ export const usePositionStore = defineStore('position', {
             links: [],
             currentPage: 1
         },
+        stateOnEdit:false
     }),
     getters: {
         vote: (state) => state.stateVoting,
@@ -74,6 +75,27 @@ export const usePositionStore = defineStore('position', {
                 this.stateStatus = data.data
                 this.stateOpenModal = !this.stateOpenModal
                 this.getPositions()
+
+              
+            } catch (error) {
+                if (error.response.status === 422) {
+                    this.stateError = error.response.data.errors
+
+                }
+            }
+
+        },
+        async handleEditPosition() {
+            this.stateError = []
+            this.stateStatus = null
+            try {
+                const data = await axios.put('api/candidate/position/'+this.stateSelectedPosition,id+'/edit', {
+                    name: this.stateForm.name,
+                    winner_count: this.stateForm.winner_count
+                })
+                this.stateStatus = data.data
+                this.stateOpenModal = !this.stateOpenModal
+             
 
               
             } catch (error) {
@@ -141,7 +163,12 @@ export const usePositionStore = defineStore('position', {
 
 
 
-        openCloseModal() {
+        openCloseModal(onEdit) {
+            if(onEdit){
+                this.stateForm.name = this.stateSelectedPosition.name
+                this.stateForm.winner_count = this.stateSelectedPosition.winner_count
+            }
+            this.stateOnEdit = onEdit
             this.stateOpenModal = !this.stateOpenModal
         },
         openCloseInsertCandidateModal() {
@@ -197,6 +224,13 @@ export const usePositionStore = defineStore('position', {
             this.statePagination.currentPage = page
 
 
+        },
+        modalAction(){
+            if(onEdit){
+                this.handleEditPosition()
+            }else{
+                this.handleAddPosition()
+            }
         }
 
     }

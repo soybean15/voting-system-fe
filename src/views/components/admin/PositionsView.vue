@@ -37,7 +37,7 @@
 
     <div class="flex pl-6 mt-2">
       <button
-        @click="positionStore.openCloseModal"
+        @click="positionStore.openCloseModal(false)"
         class="btn-green-800 text-xs p-1 flex items-center rounded-sm"
       >
         <img width="20" src="@/assets/img/icon/add-icon.svg" />
@@ -72,8 +72,10 @@
               <div class="grow flex"> {{ position.name }}  </div>
              
               <div class="flex" v-if="position.selected">
-                <div class="pr-2"><img class="w-5 h-5 cursor-pointer " src="@/assets/img/icon/edit-icon.svg"/></div>
-              <div><img @click="positionStore.handleDeletePosition" class="w-5 h-5 cursor-pointer" src="@/assets/img/icon/delete-icon.svg"/></div>
+                <div class="pr-2">
+                  <img @click="positionStore.openCloseModal(true)" class="w-5 h-5 cursor-pointer " src="@/assets/img/icon/edit-icon.svg"/></div>
+              <div>
+                <img @click="positionStore.handleDeletePosition" class="w-5 h-5 cursor-pointer" src="@/assets/img/icon/delete-icon.svg"/></div>
 
               </div>
               

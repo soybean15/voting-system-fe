@@ -5,7 +5,7 @@
     >
       <div class="relative w-full">
         <img
-          @click="positionStore.openCloseModal"
+          @click="positionStore.openCloseModal(false)"
           class="h-7 absolute top-2 right-2 cursor-pointer"
           src="@/assets/img/icon/close-icon.svg"
         />
