@@ -12,8 +12,8 @@
     <div class="admin flex rounded-tl-lg  rounded-bl-lg drop-shadow-lg  w-full h-full bg-onSurface m-4 ">
       <div class="admin-sidenav">
         <div class="flex flex-col  text-sm font-light" >
-          <div class="text-white border-b  border-slate-800  p-2 tracking-widest admin-side-tab" v-for="nav in sideNav" :key="nav.name">
-            <router-link :to="{ name: nav.route }">{{nav.name}}</router-link>
+          <div class="text-white border-b  border-slate-800  p-2 tracking-widest admin-side-tab" v-for="nav in sideNav" :key="nav.name" :class="{'active': nav.active}"  >
+            <router-link @click="onSelectedNav(nav)" :to="{ name: nav.route }">{{nav.name}} </router-link>
           </div>
         </div>
       </div>
@@ -41,15 +41,27 @@ export default {
     
     
   //  authStore.checkRole()
+
+    let selectedNav = null
    
     const sideNav = [
-        { name: "Dashboard", route: 'dashboard' },
-        { name: "Positions", route: 'positions' },
-        { name: "Partylist", route: 'partylist' },
-        { name: "Canditates", route: 'candidates' },
+        { name: "Dashboard", route: 'dashboard', active: false },
+        { name: "Positions", route: 'positions' , active: false},
+        { name: "Partylist", route: 'partylist', active: false },
+        { name: "Canditates", route: 'candidates', active: false },
     ];
 
-    return {sideNav,authStore}
+    const onSelectedNav=(item)=>{
+      if(selectedNav !=null){
+        selectedNav.active = false
+      }
+      item.active =true
+      selectedNav = item
+    }
+
+   
+
+    return {sideNav,authStore, onSelectedNav}
   },
 };
 </script>
@@ -63,6 +75,9 @@ export default {
 }
 .admin{
   z-index: 0;
+}
+.active {
+  background-color: #101318;
 }
 
 </style>
