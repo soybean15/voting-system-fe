@@ -43,19 +43,31 @@
         <img width="20" src="@/assets/img/icon/add-icon.svg" />
         <div class="pl-1">Add Position</div>
       </button>
-      <div class="grow"></div>
+      <div class="grow">
+        <div v-if="positionStore.status">
+          <div
+            class="relative border border-lime-900 border-4 rounded-md ml-40 mr-40 bg-emerald-300 p-2"
+          >
+            {{ positionStore.status.message }}
+            <div
+              @click="positionStore.clearStatus"
+              class="absolute right-2 top-2 cursor-pointer"
+            >
+              X
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="pr-10" v-if="positionStore.positions">
         <PaginationViewVue
-              :perGroupPage="5"
-              :links="positionStore.positions.links"
-              :totalPages = "positionStore.positions.last_page"
-              @onClickPage="onClickPage"
-              :store="positionStore"
-            />
+          :perGroupPage="5"
+          :links="positionStore.positions.links"
+          :totalPages="positionStore.positions.last_page"
+          @onClickPage="onClickPage"
+          :store="positionStore"
+        />
       </div>
-  
-      
     </div>
 
     <div class="p-6 flex w-full">
@@ -69,16 +81,24 @@
         >
           <div class="border-b text-sm border-slate-800 flex-col p-2">
             <div class="text-white flex font-bold text-xl">
-              <div class="grow flex"> {{ position.name }}  </div>
-             
+              <div class="grow flex">{{ position.name }}</div>
+
               <div class="flex" v-if="position.selected">
                 <div class="pr-2">
-                  <img @click="positionStore.openCloseModal(true)" class="w-5 h-5 cursor-pointer " src="@/assets/img/icon/edit-icon.svg"/></div>
-              <div>
-                <img @click="positionStore.handleDeletePosition" class="w-5 h-5 cursor-pointer" src="@/assets/img/icon/delete-icon.svg"/></div>
-
+                  <img
+                    @click="positionStore.openCloseModal(true)"
+                    class="w-5 h-5 cursor-pointer"
+                    src="@/assets/img/icon/edit-icon.svg"
+                  />
+                </div>
+                <div>
+                  <img
+                    @click="openCustomModal('deletePosition',position)"
+                    class="w-5 h-5 cursor-pointer"
+                    src="@/assets/img/icon/delete-icon.svg"
+                  />
+                </div>
               </div>
-              
             </div>
             <div class="text-slate-300 text-sm flex">
               Winner count: {{ position.winner_count }}
@@ -99,34 +119,42 @@
             v-if="positionStore.selectedPosition.candidates.length > 0"
           >
             <div
-              class="flex m-1 overflow-hidden items-center h-20 drop-shadow-lg rounded-xl "
+              class="flex m-1 overflow-hidden items-center h-20 drop-shadow-lg rounded-xl"
               v-for="candidate in positionStore.selectedPosition.candidates"
               :key="candidate.id"
             >
               <!-- <div :style="{  backgroundImage: 'url(' + candidate.party_list_image + ')'  }" class="absolute w-full h-full item-background"></div> -->
               <div class="relative w-full">
-                <div class="ml-4 absolute  bg-onSurface w-full h-full z-0   drop-shadow-lg">
-
-                    
-                </div>
+                <div
+                  class="ml-4 absolute bg-onSurface w-full h-full z-0 drop-shadow-lg"
+                ></div>
                 <img
                   :src="candidate.party_list_image"
-                  class="w-40 h-40 item-background opacity-40 rounded-full drop-shadow-lg "
+                  class="w-40 h-40 item-background opacity-40 rounded-full drop-shadow-lg"
                 />
-                <div class="absolute item flex items-center pl-2  ">
+                <div class="absolute item flex items-center pl-2">
                   <div class="mr-1">
                     <img
                       class="rounded-full w-16 h-16"
                       :src="candidate.image"
                     />
                   </div>
-                  <div class="flex flex-col text-white text-sm font-bold ">
+                  <div class="flex flex-col text-white text-sm font-bold">
                     <div class="flex">{{ candidate.name }}</div>
-                    <div class="flex font-light">{{ candidate.party_list_name }}</div>
+                    <div class="flex font-light">
+                      {{ candidate.party_list_name }}
+                    </div>
                   </div>
                 </div>
-                <div  class="absolute right-2 bottom-12 z-40 shadow-lg cursor-pointer">
-                  <img @click="positionStore.handleRemoveCandidate(candidate.id)" class="w-4 h-4" src="@/assets/img/icon/delete-icon.svg"/>
+                <div
+                  class="absolute right-2 bottom-12 z-40 shadow-lg cursor-pointer"
+                >
+                <!-- @click="positionStore.handleRemoveCandidate(candidate.id)" -->
+                  <img
+                    @click="openCustomModal('removeCandidate',candidate)"
+                    class="w-4 h-4"
+                    src="@/assets/img/icon/delete-icon.svg"
+                  />
                 </div>
               </div>
             </div>
@@ -154,31 +182,90 @@
   </div>
 
   <AddEditPositionVue :class="{ hidden: !positionStore.onOpenModal }" />
+
+  <div v-if="alertDialog.isOpen">
+    <MessageDialogModal
+      @onCloseModal = onClose
+      @onProceed = onProceed
+      :alertDialog= alertDialog
+
+    />
+  </div>
+  
 </template>
 
 <script>
 import { usePositionStore } from "@/stores/position";
-import { onMounted } from "vue";
+import { onMounted,ref } from "vue";
 import AddEditPositionVue from "@/views/components/admin/modals/AddEditPosition.vue";
 import AddCandidates from "@/views/components/admin/modals/AddCandidates.vue";
 import PaginationViewVue from "@/components/PaginationView.vue";
+import MessageDialogModal from "@/views/components/admin/modals/MessageDialogModal";
+
 export default {
-  components: { AddEditPositionVue, AddCandidates,PaginationViewVue },
+  components: {
+    AddEditPositionVue,
+    AddCandidates,
+    PaginationViewVue,
+    MessageDialogModal,
+  },
   setup() {
     const positionStore = usePositionStore();
 
+    const alertDialog = ref(
+      {
+        isOpen:false,
+        prompt:'',
+        action:null,
+        id:null
+      }
+    );
+
+    const openCustomModal =(action,item)=>{
+   
+      if(action == 'removeCandidate' ){
+        alertDialog.value.prompt = 'Are you sure you want to remove '+ item.name + '? '
+      }else if(action == 'deletePosition'){
+        alertDialog.value.prompt = 'Are you sure you want to Delete '+ item.name + '? '
+      }
+
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+      alertDialog.value.action= action
+      alertDialog.value.id =item.id
+    }
+
+    const onClose=()=>{
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+    }
+    const onProceed=()=>{
+      if(alertDialog.value.action == 'removeCandidate'){
+        positionStore.handleRemoveCandidate(alertDialog.value.id)
+      }else if(alertDialog.value.action== 'deletePosition'){
+        
+        positionStore.handleDeletePosition()
+      }
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+    }
+
+
     onMounted(() => {
       positionStore.getPositions(null);
+    
     });
 
-    const onClickPage = ( )=>{
-        
-      }
-      const onClick =()=>{
-        console.log("hello")
-      }
+    const onClickPage = () => {};
+    const onClick = () => {
+      console.log("hello");
+    };
 
-    return { positionStore,onClickPage ,onClick};
+    return { 
+      positionStore,
+       onClickPage,
+        onClick,
+         alertDialog,
+         onClose ,
+         openCustomModal,
+        onProceed};
   },
 };
 </script>
@@ -209,7 +296,6 @@ export default {
   z-index: 1;
 }
 .item {
-  z-index:2;
+  z-index: 2;
 }
-
 </style>

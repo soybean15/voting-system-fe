@@ -38,6 +38,7 @@ export const usePositionStore = defineStore('position', {
         candidates: (state) => state.stateCandidates,
         openAddCandidateModal: (state) => state.stateOpenAddCandidateModal,
         paginationPages: (state) => state.statePagination.pages,
+        status:(state)=>state.stateStatus
     },
     actions: {
         async getPositions(path) {
@@ -247,7 +248,11 @@ export const usePositionStore = defineStore('position', {
             }else{
                 this.handleAddPosition()
             }
-        }
+        },
+        clearStatus() {
+
+            this.stateStatus = null
+          }
 
     }
 
