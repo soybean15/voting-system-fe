@@ -19,9 +19,13 @@ export default {
   props: ["alertDialog"],
   emits: ["onCloseModal", "onProceed"],
   setup(props, { emit }) {
+    console.log(props.alertDialog)
+
     const onClose = () => {
-      emit("onCloseModal");
+      props.alertDialog.onClose()
+    //emit("onCloseModal");
     };
+
     const onProceed = () => {
       emit("onProceed");
     };

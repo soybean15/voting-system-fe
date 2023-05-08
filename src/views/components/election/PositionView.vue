@@ -1,9 +1,9 @@
 <template>
   <div class="relative h-full">
-    <div class="flex-none font-bold p-2 text-xl md:text-4xl">
+    <div class="flex-none font-bold p-2 text-xl text-white md:text-4xl">
       {{ position.name }}
     </div>
-    <div class="text-left text-lg font-semibold">Select : {{ count }}</div>
+    <div class="text-left text-lg font-semibold text-white">Select : {{ count }}</div>
 
     <div class="absolute  w-full candidate-list overflow-auto">
       <div class="h-20" v-for="candidate in position.candidates" :key="candidate.id">

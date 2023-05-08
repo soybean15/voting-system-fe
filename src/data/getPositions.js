@@ -28,7 +28,7 @@ import fetchData from "./fetchData"
 const getPositions = ()=>{
 
     
-    const path = "api/candidate"
+    const path = "api/voting"
 
     
 
