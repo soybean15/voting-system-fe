@@ -65,7 +65,13 @@ export default {
    
     const positions = ref()
 
-    const item = localStorage.getItem('positions');
+    let item = localStorage.getItem('positions');
+
+    onMounted(()=>{
+      console.log('mounted')
+     
+      item = localStorage.getItem('positions');
+    })
 
 
 
@@ -82,24 +88,27 @@ export default {
     let showResult = ref("hidden")
 
     onUnmounted(()=>{
-      console.log("unmounted")
+      console.log('unmounted')
+     
 
       const serializedObject = JSON.stringify(positions.value);
 
       // Save the string in local storage using localStorage.setItem()
       localStorage.setItem('positions', serializedObject);
+     
     })
 
 
-    if(item==null){
-       
-    getPositions().then((response) => {
-        positions.value = response.data;
-        len.value = positions.value.length;
-        console.log(positions.value)
+    if(!item || item == 'null'){   
+     
+      
+      getPositions().then((response) => {
+          positions.value = response.data;
+          len.value = positions.value.length;
+          console.log(positions.value)
 
-        addAttribute(positions);
-      });
+          addAttribute(positions);
+        });
       
     }else{
       

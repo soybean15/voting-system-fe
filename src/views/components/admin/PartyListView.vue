@@ -136,8 +136,7 @@
 
   <div v-if="alertDialog.isOpen">
     <MessageDialogModal
-      @onCloseModal = onClose
-      @onProceed = onProceed
+    
       :alertDialog= alertDialog
 
     />
@@ -198,19 +197,12 @@ export default {
         isOpen:false,
         prompt:'',
         action:null,
-        id:null
+        id:null,
+        onClose:null,
+        onProceed:null
       }
     );
 
-    const openCustomModal =(action,item)=>{
-   
-      if(action == 'deletePartylist' ){
-        alertDialog.value.prompt = 'Are you sure you want to delete '+ item.name + '? '
-      }
-      alertDialog.value.isOpen = !alertDialog.value.isOpen
-      alertDialog.value.action= action
-      alertDialog.value.id =item.id
-    }
 
     const onClose=()=>{
       alertDialog.value.isOpen = !alertDialog.value.isOpen
@@ -221,6 +213,19 @@ export default {
         voteStore.handleDeletePartyList(alertDialog.value.id)
       }
       alertDialog.value.isOpen = !alertDialog.value.isOpen
+    }
+
+
+    const openCustomModal =(action,item)=>{
+   
+      if(action == 'deletePartylist' ){
+        alertDialog.value.prompt = 'Are you sure you want to delete '+ item.name + '? '
+      }
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+      alertDialog.value.action= action
+      alertDialog.value.id =item.id
+      alertDialog.value.onClose = onClose
+      alertDialog.value.onProceed = onProceed
     }
 
 

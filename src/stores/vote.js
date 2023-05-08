@@ -22,6 +22,8 @@ export const useElectionStore = defineStore('vote', {
         async handleSubmit(){
 
             const data = await axios.post('api/voting',this.stateForm)
+            
+            localStorage.setItem('positions', null);
 
         }
 

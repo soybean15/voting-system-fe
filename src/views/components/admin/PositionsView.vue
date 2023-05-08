@@ -190,8 +190,7 @@
 
   <div v-if="alertDialog.isOpen">
     <MessageDialogModal
-      @onCloseModal = onClose
-      @onProceed = onProceed
+  
       :alertDialog= alertDialog
 
     />
@@ -222,23 +221,10 @@ export default {
         isOpen:false,
         prompt:'',
         action:null,
-        id:null
+        id:null,
+        onClose:null
       }
     );
-
-    const openCustomModal =(action,item)=>{
-   
-      if(action == 'removeCandidate' ){
-        alertDialog.value.prompt = 'Are you sure you want to remove '+ item.name + '? '
-      }else if(action == 'deletePosition'){
-        alertDialog.value.prompt = 'Are you sure you want to Delete '+ item.name + '? '
-      }
-
-      alertDialog.value.isOpen = !alertDialog.value.isOpen
-      alertDialog.value.action= action
-      alertDialog.value.id =item.id
-    }
-
     const onClose=()=>{
       alertDialog.value.isOpen = !alertDialog.value.isOpen
     }
@@ -251,6 +237,23 @@ export default {
       }
       alertDialog.value.isOpen = !alertDialog.value.isOpen
     }
+
+    const openCustomModal =(action,item)=>{
+   
+      if(action == 'removeCandidate' ){
+        alertDialog.value.prompt = 'Are you sure you want to remove '+ item.name + '? '
+      }else if(action == 'deletePosition'){
+        alertDialog.value.prompt = 'Are you sure you want to Delete '+ item.name + '? '
+      }
+
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+      alertDialog.value.action= action
+      alertDialog.value.id =item.id
+      alertDialog.value.onClose = onClose
+      alertDialog.value.onProceed = onProceed
+    }
+
+
 
 
     onMounted(() => {

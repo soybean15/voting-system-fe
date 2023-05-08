@@ -125,8 +125,7 @@
   
     <div v-if="alertDialog.isOpen">
     <MessageDialogModal
-      @onCloseModal = onClose
-      @onProceed = onProceed
+    
       :alertDialog= alertDialog
 
     />
@@ -168,13 +167,23 @@ export default {
         prompt:'',
         action:null,
         id:null,
-        onClose:null
+        onClose:null,
+        onProceed:null
       }
     );
     const onClose=()=>{
      
       alertDialog.value.isOpen = !alertDialog.value.isOpen
     }
+
+    const onProceed=()=>{
+      if(alertDialog.value.action == 'deleteCandidate'){
+        
+        candidateStore.handleDeleteCandidate(alertDialog.value.id)
+      }
+      alertDialog.value.isOpen = !alertDialog.value.isOpen
+    }
+
     
     const openCustomModal =(action,item)=>{
    
@@ -185,18 +194,12 @@ export default {
       alertDialog.value.action= action
       alertDialog.value.id =item.id
       alertDialog.value.onClose = onClose
+      alertDialog.value.onProceed = onProceed
      
     }
 
     
     
-    const onProceed=()=>{
-      if(alertDialog.value.action == 'deleteCandidate'){
-        
-        candidateStore.handleDeleteCandidate(alertDialog.value.id)
-      }
-      alertDialog.value.isOpen = !alertDialog.value.isOpen
-    }
 
         
       

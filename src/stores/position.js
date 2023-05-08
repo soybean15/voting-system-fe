@@ -109,7 +109,11 @@ export const usePositionStore = defineStore('position', {
                  
                     
                 });
-                
+                this.stateForm= {
+                    name: '',
+                    winner_count: ''
+                }
+    
              
 
               

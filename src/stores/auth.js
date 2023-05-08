@@ -76,7 +76,7 @@ export const useAuthStore = defineStore('auth', {
                     email: data.email,
                     password: data.password
                 })
-
+                localStorage.setItem('positions', null);
                 this.router.push('/')
 
             } catch (e) {
