@@ -6,7 +6,10 @@ export const useElectionStore = defineStore('vote', {
 
 
     state: () => ({
-        stateForm :null
+        stateForm :{
+            positions:null,
+            user_id:null
+        }
     
     }),
     getters: {
@@ -17,6 +20,8 @@ export const useElectionStore = defineStore('vote', {
     actions: {
 
         async handleSubmit(){
+
+            const data = await axios.post('api/voting',this.stateForm)
 
         }
 

@@ -94,7 +94,7 @@
             <div class="flex pt-2 pb-2 border-b text-sm border-slate-800" v-for="candidate in candidateStore.candidates.data" :key="candidate.id">
          
               <img class="rounded-full w-10 h-10" :src="candidate.image"/>
-                {{ candidate.image }}
+           
                 <div class="flex w-full items-center ml-4 ">
                   <div class="flex w-1/4 text-md font-semibold text-white">{{ candidate.name }}</div>
                   <div class="flex w-1/4 text-md font-thin text-white">{{ candidate.party_list_name }}</div>

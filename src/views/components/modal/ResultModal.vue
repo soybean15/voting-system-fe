@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay" :class="showResult">
     <div class="res-modal">
-      {{ positions}}
+
 
       <div class="flex-col p-4 h-full">
         <div class="flex-none font-bold text-2xl">Your Voting Selection</div>
@@ -15,7 +15,7 @@
 
         <div class="flex justify-center space-x-44">
             <button @click="closeResult" class="btn btn-blue">Back</button>
-            <button class="btn btn-green">Submit</button>
+            <button @click="onSubmit(authStore.user.id)" class="btn btn-green">Submit</button>
         </div>
   
 
@@ -55,7 +55,12 @@ export default {
       emit("closeResultModal")
     }
 
-    const onSubmit=()=>{
+    const onSubmit=(id)=>{
+      electionStore.form.positions = props.positions
+      electionStore.form.user_id = id
+
+      electionStore.handleSubmit()
+      emit("closeResultModal")
 
     }
 

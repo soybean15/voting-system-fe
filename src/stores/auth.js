@@ -179,7 +179,17 @@ export const useAuthStore = defineStore('auth', {
                     this.authErrors = e.response.data.errors
                 }
             }
+        },
+
+        handleStart(){
+            if(this.authUser){
+                this.router.push('/vote')
+            }else{
+                this.router.push('/login')
+            }
         }
+
+
 
     }
 })

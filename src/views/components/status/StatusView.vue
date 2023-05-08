@@ -12,7 +12,7 @@ import {useAuthStore } from "@/stores/auth"
 export default {
     setup(){
         const authStore = useAuthStore()
-        console.l
+ 
 
         return {authStore}
     }
