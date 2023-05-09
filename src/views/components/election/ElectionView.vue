@@ -1,6 +1,5 @@
 <template>
-
-  <div class="parent flex mt-4 ">
+  <div class="parent flex mt-4">
     <div class="w-2/6">
       <PositionSideView
         :positions="positions"
@@ -10,29 +9,30 @@
     </div>
 
     <div class="relative w-full overflow-hidden">
-      <div class="flex-col h-full ">
+      <div class="flex-col h-full">
         <div
-          class=" w-full item "
+          class="w-full item"
           v-for="(position, index) in positions"
           :key="position.id"
         >
-       
           <div
-            class="absolute   tab w-full h-full"
+            class="absolute tab w-full h-full"
             :class="{ active: activeTab == index }"
           >
-        
             <PositionView :position="position" />
           </div>
-       
 
           <div class="absolute right-0 bottom-0 w-full pl-4 m-1">
             <div class="flex">
-              <button @click="back" class="btn btn-blue" :class="{hidden:onFirst}">
-               {{ backStr }}
+              <button
+                @click="back"
+                class="btn btn-blue"
+                :class="{ hidden: onFirst }"
+              >
+                {{ backStr }}
               </button>
               <div class="grow"></div>
-              <button @click="next"   class="btn btn-blue">
+              <button @click="next" class="btn btn-blue">
                 {{ nextStr }}
               </button>
             </div>
@@ -40,42 +40,54 @@
         </div>
       </div>
     </div>
-    
   </div>
 
-  <ResultModal :positions="positions"  :showResult="showResult"  @closeResultModal="closeResultModal"/>
+  <ResultModal
+    :positions="positions"
+    :showResult="showResult"
+    @closeResultModal="closeResultModal"
+  />
 </template>
 
 <script>
 import { computed, ref, watchEffect } from "vue";
 import PositionView from "./PositionView.vue";
 import PositionSideView from "./PositionSideView.vue";
-import ResultModal from "@/views/components/modal/ResultModal.vue"
+import ResultModal from "@/views/components/modal/ResultModal.vue";
 import getPositions from "@/data/getPositions";
+import { useElectionStore } from "@/stores/vote";
 
-
-import { onMounted, onUpdated ,onUnmounted} from "vue";
+import { onMounted, onUpdated, onUnmounted } from "vue";
 
 export default {
-  components: { PositionView, PositionSideView,ResultModal },
+  components: { PositionView, PositionSideView, ResultModal },
   setup() {
+    const electionStore = useElectionStore();
+    //electionStore.welcome();
 
+    const positions = ref();
 
-    
-   
-    const positions = ref()
+    let item = localStorage.getItem("positions")
 
-    let item = localStorage.getItem('positions');
+    onMounted(() => {
+      console.log("mounted");
 
-    onMounted(()=>{
-      console.log('mounted')
-     
-      item = localStorage.getItem('positions');
-    })
+      item = localStorage.getItem("positions")
 
+      electionStore.getElection()
+        .then((response) => {
+          console.log(response.data)
+          if(!response.data.status){
+            electionStore.status.title = response.data.title
+            electionStore.status.message = response.data.message
+            electionStore.redirect()
+          }
+          
+        })
+      
+ 
+    });
 
-
-    
     const activeTab = ref(0);
     const len = ref(0);
 
@@ -85,44 +97,51 @@ export default {
     let onLast = false;
     let onFirst = ref(true);
 
-    let showResult = ref("hidden")
+    let showResult = ref("hidden");
 
-    onUnmounted(()=>{
-      console.log('unmounted')
-     
+    onUnmounted(() => {
+      console.log("unmounted");
 
       const serializedObject = JSON.stringify(positions.value);
 
       // Save the string in local storage using localStorage.setItem()
-      localStorage.setItem('positions', serializedObject);
-     
-    })
+      localStorage.setItem("positions", serializedObject);
 
-
-    if(!item || item == 'null'){   
-     
       
-      getPositions().then((response) => {
-          positions.value = response.data;
+    });
+
+    if (!item || item == "null") {
+      electionStore.getElection()
+        .then((response) => {
+         
+          console.log(response.data)
+          positions.value = response.data.data;
           len.value = positions.value.length;
-          console.log(positions.value)
+          console.log(positions.value);
 
           addAttribute(positions);
-        });
+        })
       
-    }else{
-      
-      positions.value = JSON.parse(item);
-      len.value = positions.value.length;
-    }
+    } else {
+    
+     
+      try{
+        positions.value = JSON.parse(item);
+        len.value = positions.value.length;
+      }catch(e){
+        electionStore.redirect()
 
+      }
+     
+     
+    }
 
     const addAttribute = (positions) => {
       positions.value.forEach((position) => {
         position.voted = ref(false);
-        position.candidates.forEach((candidate)=>{
-          candidate.isSelected = false
-        })
+        position.candidates.forEach((candidate) => {
+          candidate.isSelected = false;
+        });
       });
     };
 
@@ -130,8 +149,8 @@ export default {
       if (activeTab.value < len.value - 1) {
         activeTab.value++;
       }
-      if(onLast ){
-        showResult.value = 'flex'
+      if (onLast) {
+        showResult.value = "flex";
       }
     };
 
@@ -143,49 +162,41 @@ export default {
       }
     };
 
-    const closeResultModal=()=>{
-      showResult.value = 'hidden'
-      
-    }
-
-
+    const closeResultModal = () => {
+      showResult.value = "hidden";
+    };
 
     const onClickTab = (index) => {
       activeTab.value = index;
     };
 
     watchEffect(() => {
-
-
-      if (activeTab.value== len.value - 1) {
+      if (activeTab.value == len.value - 1) {
         nextStr.value = "Finished";
         onLast = true;
       } else {
         onLast = false;
-        nextStr.value= "Next";
+        nextStr.value = "Next";
       }
 
       if (activeTab.value == 0) {
-        onFirst.value =true
-
+        onFirst.value = true;
       } else {
-        onFirst.value =false
+        onFirst.value = false;
       }
     });
 
-    return { 
-      positions, 
+    return {
+      positions,
       activeTab,
       next,
-      back, 
-      onClickTab, 
-      nextStr, 
+      back,
+      onClickTab,
+      nextStr,
       backStr,
-      onFirst ,
+      onFirst,
       closeResultModal,
-      showResult
-      
-
+      showResult,
     };
   },
 };
@@ -200,13 +211,13 @@ export default {
   width: 80%;
   height: 90%;
   min-width: 300px;
- 
+
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .item {
   display: absolute;
-  
+
   top: 0;
   left: 0;
   width: 100%;
@@ -227,7 +238,6 @@ export default {
 
 } */
 
-
 .tab {
   position: absolute;
   top: 0;
@@ -236,20 +246,18 @@ export default {
   height: 100%;
   opacity: 0;
   transform: translateX(-100%);
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .tab.active {
   opacity: 1;
- 
+
   transform: translateX(0%);
 }
 .activeButton {
   background-color: rgb(127 29 29);
 }
-.hidden{
- display: none;
+.hidden {
+  display: none;
 }
-
-
 </style>

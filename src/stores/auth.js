@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from "axios"
 import router from '@/router'
+import { getStatus, setStatus } from '@/data/status'
 
 export const useAuthStore = defineStore('auth', {
 
@@ -104,11 +105,16 @@ export const useAuthStore = defineStore('auth', {
                 })
 
 
-                this.authStatus ={
-                    title: 'Welcome to Voting.com',
-                    status :"We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
+                // this.authStatus ={
+                //     title: 'Welcome to Voting.com',
+                //     status :"We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
 
-                } 
+                // } 
+                const status = {
+                    title:'Welcome to Voting.com',
+                    message: "We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
+                }
+                setStatus(status)
                 this.router.push('/status')
 
             } catch (e) {
@@ -131,13 +137,19 @@ export const useAuthStore = defineStore('auth', {
                 const data = await axios.post('/forgot-password', {
                     email: email
                 })
+                const status = {
+                    title:'Forgot Password',
+                    message:data.data.status
+                }
+                getStatus(status)
                 this.router.push('/status')
-                this.authStatus ={
-                    title: 'Forgot Password',
-                    status :data.data.status
+                // this.authStatus ={
+                //     title: 'Forgot Password',
+                //     status :data.data.status
 
-                } 
-                
+                // } 
+
+              
                
 
             }catch(e){
