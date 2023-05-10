@@ -62,11 +62,12 @@
       </div>
     </div>
 
-    <div class=" grow mr-6 flex-col w-full h-5/6">
-      <div class="text-white text-xl font-semibold flex p-2">Result</div>
+    <div class=" grow mr-6 flex-col w-full h-5/6 ">
+      <div class="text-white text-xl font-semibold flex p-2 pb-0">Result</div>
+      <div class="text-gray-400 text-sm flex p-2 pt-0">As of {{ currentTime }}</div>
       <div class="overflow-y-auto  h-5/6 w-full">
         <div
-          class=" rounded-lg bg-gray-700 m-2 p-2 pb-1  "
+          class=" drop-shadow-lg rounded-lg bg-gray-700 m-2 p-2 pb-1  "
           v-for="position in dashboardStore.dashboard.positions"
           :key="position.id"
         >
@@ -76,9 +77,11 @@
             </div>
 
             <CandidatesCard :position="position"/>
+
        
           </div>
         </div>
+        <div class="h-40"></div>
       </div>
     </div>
   </div>
@@ -101,7 +104,9 @@ export default {
       //authStore.getUser()
     });
 
-    return { authStore, dashboardStore };
+    const currentTime =  new Date().toLocaleTimeString()
+
+    return { authStore, dashboardStore,currentTime };
   },
 };
 </script>
@@ -112,6 +117,7 @@ export default {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   font-weight: bolder;
+
 }
 
 </style>

@@ -33,6 +33,7 @@ export const useDashboardStore = defineStore('dashboard', {
             this.stateDashboard.positions_count = data.data.position_count
             this.stateDashboard.user_count = data.data.user_count
             this.stateDashboard.positions = data.data.positions
+            console.log(data.data.vote_logs)
 
 
         }
