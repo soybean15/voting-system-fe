@@ -14,13 +14,16 @@ export const useDashboardStore = defineStore('dashboard', {
             candidate_count:0,
             positions_count:0,
             user_count:0,
-            positions:null
-        }
-        
+            positions:null,
+            voters:null,
+            vote_logs:null
+        },
+        stateTurnoutPercentage:0
 
     }),
     getters: {
-       dashboard:(state)=>state.stateDashboard  
+       dashboard:(state)=>state.stateDashboard  ,
+       turnOutPercentage:(state)=>state.stateTurnoutPercentage
 
     },
     actions:{
@@ -33,10 +36,21 @@ export const useDashboardStore = defineStore('dashboard', {
             this.stateDashboard.positions_count = data.data.position_count
             this.stateDashboard.user_count = data.data.user_count
             this.stateDashboard.positions = data.data.positions
-            console.log(data.data.vote_logs)
+            this.stateDashboard.voters = data.data.voters
+  
+            this.stateDashboard.vote_logs = data.data.vote_logs
 
+            this.computeTurnoutPercentage()
+           
 
+        },
+         computeTurnoutPercentage(){
+            let hasVoted = this.stateDashboard.voters.has_voted
+            let totalVoters = hasVoted +  this.stateDashboard.voters.not_voted
+            let percentage =  (hasVoted/totalVoters)*100
+            this.stateTurnoutPercentage =  percentage.toFixed(2);
         }
+    
 
     }
 })

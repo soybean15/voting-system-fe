@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full  border">
+  <div class="flex h-full">
     <div class="w-full flex flex-col grow">
       <span
         class="text-left pl-6 text-xl text-white font-bold pt-2"
@@ -8,7 +8,7 @@
       >
 
       <div class="md:flex p-4 justify-start grid grid-cols-2">
-        <div class="admin-card relative  w-32 md:w-40 h-20 m-2">
+        <div class="admin-card relative w-32 md:w-40 h-20 m-2">
           <div class="absolute top-1 left-1 text-sm text-white">
             Registered Voters
           </div>
@@ -23,7 +23,7 @@
           </div>
         </div>
 
-        <div class="admin-card relative  w-32 md:w-40 h-20 m-2">
+        <div class="admin-card relative w-32 md:w-40 h-20 m-2">
           <div class="absolute top-1 left-1 text-sm text-white">Party List</div>
           <div class="absolute bottom-4 left-5 text-3xl text-stone-300">
             {{ dashboardStore.dashboard.partylist_count }}
@@ -35,7 +35,7 @@
             />
           </div>
         </div>
-        <div class="admin-card relative  w-32 md:w-40 h-20 m-2">
+        <div class="admin-card relative w-32 md:w-40 h-20 m-2">
           <div class="absolute top-1 left-1 text-sm text-white">Positions</div>
           <div class="absolute bottom-4 left-5 text-3xl text-stone-300">
             {{ dashboardStore.dashboard.positions_count }}
@@ -60,14 +60,51 @@
           </div>
         </div>
       </div>
+
+      <div class="flex flex-col md:flex-row-reverse  mr-6 ">
+        <div
+          class="flex text-white ml-5 text-blue-400"
+          v-if="dashboardStore.dashboard.voters"
+        >
+          Casted Vote: {{ dashboardStore.dashboard.voters.has_voted }}
+        </div>
+        <div class="flex text-white text-emerald-400">
+          Turn out: {{ dashboardStore.turnOutPercentage }}%
+        </div>
+      </div>
+      <div>
+        <div class="flex ml-6 text-white font-bold">History</div>
+        <div class="ml-6 bg-gray-800 drop-shadow-lg h-52 rounded-lg md:h-56 w-80 md:w-11/12">
+          <div
+            class="text-white text-sm"
+            v-for="log in dashboardStore.dashboard.vote_logs"
+            :key="log.id"
+          >
+            <div class="flex p-1 ">
+              <div class="flex w-1/2">
+                <div class="flex pr-2">{{ log.id }}</div>
+
+                <div class="flex">{{ log.user.name }}</div>
+              </div>
+
+              <div class="flex ">{{ log.created_at }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class=" grow mr-6 flex-col w-full h-5/6 ">
-      <div class="text-white text-xl font-semibold flex p-2 pb-0">Result</div>
-      <div class="text-gray-400 text-sm flex p-2 pt-0">As of {{ currentTime }}</div>
-      <div class="overflow-y-auto  h-5/6 w-full">
+    <div class="grow mr-6 flex-col  md:w-full h-5/6 md:h-96 w-full">
+      <div class="text-white text-xl font-semibold flex p-2 pb-0 ">
+        <div class="">Result</div>
+        
+      </div>
+      <div class="text-gray-400 text-sm flex p-2 pt-0">
+        As of {{ currentTime }}
+      </div>
+      <div class="overflow-y-auto h-5/6 w-full">
         <div
-          class=" drop-shadow-lg rounded-lg bg-gray-700 m-2 p-2 pb-1  "
+          class="drop-shadow-lg rounded-lg bg-gray-700 m-2 p-2 pb-1"
           v-for="position in dashboardStore.dashboard.positions"
           :key="position.id"
         >
@@ -76,12 +113,9 @@
               {{ position.name }}
             </div>
 
-            <CandidatesCard :position="position"/>
-
-       
+            <CandidatesCard :position="position" />
           </div>
         </div>
-        <div class="h-40"></div>
       </div>
     </div>
   </div>
@@ -90,10 +124,10 @@
 <script>
 import { useAuthStore } from "@/stores/auth";
 import { useDashboardStore } from "@/stores/dashboard";
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
 import CandidatesCard from "./components/CandidatesCard.vue";
 export default {
-    components:{CandidatesCard},
+  components: { CandidatesCard },
   setup() {
     const authStore = useAuthStore();
 
@@ -104,9 +138,9 @@ export default {
       //authStore.getUser()
     });
 
-    const currentTime =  new Date().toLocaleTimeString()
+    const currentTime = new Date().toLocaleTimeString();
 
-    return { authStore, dashboardStore,currentTime };
+    return { authStore, dashboardStore, currentTime };
   },
 };
 </script>
@@ -117,7 +151,5 @@ export default {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   font-weight: bolder;
-
 }
-
 </style>
