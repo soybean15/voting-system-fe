@@ -11,6 +11,7 @@ import Dashboard from '@/views/components/admin/Dashboard'
 import PartylistView from '@/views/components/admin/PartyListView'
 import CandidatesView from '@/views/components/admin/CandidatesView'
 import ElectionView from '@/views/components/election/ElectionView'
+import ResultView from '@/views/ResultView'
 const routes = [
   {
     path: '/',
@@ -97,6 +98,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+   {
+    path: '/result',
+    name: 'result',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: ResultView
   },
 
 ]

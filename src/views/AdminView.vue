@@ -49,6 +49,7 @@ export default {
         { name: "Positions", route: 'positions' , active: false},
         { name: "Partylist", route: 'partylist', active: false },
         { name: "Canditates", route: 'candidates', active: false },
+        { name: "Settings", route: 'candidates', active: false },
     ];
 
     const onSelectedNav=(item)=>{

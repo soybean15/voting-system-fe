@@ -78,7 +78,7 @@ export default {
         route: "/admin",
        
       },
-      { route_name: "home", name: "Results", route: "/"},
+      { route_name: "result", name: "Results", route: "/result"},
       { route_name: "about", name: "About", route: "/about" },
     ];
 
