@@ -10,7 +10,9 @@ import PositionsView from '@/views/components/admin/PositionsView'
 import Dashboard from '@/views/components/admin/Dashboard'
 import PartylistView from '@/views/components/admin/PartyListView'
 import CandidatesView from '@/views/components/admin/CandidatesView'
+import SettingsView from '@/views/components/admin/SettingsView'
 import ElectionView from '@/views/components/election/ElectionView'
+
 import ResultView from '@/views/ResultView'
 const routes = [
   {
@@ -75,6 +77,12 @@ const routes = [
         name : 'candidates',
     
         component:CandidatesView ,
+      },
+      {
+        path: 'settings',
+        name : 'settings',
+    
+        component:SettingsView ,
       },
       
       

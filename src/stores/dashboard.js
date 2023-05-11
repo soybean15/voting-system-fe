@@ -18,7 +18,12 @@ export const useDashboardStore = defineStore('dashboard', {
             voters:null,
             vote_logs:null
         },
-        stateTurnoutPercentage:0
+        stateTurnoutPercentage:0,
+        stateSettings:{
+            show_result:null,
+            date_open:null,
+            date_close:null
+        }
 
     }),
     getters: {
@@ -49,6 +54,16 @@ export const useDashboardStore = defineStore('dashboard', {
             let totalVoters = hasVoted +  this.stateDashboard.voters.not_voted
             let percentage =  (hasVoted/totalVoters)*100
             this.stateTurnoutPercentage =  percentage.toFixed(2);
+        },
+
+        async getSettings(){
+            const data = await axios('api/admin/settings')
+
+            this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
+
+           
+
+            
         }
     
 
