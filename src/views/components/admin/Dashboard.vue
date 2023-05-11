@@ -61,43 +61,50 @@
         </div>
       </div>
 
-      <div class="flex flex-col md:flex-row-reverse  mr-6 ">
-        <div
-          class="flex text-white ml-5 text-blue-400"
-          v-if="dashboardStore.dashboard.voters"
-        >
-          Casted Vote: {{ dashboardStore.dashboard.voters.has_voted }}
-        </div>
-        <div class="flex text-white text-emerald-400">
-          Turn out: {{ dashboardStore.turnOutPercentage }}%
+      <div class="flex flex-col md:flex-row-reverse mr-6">
+        <div class="flex shadow-lg  p-1 rounded-lg bg-gray-700">
+          <div
+            class="flex  mr-5 text-blue-400"
+            v-if="dashboardStore.dashboard.voters"
+          >
+            Casted Vote: {{ dashboardStore.dashboard.voters.has_voted }}
+          </div>
+          <div class="flex text-emerald-400 items-center">
+            <div>Turn out: {{ dashboardStore.turnOutPercentage }}%</div>
+            <div class="flex w-24 bg-rose-400 h-1.5 ml-1 rounded-lg items-center"> 
+              <div class="result-line  h-1 ml-0.5 rounded-lg bg-emerald-400 " :style="{'--percentage': dashboardStore.turnOutPercentage}" ></div>
+
+            </div>
+          </div>
         </div>
       </div>
       <div>
         <div class="flex ml-6 text-white font-bold">History</div>
-        <div class="ml-6 bg-gray-800 drop-shadow-lg h-52 rounded-lg md:h-56 w-80 md:w-11/12">
+        <div
+          class="ml-6 bg-gray-700 drop-shadow-lg h-52 rounded-lg md:h-56 w-80 md:w-11/12"
+        >
           <div
             class="text-white text-sm"
             v-for="log in dashboardStore.dashboard.vote_logs"
             :key="log.id"
           >
-            <div class="flex p-1 ">
+            <div class="flex p-1">
               <div class="flex w-1/2">
                 <div class="flex pr-2">{{ log.id }}</div>
 
                 <div class="flex">{{ log.user.name }}</div>
               </div>
 
-              <div class="flex ">{{ log.created_at }}</div>
+              <div class="flex">{{ log.created_at }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="grow mr-6 flex-col  md:w-full h-5/6 md:h-96 w-full">
-      <div class="text-white text-xl font-semibold flex p-2 pb-0 ">
+    <div class="grow mr-6 flex-col md:w-full h-5/6 md:h-96 w-full">
+      <div class="text-white text-xl font-semibold flex p-2 pb-0">
         <div class="">Result</div>
-        
       </div>
       <div class="text-gray-400 text-sm flex p-2 pt-0">
         As of {{ currentTime }}
@@ -151,5 +158,20 @@ export default {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   font-weight: bolder;
+}
+
+.result-line {
+
+--percentage: 0%; /* Define a custom property for percentage */
+
+width: calc(var(--percentage) * 0.01 * 100%); /* Use the custom property to set width */
+
+
+margin-right: 2px;
+
+@apply bg-gray-700;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+
 }
 </style>

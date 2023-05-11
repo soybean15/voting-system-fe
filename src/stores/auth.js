@@ -33,6 +33,7 @@ export const useAuthStore = defineStore('auth', {
                 const data = await axios.get("/api/user")
                
                 this.authUser = data.data
+                this.checkRole()
             } catch (e) {
                 // if(e.response.status ===401){
                 //     router.push('/login')

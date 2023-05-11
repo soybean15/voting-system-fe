@@ -17,10 +17,11 @@
           <router-link :to="{ name: navItem.route_name }">
             <div
               class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 pb-1 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"
-              :class="{ hidden: navItem.name == 'Admin' && !authStore.isAdmin &&  !authStore.user }"
+              :class="{ hidden: navItem.name == 'Admin' && !authStore.isAdmin  }"
             >
-              {{ navItem.name }}
+              {{ navItem.name }}  
             </div>
+          
           </router-link>
         </div>
       </div>
