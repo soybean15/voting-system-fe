@@ -24,20 +24,24 @@ export const useDashboardStore = defineStore('dashboard', {
             isOpen:null,
             date_open:null,
             date_close:null
-        }
+        },
+        stateLoading:false
 
     }),
     getters: {
        dashboard:(state)=>state.stateDashboard  ,
        turnOutPercentage:(state)=>state.stateTurnoutPercentage,
-       settings:(state)=>state.stateSettings
+       settings:(state)=>state.stateSettings,
+       loading:(state)=>state.stateLoading
 
     },
     actions:{
         async getDashboard(){
 
             const data = await axios.get('api/dashboard')
-            const result = await axios.get('api/admin/result')
+            await this.getResult()
+            
+           
             this.stateDashboard.partylist_count = data.data.partylist_count
             this.stateDashboard.candidate_count = data.data.candidate_count
             this.stateDashboard.positions_count = data.data.position_count
@@ -45,14 +49,18 @@ export const useDashboardStore = defineStore('dashboard', {
        
             this.stateDashboard.voters = data.data.voters
           
-            console.log(result.data)
-           this.stateDashboard.positions = result.data.positions
-  
+
+           
             this.stateDashboard.vote_logs = data.data.vote_logs
 
             this.computeTurnoutPercentage()
            
 
+        },
+        async getResult(){
+            const result = await axios.get('api/admin/result')
+            this.stateDashboard.positions = result.data.positions
+  
         },
          computeTurnoutPercentage(){
             let hasVoted = this.stateDashboard.voters.has_voted
@@ -62,12 +70,14 @@ export const useDashboardStore = defineStore('dashboard', {
         },
 
         async getSettings(){
+            this.stateLoading = true
             const data = await axios('api/admin/settings')
 
             this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
             this.stateSettings.isOpen = data.data.settings[0].time_open == null?false:true
             this.stateSettings.date_open = data.data.settings[0].time_open
             console.log(this.stateSettings)
+            this.stateLoading=false
             
         },
 

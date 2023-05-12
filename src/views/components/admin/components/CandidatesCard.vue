@@ -54,6 +54,8 @@ const computeTotalVote = (position) => {
     };
   });
 
+  result.sort((a, b) => b.vote_count - a.vote_count);
+
   return {
     total_vote: totalVote,
     data: result,
