@@ -160,7 +160,7 @@ export const usePositionStore = defineStore('position', {
 
             
         },
-        async handleRemoveCandidate  (id) {
+        async handleRemoveCandidate(id) {
             this.stateStatus = null
             
             try {

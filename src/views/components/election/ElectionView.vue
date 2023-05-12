@@ -56,6 +56,7 @@ import PositionSideView from "./PositionSideView.vue";
 import ResultModal from "@/views/components/modal/ResultModal.vue";
 import getPositions from "@/data/getPositions";
 import { useElectionStore } from "@/stores/vote";
+import { useDashboardStore } from "@/stores/dashboard";
 
 import { onMounted, onUpdated, onUnmounted } from "vue";
 
@@ -63,6 +64,7 @@ export default {
   components: { PositionView, PositionSideView, ResultModal },
   setup() {
     const electionStore = useElectionStore();
+    const dashboardStore =useDashboardStore();
     //electionStore.welcome();
 
     const positions = ref();
@@ -73,13 +75,18 @@ export default {
       console.log("mounted");
 
       item = localStorage.getItem("positions")
+      dashboardStore.getSettings()
 
       electionStore.getElection()
         .then((response) => {
           console.log(response.data)
-          if(!response.data.status){
+          if(!response.data.status ){
             electionStore.status.title = response.data.title
             electionStore.status.message = response.data.message
+            electionStore.redirect()
+          }else if( !dashboardStore.settings.isOpen){
+            electionStore.status.title = "Election is Close"
+            electionStore.status.message = "We're sorry, the voting period for this election has already ended. Thank you to all who participated in the election. Please stay tuned for the results, which will be announced shortly."
             electionStore.redirect()
           }
           

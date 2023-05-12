@@ -27,7 +27,11 @@
         }"
       ></div>
       <div class="text-white font-bold">{{ candidate.vote_count }}</div>
-      <div class="text-green-400 ml-2" v-if="candidate.label">{{ candidate.label }}</div>
+      <div v-if="!isOpen">
+       
+         <div class="text-green-400 ml-2" v-if="candidate.label">{{ candidate.label }}</div>
+      </div>
+     
     </div>
     <div>
      
@@ -182,7 +186,7 @@ const computeTotalVote = (position) => {
 // };
 
 export default {
-  props: ["position"],
+  props: ["position",'isOpen'],
   setup(props) {
     const computedPosition = ref(computeTotalVote(props.position));
     console.log(computedPosition);

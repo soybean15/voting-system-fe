@@ -120,7 +120,7 @@
               {{ position.name }}
             </div>
 
-            <CandidatesCard :position="position" />
+            <CandidatesCard :position="position" :isOpen="dashboardStore.settings.isOpen"/>
           </div>
         </div>
       </div>
