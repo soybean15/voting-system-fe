@@ -34,7 +34,7 @@ export default {
 
     const authStore = useAuthStore()
    
-    authStore.checkRole()
+    // authStore.checkRole()
 
     
 

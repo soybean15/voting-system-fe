@@ -28,7 +28,8 @@ export const useDashboardStore = defineStore('dashboard', {
     }),
     getters: {
        dashboard:(state)=>state.stateDashboard  ,
-       turnOutPercentage:(state)=>state.stateTurnoutPercentage
+       turnOutPercentage:(state)=>state.stateTurnoutPercentage,
+       settings:(state)=>state.stateSettings
 
     },
     actions:{
@@ -60,10 +61,14 @@ export const useDashboardStore = defineStore('dashboard', {
             const data = await axios('api/admin/settings')
 
             this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
-
-           
-
+            console.log(this.stateSettings)
             
+        },
+
+        async handleShowResult(){
+            const data = await axios.post('api/admin/settings/show-result')
+            this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
+
         }
     
 
