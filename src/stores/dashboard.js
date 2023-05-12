@@ -21,6 +21,7 @@ export const useDashboardStore = defineStore('dashboard', {
         stateTurnoutPercentage:0,
         stateSettings:{
             show_result:null,
+            isOpen:null,
             date_open:null,
             date_close:null
         }
@@ -36,13 +37,16 @@ export const useDashboardStore = defineStore('dashboard', {
         async getDashboard(){
 
             const data = await axios.get('api/dashboard')
-           
+            const result = await axios.get('api/admin/result')
             this.stateDashboard.partylist_count = data.data.partylist_count
             this.stateDashboard.candidate_count = data.data.candidate_count
             this.stateDashboard.positions_count = data.data.position_count
             this.stateDashboard.user_count = data.data.user_count
-            this.stateDashboard.positions = data.data.positions
+       
             this.stateDashboard.voters = data.data.voters
+          
+            console.log(result.data)
+           this.stateDashboard.positions = result.data.positions
   
             this.stateDashboard.vote_logs = data.data.vote_logs
 
@@ -61,13 +65,22 @@ export const useDashboardStore = defineStore('dashboard', {
             const data = await axios('api/admin/settings')
 
             this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
+            this.stateSettings.isOpen = data.data.settings[0].time_open == null?false:true
+            this.stateSettings.date_open = data.data.settings[0].time_open
             console.log(this.stateSettings)
             
         },
 
         async handleShowResult(){
             const data = await axios.post('api/admin/settings/show-result')
-            this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
+            this.stateSettings.show_result= data.data.settings.show_result == 0?false :true
+
+        },
+        async handleOpenVoting(){
+            const data = await axios.post('api/admin/settings/open-voting')
+
+            this.stateSettings.isOpen = data.data.settings.time_open== null?false :true
+            this.stateSettings.date_open = data.data.settings.time_open
 
         }
     

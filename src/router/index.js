@@ -84,8 +84,8 @@ const routes = [
     
         component:SettingsView ,
       },
-      
-      
+
+    
 
     ],
 
@@ -115,6 +115,12 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: ResultView
   },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/status'
+  }
+  
+  
 
 ]
 

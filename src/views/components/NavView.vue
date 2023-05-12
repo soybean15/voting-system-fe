@@ -14,7 +14,7 @@
       </div>
       <div class="flex-grow  mt-4 md:mt-0 md:flex items-center">
         <div v-for="navItem in navItems" :key="navItem.name">
-          <router-link :to="{ name: navItem.route_name }">
+          <router-link  :to="{ name: navItem.route_name }">
             <div
               class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 pb-1 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"
               :class="{ hidden: navItem.name == 'Admin' && !authStore.isAdmin  }"
