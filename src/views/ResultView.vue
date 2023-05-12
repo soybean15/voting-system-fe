@@ -4,6 +4,7 @@
 
         <div class="" v-if="dashboardStore.settings.show_result">
             <div class="bg-onSurface p-2 m-2 rounded-lg shadow-lg" v-for="position in dashboardStore.dashboard.positions" :key="position.id">
+                <div class="flex text-xl font-semibold">{{ position.name }}</div>
                 <CandidatesCard :position ="position"/>
             </div>
         </div>
