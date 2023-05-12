@@ -116,10 +116,7 @@
           :key="position.id"
         >
           <div>
-            <div class="flex text-white text-lg font-semibold">
-              {{ position.name }}
-            </div>
-
+            
             <CandidatesCard :position="position" :isOpen="dashboardStore.settings.isOpen"/>
           </div>
         </div>

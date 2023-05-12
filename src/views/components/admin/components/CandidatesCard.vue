@@ -1,7 +1,10 @@
 <template>
-  <div class="text-white flex text-sm font-bold p-2 pl-0">
-    <div class="">Total Votes:</div>
-    <div class="pl-2">{{ computedPosition.total_vote }}</div>
+  <div class="text-white flex flex-col text-sm font-bold p-2 pl-0 pt-1">
+    <div class="flex text-white text-lg font-semibold font-sans">
+              {{ computedPosition.name }}
+      </div>
+    <div class="flex font-thin font-sans">Total Votes:{{ computedPosition.total_vote }}</div>
+    
     
   </div>
 
@@ -10,8 +13,9 @@
     v-for="candidate in computedPosition.result"
     :key="candidate.id"
   >
-    <div class="w-7 h-7">
-      <img class="w-7 h-7 rounded-full" :src="candidate.image" />
+    <div class="w-8 h-8  result-line-image flex items-center rounded-full"
+        :style="{ '--color': candidate.color }">
+      <img class="w-8 h-8 p-1 rounded-full" :src="candidate.image" />
     </div>
 
     <div class="flex w-full items-center">
@@ -150,7 +154,8 @@ const computeTotalVote = (position) => {
   return {
     total_vote: totalVote,
     result: updatedResult,
-    winners: winners
+    winners: winners,
+    name:position.name
   };
 };
 
@@ -206,7 +211,7 @@ export default {
   ); /* Use the custom property to set width */
 
   margin-right: 2px;
-  height: 5px;
+  height: 15px;
   background-color: var(--color);
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -214,11 +219,16 @@ export default {
 .result-line-default {
   --color: white;
   width: 2%;
-  margin-left: 5px;
 
-  height: 5px;
+
+  height: 15px;
   background-color: var(--color);
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+
+}
+.result-line-image {
+  --color: white;
+
+  background-color: var(--color);
+ 
 }
 </style>
