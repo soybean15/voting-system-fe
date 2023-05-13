@@ -1,5 +1,6 @@
 <template>
-  <div class="text-white flex flex-col text-sm font-bold p-2 pl-0 pt-1">
+  <div class="p-4">
+    <div class="text-white flex flex-col text-sm font-bold p-2  pl-0 pt-0">
     <div class="flex text-white text-lg font-semibold font-sans">
               {{ computedPosition.name }}
       </div>
@@ -13,9 +14,9 @@
     v-for="candidate in computedPosition.result"
     :key="candidate.id"
   >
-    <div class="w-8 h-8  result-line-image flex items-center rounded-full"
+    <div class="w-16 h-16  result-line-image flex items-center rounded-full"
         :style="{ '--color': candidate.color }">
-      <img class="w-8 h-8 p-1 rounded-full" :src="candidate.image" />
+      <img class="w-16 h-16 p-1 rounded-full" :src="candidate.image" />
     </div>
 
     <div class="flex w-full items-center">
@@ -41,6 +42,9 @@
      
     </div>
   </div>
+
+  </div>
+  
 </template>
 
 <script>

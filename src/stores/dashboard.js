@@ -59,7 +59,9 @@ export const useDashboardStore = defineStore('dashboard', {
         },
         async getResult(){
             const result = await axios.get('api/admin/result')
+            
             this.stateDashboard.positions = result.data.positions
+            console.log(result)
   
         },
          computeTurnoutPercentage(){
@@ -72,11 +74,12 @@ export const useDashboardStore = defineStore('dashboard', {
         async getSettings(){
             this.stateLoading = true
             const data = await axios('api/admin/settings')
+            console.log(data.data)
 
             this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
             this.stateSettings.isOpen = data.data.settings[0].time_open == null?false:true
             this.stateSettings.date_open = data.data.settings[0].time_open
-            console.log(this.stateSettings)
+
             this.stateLoading=false
             
         },

@@ -14,12 +14,23 @@ export const useElectionStore = defineStore('vote', {
         stateStatus: {
             title: '404',
             message: 'Page not found'
-        }
+        },
+        stateResult:null,
+        stateSettings:{
+            show_result:null,
+            isOpen:null,
+            date_open:null,
+            date_close:null
+        },
+        stateLoading:false
     
     }),
     getters: {
         form: (state) => state.stateForm,
-        status:(state)=>state.stateStatus
+        status:(state)=>state.stateStatus,
+        result:(state)=>state.stateResult,
+        settings:(state)=>state.stateSettings,
+        loading:(state)=>state.stateLoading
 
         
     },
@@ -79,7 +90,27 @@ export const useElectionStore = defineStore('vote', {
             setStatus(status)
             router.push('/status')
 
-        }
+        },
+
+        async getResult(){
+            const result = await axios.get('api/voting/result')
+            
+            this.stateResult = result.data.positions
+            console.log(result)
+  
+        },
+        async getSettings(){
+            this.stateLoading = true
+            const data = await axios('api/voting/settings')
+            console.log(data.data)
+
+            this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
+            this.stateSettings.isOpen = data.data.settings[0].time_open == null?false:true
+            this.stateSettings.date_open = data.data.settings[0].time_open
+
+            this.stateLoading=false
+            
+        },
 
     }
 

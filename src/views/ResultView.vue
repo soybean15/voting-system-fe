@@ -1,12 +1,12 @@
 <template>
-    <div class="flex-col m-14 p-3 text-white overflow-auto h-5/6 md:h-3/6" v-if="!dashboardStore.loading">
+    <div class="flex-col m-14 p-3 text-white overflow-auto h-5/6 md:h-3/6" v-if="!electionStore.loading">
         
 
-        <div class="" v-if="dashboardStore.settings.show_result">
+        <div class="" v-if="electionStore.settings.show_result">
             <div class="flex text-xl font-bold">Result</div>
-            <div class="bg-onSurface p-2 m-2 rounded-lg shadow-lg" v-for="position in dashboardStore.dashboard.positions" :key="position.id">
-                <div class="flex text-xl font-semibold">{{ position.name }}</div>
-                <CandidatesCard :position ="position" :isOpen="dashboardStore.settings.isOpen"/>
+            <div class="bg-onSurface p-2 m-2 rounded-lg shadow-lg" v-for="position in electionStore.result" :key="position.id">
+                
+                <CandidatesCard :position ="position" :isOpen="electionStore.settings.isOpen"/>
             </div>
         </div>
         <div v-else>
@@ -22,17 +22,20 @@
 import { useDashboardStore } from '@/stores/dashboard';
 import { onMounted } from 'vue';
 import CandidatesCard from '@/views/components/admin/components/CandidatesCard.vue'
+import {useElectionStore} from '@/stores/vote'
 export default {
     components:{CandidatesCard},
     setup(){
-        const dashboardStore = useDashboardStore()
+        //const dashboardStore = useDashboardStore()
+        const electionStore = useElectionStore()
 
         onMounted(()=>{
-            dashboardStore.getSettings()
-            dashboardStore.getResult()
+            electionStore.getSettings()
+            electionStore.getResult()
+            //dashboardStore.getResult()
         })
         
-        return {dashboardStore}
+        return {electionStore}
     }
 
 }
