@@ -6,7 +6,9 @@ const fetchData = async (route) => {
     const api = "https://api.pollingpoint.net/"
 
     try {
-      let data = await fetch(api+route);n
+      let data = await fetch(api+route, {
+          credentials: 'include'
+      });
       if (!data.ok) {
         throw Error("no Data available");
       }
