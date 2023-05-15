@@ -142,7 +142,7 @@ export const useAuthStore = defineStore('auth', {
                     title:'Forgot Password',
                     message:data.data.status
                 }
-                getStatus(status)
+                setStatus(status)
                 this.router.push('/status')
                 // this.authStatus ={
                 //     title: 'Forgot Password',
