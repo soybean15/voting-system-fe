@@ -10,14 +10,16 @@ export const useAuthStore = defineStore('auth', {
         authUser: null,
         authErrors: [],
         authStatus: null,
-        authIsAdmin : null
+        authIsAdmin : null,
+        authLoading:false,
     
     }),
     getters: {
         user: (state) => state.authUser,
         errors: (state) => state.authErrors,
         status:(state)=> state.authStatus,
-        isAdmin:(state)=>state.authIsAdmin
+        isAdmin:(state)=>state.authIsAdmin,
+        loading:(state)=>state.authLoading
         
     },
     actions: {
@@ -28,12 +30,14 @@ export const useAuthStore = defineStore('auth', {
             await axios.get('/sanctum/csrf-cookie')
         },
         async getUser() {
+            this.authLoading = true
             await this.getToken()
             try {
                 const data = await axios.get("/api/user")
                
                 this.authUser = data.data
                 this.checkRole()
+                this.authLoading = false
             } catch (e) {
                 // if(e.response.status ===401){
                 //     router.push('/login')
@@ -195,11 +199,15 @@ export const useAuthStore = defineStore('auth', {
         },
 
         handleStart(){
-            if(this.authUser){
-                this.router.push('/vote')
-            }else{
-                this.router.push('/login')
+            if(!this.authLoading){
+                if(this.authUser){
+                    this.router.push('/vote')
+                }else{
+                    this.router.push('/login')
+                }
+
             }
+         
         }
 
 
