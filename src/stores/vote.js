@@ -103,7 +103,8 @@ export const useElectionStore = defineStore('vote', {
         },
         async getSettings(){
             this.stateLoading = true
-            const data = await axios('api/voting/settings')
+            const data = await axios.get('api/voting/settings')
+
             console.log(data.data)
 
             this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
