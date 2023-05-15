@@ -31,7 +31,7 @@
             <div
               class="ml-4 md:h-24 flex items-end md:pl-1 md:pb-4 text-base text-gray-100 font-semibold"
             >
-              <router-link :to="{ name: auth.route_name, query:{register:auth.register} }">{{
+              <router-link @click="onHideNav" :to="{ name: auth.route_name, query:{register:auth.register} }">{{
                 auth.name
               }}</router-link>
             </div>
