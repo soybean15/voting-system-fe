@@ -72,14 +72,14 @@ export default {
     let item = localStorage.getItem("positions")
 
     onMounted(() => {
-      console.log("mounted");
+     
 
       item = localStorage.getItem("positions")
       electionStore.getSettings()
      
       electionStore.getElection()
         .then((response) => {
-          console.log(response.data)
+         
           if(!response.data.status ){
             electionStore.status.title = response.data.title
             electionStore.status.message = response.data.message
@@ -107,7 +107,7 @@ export default {
     let showResult = ref("hidden");
 
     onUnmounted(() => {
-      console.log("unmounted");
+    
 
       const serializedObject = JSON.stringify(positions.value);
 
@@ -124,7 +124,7 @@ export default {
           console.log(response.data)
           positions.value = response.data.data;
           len.value = positions.value.length;
-          console.log(positions.value);
+          
 
           addAttribute(positions);
         })
@@ -136,7 +136,7 @@ export default {
         positions.value = JSON.parse(item);
         len.value = positions.value.length;
       }catch(e){
-        electionStore.redirect()
+        //electionStore.redirect()
 
       }
      

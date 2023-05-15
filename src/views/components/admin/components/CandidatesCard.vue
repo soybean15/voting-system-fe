@@ -198,7 +198,7 @@ export default {
   props: ["position",'isOpen'],
   setup(props) {
     const computedPosition = ref(computeTotalVote(props.position));
-    console.log(computedPosition);
+   
 
     console.log(computedPosition);
     return { computedPosition, getRandomColor };
