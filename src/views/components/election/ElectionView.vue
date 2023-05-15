@@ -76,6 +76,7 @@ export default {
 
       item = localStorage.getItem("positions")
       electionStore.getSettings()
+      console.log('isOpen::'+electionStore.settings.isOpen)
 
       electionStore.getElection()
         .then((response) => {
