@@ -1,0 +1,31 @@
+name: "PollingPoint - Web"
+
+on:
+  push:
+    branches:
+      - 'master'
+  workflow_dispatch:
+
+env:
+  HOSTNAME: ${{ secrets.HOST_NAME }}
+  USERNAME: ${{ secrets.USERNAME }}
+  SSH_KEY:  ${{ secrets.SSH_PRIVATE_KEY }}
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup SSH Private Key
+        run:  echo "$SSH_KEY" > private_key && chmod 600 private_key
+      - name: Web Deployment
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOSTNAME} '
+          cd /home/ubuntu/projects/web &&
+          git pull &&
+          cd /home/ubuntu/projects/services &&
+          sudo docker compose exec -uroot app sh -c \
+          "cd /var/www/web &&
+          npm install && npm run build"
+          '
