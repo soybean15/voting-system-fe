@@ -69,13 +69,13 @@ export default {
     const positions = ref();
 
    // let item = localStorage.getItem("positions")
-
+   const len = ref(0);
     onMounted(() => {
      
 
      // item = localStorage.getItem("positions")
       electionStore.getSettings()
-      const len = ref(0);
+      
       electionStore.getElection()
         .then((response) => {
          
