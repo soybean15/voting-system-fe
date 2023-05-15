@@ -57,10 +57,12 @@ export default {
   setup() {
     const authStore = useAuthStore();
     // authStore.checkRole()
-    onMounted( async ()=>{
-      await authStore.getUser()
+    onMounted( 
+    //   async ()=>{
+    //   await authStore.getUser()
 
-    })
+    // }
+    )
     const hideNav = ref(true)
 
    
