@@ -75,7 +75,7 @@ export default {
       console.log("mounted");
 
       item = localStorage.getItem("positions")
-      dashboardStore.getSettings()
+      electionStore.getSettings()
 
       electionStore.getElection()
         .then((response) => {
