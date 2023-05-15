@@ -56,7 +56,7 @@ import PositionSideView from "./PositionSideView.vue";
 import ResultModal from "@/views/components/modal/ResultModal.vue";
 import getPositions from "@/data/getPositions";
 import { useElectionStore } from "@/stores/vote";
-import { useDashboardStore } from "@/stores/dashboard";
+
 
 import { onMounted, onUpdated, onUnmounted } from "vue";
 
@@ -64,7 +64,7 @@ export default {
   components: { PositionView, PositionSideView, ResultModal },
   setup() {
     const electionStore = useElectionStore();
-    const dashboardStore =useDashboardStore();
+  
     //electionStore.welcome();
 
     const positions = ref();
@@ -76,8 +76,7 @@ export default {
 
       item = localStorage.getItem("positions")
       electionStore.getSettings()
-      console.log('isOpen::'+electionStore.settings.isOpen)
-
+     
       electionStore.getElection()
         .then((response) => {
           console.log(response.data)
