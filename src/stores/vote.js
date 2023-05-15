@@ -97,6 +97,7 @@ export const useElectionStore = defineStore('vote', {
             
             this.stateResult = result.data.positions
             console.log(result)
+            //test
   
         },
         async getSettings(){
