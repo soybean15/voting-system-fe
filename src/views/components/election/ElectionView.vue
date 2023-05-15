@@ -216,7 +216,7 @@ export default {
   background-color: #ffffff;
   margin: auto;
 
-  width: 80%;
+  width: 100%;
   height: 90%;
   min-width: 300px;
 
