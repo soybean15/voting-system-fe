@@ -1,12 +1,12 @@
 <template>
-  <div class="about p-6 flex flex-col items-center">
+  <div class="about  p-6 flex flex-col items-center">
     <h1 class="text-4xl text-white font-bold p-2">About us</h1>
     
-    <div class=" flex ">
+    <div class=" flex-col overflow-auto h-96">
       
-      <img class="w-72 shadow-lg rounded-md" src="@/assets/img/about.jpg" />
+      <div><img class="w-72 h-96 shadow-lg rounded-md " src="@/assets/img/about.jpg" /></div>
       <div class="w-72 text-white flex flex-col">
-        <div class="font-bold text-2xl flex ml-6">BSIT 3A</div>
+        <div class="font-bold text-2xl flex ml-6 pt-5">BSIT 3A</div>
         <div class="flex ml-6 text-gray-400" v-for="name in bsit" :key="name">
           <div>{{ name }}</div>
         </div>
