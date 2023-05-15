@@ -1,6 +1,6 @@
 <template>
   <div class="modal-overlay" :class="showResult">
-    <div class="res-modal">
+    <div class="res-modal w-11/12 md:3/5">
       <div class="flex-col p-4 h-full">
         <div class="flex-none font-bold text-2xl">Your Voting Selection</div>
         <div class="h-4/5">
