@@ -54,11 +54,10 @@ import { computed, ref, watchEffect } from "vue";
 import PositionView from "./PositionView.vue";
 import PositionSideView from "./PositionSideView.vue";
 import ResultModal from "@/views/components/modal/ResultModal.vue";
-import getPositions from "@/data/getPositions";
 import { useElectionStore } from "@/stores/vote";
 
 
-import { onMounted, onUpdated, onUnmounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 
 export default {
   components: { PositionView, PositionSideView, ResultModal },

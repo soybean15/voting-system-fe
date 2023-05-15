@@ -28,7 +28,7 @@ export default {
     setup(props,{emit}){
         
         const onClickTab = (index)=>{
-            console.log(index)
+            
             emit('onClickTab',index)
         }
     //    const isActive = props.positions.id 

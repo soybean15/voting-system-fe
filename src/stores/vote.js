@@ -97,15 +97,14 @@ export const useElectionStore = defineStore('vote', {
             const result = await axios.get('api/voting/result')
             
             this.stateResult = result.data.positions
-            console.log(result)
-            //test
+           
   
         },
         async getSettings(){
             this.stateLoading = true
             const data = await axios.get('api/voting/settings')
 
-            console.log(data.data)
+            
 
             this.stateSettings.show_result= data.data.settings[0].show_result == 0?false :true
             this.stateSettings.isOpen = data.data.settings[0].time_open == null?false:true

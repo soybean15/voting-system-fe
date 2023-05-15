@@ -200,7 +200,7 @@ export default {
     const computedPosition = ref(computeTotalVote(props.position));
    
 
-    console.log(computedPosition);
+
     return { computedPosition, getRandomColor };
   },
 };
