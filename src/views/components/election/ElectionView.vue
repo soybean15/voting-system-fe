@@ -57,7 +57,7 @@ import ResultModal from "@/views/components/modal/ResultModal.vue";
 import { useElectionStore } from "@/stores/vote";
 
 
-import { onMounted, onUnmounted } from "vue";
+import { onMounted,  onUnmounted } from "vue";
 
 export default {
   components: { PositionView, PositionSideView, ResultModal },
@@ -68,14 +68,14 @@ export default {
 
     const positions = ref();
 
-   // let item = localStorage.getItem("positions")
-   const len = ref(0);
+    let item = localStorage.getItem("positions")
+
     onMounted(() => {
      
 
-     // item = localStorage.getItem("positions")
+      item = localStorage.getItem("positions")
       electionStore.getSettings()
-      
+     
       electionStore.getElection()
         .then((response) => {
          
@@ -88,7 +88,6 @@ export default {
             electionStore.status.message = "We're sorry, the voting period for this election has already ended. Thank you to all who participated in the election. Please stay tuned for the results, which will be announced shortly."
             electionStore.redirect()
           }
-          len.value = positions.value.length;
           
         })
       
@@ -96,7 +95,7 @@ export default {
     });
 
     const activeTab = ref(0);
-   
+    const len = ref(0);
 
     const backStr = ref("Back");
     const nextStr = ref("Next");
@@ -109,39 +108,39 @@ export default {
     onUnmounted(() => {
     
 
-      // const serializedObject = JSON.stringify(positions.value);
+      const serializedObject = JSON.stringify(positions.value);
 
-      // // Save the string in local storage using localStorage.setItem()
-      // localStorage.setItem("positions", serializedObject);
+      // Save the string in local storage using localStorage.setItem()
+      localStorage.setItem("positions", serializedObject);
 
       
     });
 
-    // if (!item || item == "null") {
-    //   electionStore.getElection()
-    //     .then((response) => {
+    if (!item || item == "null") {
+      electionStore.getElection()
+        .then((response) => {
          
-    //       console.log(response.data)
-    //       positions.value = response.data.data;
-    //       len.value = positions.value.length;
+          console.log(response.data)
+          positions.value = response.data.data;
+          len.value = positions.value.length;
           
 
-    //       addAttribute(positions);
-    //     })
+          addAttribute(positions);
+        })
       
-    // } else {
+    } else {
     
      
-    //   try{
-    //     positions.value = JSON.parse(item);
-    //     len.value = positions.value.length;
-    //   }catch(e){
-    //     //electionStore.redirect()
+      try{
+        positions.value = JSON.parse(item);
+        len.value = positions.value.length;
+      }catch(e){
+        //electionStore.redirect()
 
-    //   }
+      }
      
      
-    // }
+    }
 
     const addAttribute = (positions) => {
       positions.value.forEach((position) => {
