@@ -22,7 +22,8 @@ export const useElectionStore = defineStore('vote', {
             date_open:null,
             date_close:null
         },
-        stateLoading:false
+        stateLoading:false,
+        
     
     }),
     getters: {

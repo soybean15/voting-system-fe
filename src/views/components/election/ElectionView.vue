@@ -84,7 +84,7 @@ export default {
             electionStore.status.title = response.data.title
             electionStore.status.message = response.data.message
             electionStore.redirect()
-          }else if( !dashboardStore.settings.isOpen){
+          }else if( !electionStore.settings.isOpen){
             electionStore.status.title = "Election is Close"
             electionStore.status.message = "We're sorry, the voting period for this election has already ended. Thank you to all who participated in the election. Please stay tuned for the results, which will be announced shortly."
             electionStore.redirect()
