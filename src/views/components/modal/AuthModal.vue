@@ -9,7 +9,7 @@
 
    <div class="modal-overlay flex">
   
-    <div class="relative modal m-20 ">
+    <div class="relative modal md:m-20 ">
   
         <div @click="authStore.onCloseAuthModal" class="absolute close-button"> <img class="h-7" src="../../../assets/img/icon/close-icon.svg"></div>
        
