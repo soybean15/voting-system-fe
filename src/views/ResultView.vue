@@ -1,5 +1,5 @@
 <template>
-    <div class="flex-col m-14 p-3 text-white overflow-auto h-5/6 md:h-3/6" v-if="!electionStore.loading">
+    <div class="flex-col m-4 p-3 text-white overflow-auto h-5/6 md:h-3/6" v-if="!electionStore.loading">
         
 
         <div class="" v-if="electionStore.settings.show_result">
