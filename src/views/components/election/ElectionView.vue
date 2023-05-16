@@ -1,5 +1,5 @@
 <template>
-  <div class="parent flex mt-10 rounded-none md:rounded-sm drop-shadow-none md:drop-shadow-lg">
+  <div class="parent  flex mt-10 rounded-none md:rounded-sm drop-shadow-none md:drop-shadow-lg">
     <div class="w-24 md:w-2/6">
       <PositionSideView
         :positions="positions"
@@ -8,15 +8,15 @@
       />
     </div>
 
-    <div class="relative w-full overflow-hidden">
+    <div class="relative w-full  overflow-hidden">
       <div class="flex-col h-full">
         <div
-          class="w-full item"
+          class="w-full  item"
           v-for="(position, index) in positions"
           :key="position.id"
         >
           <div
-            class="absolute tab w-full h-full"
+            class="absolute tab w-full bg-primary h-full"
             :class="{ active: activeTab == index }"
           >
             <PositionView :position="position" />
@@ -209,7 +209,7 @@ export default {
 </script>
 
 
-<style>
+<style >
 .parent {
   /* background-color: #ffffff; */
   margin: auto;

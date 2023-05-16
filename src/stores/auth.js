@@ -112,7 +112,7 @@ export const useAuthStore = defineStore('auth', {
         async handleRegister(data) {
             this.authErrors = []
             this.authStatus = null
-            await this.getToken()
+            //await this.getToken()
             try {
              await axios.post('/register', {
                     name: data.name,

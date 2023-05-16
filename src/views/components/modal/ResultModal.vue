@@ -43,7 +43,9 @@ export default {
     const authStore = useAuthStore();
     const electionStore = useElectionStore();
 
-    onMounted(() => {});
+    onMounted(() => {
+    
+    });
 
     const closeResult = () => {
       emit("closeResultModal");
