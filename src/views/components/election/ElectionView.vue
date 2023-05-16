@@ -1,6 +1,6 @@
 <template>
-  <div class="parent flex mt-4">
-    <div class="w-2/6">
+  <div class="parent flex mt-10 rounded-none md:rounded-sm drop-shadow-none md:drop-shadow-lg">
+    <div class="w-24 md:w-2/6">
       <PositionSideView
         :positions="positions"
         :activeTab="activeTab"
@@ -211,15 +211,15 @@ export default {
 
 <style>
 .parent {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   margin: auto;
 
   width: 100%;
   height: 90%;
   min-width: 300px;
 
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /* border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
 }
 .item {
   display: absolute;

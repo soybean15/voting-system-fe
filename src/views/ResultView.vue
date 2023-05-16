@@ -1,15 +1,19 @@
 <template>
-    <div class="flex-col m-4 p-3 text-white overflow-auto h-5/6 " v-if="!electionStore.loading">
+    <div class="flex-col md:m-4 md:p-3 text-white " v-if="!electionStore.loading">
         
 
-        <div class="" v-if="electionStore.settings.show_result">
-            <div class="flex text-xl font-bold">Result</div>
-            <div class="bg-onSurface p-2 m-2 rounded-lg shadow-lg" v-for="position in electionStore.result" :key="position.id">
+        <div  v-if="electionStore.settings.show_result">
+            <div class="flex text-xl font-bold justify-center mt-4">Result</div>
+            <div class="flex-col overflow-auto result-container">
+                <div class="bg-onSurface p-2 m-2 rounded-lg shadow-lg" v-for="position in electionStore.result" :key="position.id">
                 
                 <CandidatesCard :position ="position" :isOpen="electionStore.settings.isOpen"/>
             </div>
+
+            </div>
+           
         </div>
-        <div v-else>
+        <div class=" " v-else>
             <div class="flex text-2xl font-bold" >Result not posted yet</div>
             <div class="flex">The election results are currently being processed. We will update this page as soon as they become available.</div>
         </div>
@@ -41,6 +45,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.result-container{
+    height:30em;
+}
 
 </style>

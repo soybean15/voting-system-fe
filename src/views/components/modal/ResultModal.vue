@@ -3,17 +3,17 @@
     <div class="res-modal w-11/12 md:3/5">
       <div class="flex-col p-4 h-full">
         <div class="flex-none font-bold text-2xl">Your Voting Selection</div>
-        <div class="h-4/5">
+        <div class="h-4/5 overflow-auto">
           <div class="" v-for="position in positions" :key="position.id">
             <ResultModalPosition :position="position" />
           </div>
         </div>
 
-        <div class="flex justify-center space-x-44">
-          <button @click="closeResult" class="btn btn-blue">Back</button>
+        <div class="flex m-6 mt-0 justify-center">
+          <button @click="closeResult" class="btn m-10 mt-0 btn-blue">Back</button>
           <button
             @click="openCustomModal('submitVote', authStore.user)"
-            class="btn btn-green"
+            class="btn m-10 mt-0 btn-green"
           >
             Submit
           </button>

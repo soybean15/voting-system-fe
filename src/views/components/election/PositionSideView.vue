@@ -1,14 +1,16 @@
 <template>
-    <div class="side font-bold p-1">Positions</div>
+    <div class="side font-bold p-1 text-white">Positions</div>
 
-    <div class="overflow-auto h-96">
+    <div class="overflow-auto h-96 flex-col items-center">
 
         <div 
         @click="onClickTab(index)"
-        class="flex-col side-tab m-2 cursor-pointer" 
-    :class="{sideActive: index==activeTab}" 
+        class="flex items-center side-tab m-2 cursor-pointer h-10 rounded-md justify-center" 
+    :class="{sideActive: index==activeTab,'text-lime-700': position.voted}" 
         v-for="(position,index) in positions" :key="position.id">
-            <div class="m-2 p-2">{{ position.name }} <span class="check text-2xl text-lime-700 font-bold" :class="{hidden:!position.voted}">✓</span></div>
+            <div class="m-2  text-sm">{{ position.name }} 
+                <!-- <span class="check text-2xl text-lime-700 font-bold" :class="{hidden:!position.voted}">✓</span> -->
+            </div>
             {{ }}
           
         

@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay-2 flex">
     <div
-      class="admin-modal bg-onSurface flex-col justify-items-start font-color-primary"
+      class="admin-modal w-96 bg-onSurface flex-col justify-items-start font-color-primary"
     >
       <div class="flex-col">
         <div class="text-white text-xl p-6 h-32">{{ alertDialog.prompt }}</div>
@@ -36,5 +36,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

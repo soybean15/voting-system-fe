@@ -8,10 +8,16 @@
      
      <div class="font-extrabold text-4xl md:text-8xl text-white text-slate-50 underline decoration-sky-500">Polling-Point.net</div>
      <div class=" text-xl text-gray-300 mt-2 font-mono">Introducing our new voting web app – designed to make your voting experience more convenient and accurate than ever before. Say goodbye to long queues and confusing ballot papers – our intuitive interface and secure voting system ensure a seamless and stress-free voting process.</div>
-     <div class="flex">
+    <div v-if="!authStore.loading">
+      <div class="flex">
        <button @click="authStore.handleStart" class="mt-4 btn btn-blue drop-shadow-lg">Get Started</button>
   
      </div>
+
+    </div>
+    <div v-else>
+      <img class="w-16 h-10 rounded-2xl" src="@/assets/img/icon/loading.gif"/>
+    </div>
 
 
     </div>

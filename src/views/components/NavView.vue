@@ -1,6 +1,6 @@
 <template>
 
-  <div class=" header">
+  <div class=" header" >
     
     <div @click="onHideNav" class="menu w-6 h-6 onhide  "><img class="w-6 h-6 cursor-pointer" src="@/assets/img/icon/burger-menu.svg"></div>
     <div  class="flex flex-col nav w-32 md:w-full md:flex-row  bg-primary overflow-visible" :class="{hide: onMobile && hideNav}"> 
@@ -12,12 +12,13 @@
         <div class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 md:pb-4 text-base text-gray-100 font-semibold"></div>
         <div class="ml-1 md:h-24 font-sans flex md:items-end pl-2 md:pl-0 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"><img width="23" src="@/assets/img/icon/vote-logo.svg"/>Polling-point.net</div>
       </div>
-      <div class="flex-grow  mt-4 md:mt-0 md:flex items-center">
+      <div class="flex-grow  mt-4 md:mt-0 md:flex items-center md:pl-5">
         <div v-for="navItem in navItems" :key="navItem.name">
-          <router-link  :to="{ name: navItem.route_name }">
+          <router-link @click="onNavClick(navItem)"  :to="{ name: navItem.route_name }">
             <div
-              class="ml-4 md:h-24 font-sans flex md:items-end md:pl-12 pb-1 md:pb-4 text-sm md:text-base text-gray-100 font-semibold"
-              :class="{ hidden: navItem.name == 'Admin' && !authStore.isAdmin  }"
+            
+              class=" md:mt-14  font-sans flex items-center justify-center p-3  md:items-end md:pl-5 md:pr-5 m-2  md:p-0  text-sm md:text-base text-gray-100 font-semibold"
+              :class="{ hidden: navItem.name == 'Admin' && !authStore.isAdmin , active: navItem.active }"
             >
               {{ navItem.name }}  
             </div>
@@ -25,13 +26,13 @@
           </router-link>
         </div>
       </div>
-      <div class="flex pr-4">
+      <div class="flex pr-4" v-if="!authStore.loading">
         <div class="md:flex pb-6 md:pb-0 items-center" v-if="!authStore.user">
           <div v-for="auth in navAuth" :key="auth.route_name">
             <div
               class="ml-4 md:h-24 flex items-end md:pl-1 md:pb-4 text-base text-gray-100 font-semibold"
             >
-              <router-link @click="onHideNav" :to="{ name: auth.route_name, query:{register:auth.register} }">{{
+              <router-link  @click="onHideNav" :to="{ name: auth.route_name, query:{register:auth.register} }">{{
                 auth.name
               }}</router-link>
             </div>
@@ -57,13 +58,14 @@ export default {
   setup() {
     const authStore = useAuthStore();
     // authStore.checkRole()
-    onMounted( 
-    //   async ()=>{
-    //   await authStore.getUser()
+    // onMounted( 
+    // //   async ()=>{
+    // //   await authStore.getUser()
 
-    // }
-    )
+    // // }
+    // )
     const hideNav = ref(true)
+    
 
    
     
@@ -73,15 +75,16 @@ export default {
     }
 
     const navItems = [
-      { route_name: "home", name: "Home", route: "/"},
+      { route_name: "home", name: "Home", route: "/",active:true},
       {
         route_name: "admin",
         name: "Admin",
         route: "/admin",
+        active: false,
        
       },
-      { route_name: "result", name: "Results", route: "/result"},
-      { route_name: "about", name: "About", route: "/about" },
+      { route_name: "result", name: "Results", route: "/result",active: false,},
+      { route_name: "about", name: "About", route: "/about",active: false, },
     ];
 
     const navAuth = [
@@ -100,6 +103,17 @@ export default {
       console.log("Opneing")
     });
 
+    let activeNav =navItems[0]
+    const onNavClick = (item)=>{
+
+     
+      activeNav.active = false
+      
+      item.active = true
+      activeNav = item
+
+    }
+
 
     return {
       authStore,
@@ -107,7 +121,8 @@ export default {
       navAuth,
       hideNav,
       onHideNav,
-      onMobile
+      onMobile,
+      onNavClick
     };
   },
 };
@@ -162,5 +177,11 @@ export default {
   }
 
 
+}
+
+.active{
+  background-color:rgb(66, 65, 68);
+  border-radius: 10px;
+ 
 }
 </style>

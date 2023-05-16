@@ -32,12 +32,22 @@ export const useAuthStore = defineStore('auth', {
         async getUser() {
             this.authLoading = true
             await this.getToken()
+
+
             try {
-                const data = await axios.get("/api/user")
+                // const data = await axios.get("/api/user")
                
-                this.authUser = data.data
-                this.checkRole()
-                this.authLoading = false
+                // this.authUser = data.data
+                // this.checkRole()
+                // this.authLoading = false
+
+
+                setTimeout(async () => {
+                    const data = await axios.get("/api/user")
+                    this.authUser = data.data
+                    this.checkRole()
+                    this.authLoading = false
+                  }, 3000)
             } catch (e) {
                 // if(e.response.status ===401){
                 //     router.push('/login')
@@ -48,7 +58,7 @@ export const useAuthStore = defineStore('auth', {
 
         },
         async checkRole() {
-            await this.getToken()
+            //await this.getToken()
             this.authIsAdmin = null
             try {
                 const data = await axios.get("/api/admin")
