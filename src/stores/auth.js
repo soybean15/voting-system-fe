@@ -49,6 +49,8 @@ export const useAuthStore = defineStore('auth', {
                 //     this.authLoading = false
                 //   }, 3000)
             } catch (e) {
+                this.authLoading = false
+
                 // if(e.response.status ===401){
                 //     router.push('/login')
                 // }
