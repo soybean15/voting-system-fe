@@ -159,6 +159,7 @@ export const useAuthStore = defineStore('auth', {
                 }
                 setStatus(status)
                 this.router.push('/status')
+                this.handleLogout()
 
             } catch (e) {
                 if (e.response.status === 422) {
