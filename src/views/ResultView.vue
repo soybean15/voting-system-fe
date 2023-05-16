@@ -3,7 +3,15 @@
         
 
         <div  v-if="electionStore.settings.show_result">
-            <div class="flex text-xl font-bold justify-center mt-4">Result</div>
+            <div class="flex text-xl items-center font-bold justify-center mt-4"><div>Result</div>
+                <div class="text-gray-400 text-sm font-thin flex p-2 ">
+        as of {{ currentTime }}
+        <div class="text-cyan-400" v-if="electionStore.settings.isOpen" >(unofficial)</div>
+        <div class="text-rose-400" v-else>
+            (Final)
+        </div>
+                </div>
+            </div>
             <div class="flex-col overflow-auto result-container">
                 <div class="bg-onSurface p-2 m-2 rounded-lg shadow-lg" v-for="position in electionStore.result" :key="position.id">
                 
@@ -38,8 +46,10 @@ export default {
             electionStore.getResult()
             //dashboardStore.getResult()
         })
+        const currentTime = new Date().toLocaleTimeString();
+
         
-        return {electionStore}
+        return {electionStore,currentTime}
     }
 
 }

@@ -4,7 +4,9 @@
         <!-- <div class="text-4xl font-bold mb-4" >{{authStore.status.title}}</div>
         <p class="text-base text-slate-200">{{ authStore.status.status }}</p> -->
         <div class="text-4xl font-bold mb-4" >{{status.title}}</div>
-        <p class="text-base text-slate-200">{{ status.message }}</p>
+        <p class="text-base text-slate-200">{{ status.message }} </p>
+        <div v-if="status.notVerified"><div @click="authStore.resendVerification" class="pt-25 text-cyan-500" >Resend Verification</div></div>
+        <router-link class="pt-25 text-cyan-500" :to="{name:'home'}">Back to Home</router-link>
     </div>
   
 </template>

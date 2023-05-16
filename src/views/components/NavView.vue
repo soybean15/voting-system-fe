@@ -27,14 +27,14 @@
         </div>
       </div>
       <div class="flex pr-4" v-if="!authStore.loading">
-        <div class="md:flex pb-6 md:pb-0 items-center" v-if="!authStore.user">
+        <div class="md:flex pb-6 md:pb-0 items-center" v-if="!authStore.user && authStore.verified">
           <div v-for="auth in navAuth" :key="auth.route_name">
             <div
               class="ml-4 md:h-24 flex items-end md:pl-1 md:pb-4 text-base text-gray-100 font-semibold"
             >
               <router-link  @click="onHideNav" :to="{ name: auth.route_name, query:{register:auth.register} }">{{
                 auth.name
-              }}</router-link>
+              }}  </router-link>
             </div>
           </div>
         </div>
@@ -71,6 +71,7 @@ export default {
     
 
     const onHideNav= ()=>{
+    
       hideNav.value = !hideNav.value 
     }
 

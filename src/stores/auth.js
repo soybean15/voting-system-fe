@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', {
         authStatus: null,
         authIsAdmin : null,
         authLoading:false,
+        authVerified: true,
     
     }),
     getters: {
@@ -19,7 +20,8 @@ export const useAuthStore = defineStore('auth', {
         errors: (state) => state.authErrors,
         status:(state)=> state.authStatus,
         isAdmin:(state)=>state.authIsAdmin,
-        loading:(state)=>state.authLoading
+        loading:(state)=>state.authLoading,
+        verified :(state)=>state.authVerified
         
     },
     actions: {
@@ -32,6 +34,7 @@ export const useAuthStore = defineStore('auth', {
         async getUser() {
             this.authLoading = true
             await this.getToken()
+            this.authVerified =true
 
 
             try {
@@ -49,15 +52,38 @@ export const useAuthStore = defineStore('auth', {
                 //     this.authLoading = false
                 //   }, 3000)
             } catch (e) {
-                this.authLoading = false
+                 this.authLoading = false
 
-                // if(e.response.status ===401){
-                //     router.push('/login')
-                // }
+                if(e.response.status ===409){
+                    this.authVerified =false
+
+                   
+                    const status = {
+                        title:'Your Account is not verified',
+                        message: "Please Check you email for verification",
+                        notVerified:true
+                    }
+                    setStatus(status)
+                   
+                    this.router.push('/status')
+                   
+                }
 
 
             }
 
+        },
+
+        async resendVerification(){
+            const data = await axios.post('/email/verification-notification')
+
+            const status = {
+                title:'Verification sent',
+                message: "Please Check you email for verification",
+                
+            }
+            setStatus(status)
+            this.router.push('/status')
         },
         async checkRole() {
             //await this.getToken()
@@ -112,7 +138,7 @@ export const useAuthStore = defineStore('auth', {
         async handleRegister(data) {
             this.authErrors = []
             this.authStatus = null
-            //await this.getToken()
+            await this.getToken()
             try {
              await axios.post('/register', {
                     name: data.name,

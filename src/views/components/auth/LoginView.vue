@@ -29,6 +29,9 @@
             <div v-if="authStore.errors.password">
                 <span class="text-red-400 text-sm">{{ authStore.errors.password[0] }}</span>
             </div>
+           
+                <span class="text-red-400 text-sm">{{ authStore.errors.message }}</span>
+        
                      
           
         </div>
