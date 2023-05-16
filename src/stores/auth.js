@@ -35,19 +35,19 @@ export const useAuthStore = defineStore('auth', {
 
 
             try {
-                // const data = await axios.get("/api/user")
+                const data = await axios.get("/api/user")
                
-                // this.authUser = data.data
-                // this.checkRole()
-                // this.authLoading = false
+                this.authUser = data.data
+                this.checkRole()
+                this.authLoading = false
 
 
-                setTimeout(async () => {
-                    const data = await axios.get("/api/user")
-                    this.authUser = data.data
-                    this.checkRole()
-                    this.authLoading = false
-                  }, 3000)
+                // setTimeout(async () => {
+                //     const data = await axios.get("/api/user")
+                //     this.authUser = data.data
+                //     this.checkRole()
+                //     this.authLoading = false
+                //   }, 3000)
             } catch (e) {
                 // if(e.response.status ===401){
                 //     router.push('/login')
