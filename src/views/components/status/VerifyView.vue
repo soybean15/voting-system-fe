@@ -1,5 +1,5 @@
 <template>
-  <div class="m-14 p-3 text-justify text-white">
+  <div class="m-10 p-1 text-white">
     <div class="text-4xl font-bold mb-4">Check your Email</div>
     <p class="text-base text-slate-200">
       We sent you a temporary code to verify your email
