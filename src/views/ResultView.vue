@@ -22,7 +22,7 @@
            
         </div>
         <div class=" " v-else>
-            <div class="flex text-2xl font-bold" >Result not posted yet</div>
+            <div class="flex text-2xl font-bold pt-10" >Result not posted yet</div>
             <div class="flex">The election results are currently being processed. We will update this page as soon as they become available.</div>
         </div>
 
