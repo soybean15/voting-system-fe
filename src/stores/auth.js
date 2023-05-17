@@ -154,21 +154,23 @@ export const useAuthStore = defineStore('auth', {
             this.authErrors = []
             this.authStatus = null
             this.authLoading = true
-            await this.getToken()
+           // await this.getToken()
             try {
-                setTimeout(async () => {
+                // setTimeout(async () => {
              await axios.post('/register', {
                     name: data.name,
                     email: data.email,
                     password: data.password,
                     password_confirmation: data.password_confirmation
+                    
                 })
-            }, 3000)
-            this.authLoading = false
+                this.authLoading = false
               
                 localStorage.setItem('email',  data.email);
               
                 this.router.push('/verify')
+            // }, 3000)
+            
                
 
             } catch (e) {

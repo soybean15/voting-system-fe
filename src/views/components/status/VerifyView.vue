@@ -33,7 +33,7 @@
       <div v-else>
         <div
           class="text-cyan-500 pl-2 cursor-pointer hover:underline"
-          @click="authStore.resendVerification"
+          @click="onResend"
         >
           Resend
         </div>
@@ -48,21 +48,21 @@ import { onMounted, ref } from "vue";
 export default {
   setup() {
     const authStore = useAuthStore();
-    authStore.onVerify()
+    // authStore.onVerify()
 
     const countdown = ref("01:30");
-
+    let intervalId;
     onMounted(() => {
       authStore.form.email = localStorage.getItem("email");
       const endTime = new Date();
-        endTime.setMinutes(endTime.getMinutes() + 1);
-        endTime.setSeconds(endTime.getSeconds() + 30);
+    //   endTime.setMinutes(endTime.getMinutes() + 1);
+    //   endTime.setSeconds(endTime.getSeconds() + 30);
 
-      //endTime.setSeconds(endTime.getSeconds() + 5);
+      endTime.setSeconds(endTime.getSeconds() + 5);
 
       updateCountdown(endTime);
-      setInterval(() => updateCountdown(endTime), 1000);
-    });
+      intervalId = setInterval(() => updateCountdown(endTime), 1000);
+});
 
     const updateCountdown = (endTime) => {
       const now = new Date();
@@ -78,7 +78,20 @@ export default {
       countdown.value = formattedTime;
     };
 
-    return { authStore, countdown };
+    const onResend = () => {
+      authStore.resendVerification();
+      countdown.value = "1:30";
+
+      clearInterval(intervalId); // Clear the previous interval
+      const endTime = new Date();
+      endTime.setMinutes(endTime.getMinutes() + 1);
+      endTime.setSeconds(endTime.getSeconds() + 30);
+
+      updateCountdown(endTime);
+      intervalId = setInterval(() => updateCountdown(endTime), 1000);
+    };
+
+    return { authStore, countdown, onResend };
   },
 };
 </script>

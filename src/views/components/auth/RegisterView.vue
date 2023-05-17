@@ -1,5 +1,5 @@
 <template>
-   
+{{ authStore.errors }}
   <div class="reg-container bg-neutral-800 border m-2">
     <div class=" text-2xl mt-4 font-bold">Register</div>
     <form @submit.prevent="authStore.handleRegister(form)">
