@@ -49,6 +49,7 @@ export default {
    
     setup(){
         const authStore = useAuthStore()
+        authStore.checkUser()
         const route = useRoute();
         const register =ref(route.query.register)
         authStore.resetErrors()

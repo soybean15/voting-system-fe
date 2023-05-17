@@ -36,7 +36,15 @@
           
         </div>
         <div class="p-2">
-            <input  class="btn-submit bg-lime-600" type="submit" value="Sign in">
+            <div v-if="!authStore.loading">
+                <input  class="btn-submit bg-lime-600" type="submit" value="Sign in">
+            </div>
+            <div v-else>
+                <input  class="btn-submit bg-lime-600" type="submit" value="Please Wait">
+            </div>
+
+
+            
         </div>
     </form>
     <div class="login-container border m-2">

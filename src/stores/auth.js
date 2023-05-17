@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
         authStatus: null,
         authIsAdmin : null,
         authLoading:false,
-        authVerified: true,
+        authOnVerify: false,
         authForm:{
             email:'',
             code:null
@@ -25,7 +25,6 @@ export const useAuthStore = defineStore('auth', {
         status:(state)=> state.authStatus,
         isAdmin:(state)=>state.authIsAdmin,
         loading:(state)=>state.authLoading,
-        onVerified :(state)=>state.authVerified,
         form:(state)=>state.authForm
     },
     actions: {
@@ -36,9 +35,10 @@ export const useAuthStore = defineStore('auth', {
             await axios.get('/sanctum/csrf-cookie')
         },
         async getUser() {
+            
             this.authLoading = true
             await this.getToken()
-            this.authVerified =true
+            
 
 
             try {
@@ -55,12 +55,11 @@ export const useAuthStore = defineStore('auth', {
                 //     this.checkRole()
                 //     this.authLoading = false
                 //   }, 3000)
+                
             } catch (e) {
-                 this.authLoading = false
-
+                
                 if(e.response.status ===409){
-                    this.authVerified =false
-
+                    this.authOnVerify = true
                    
                     const status = {
                         title:'Your Account is not verified',
@@ -72,6 +71,7 @@ export const useAuthStore = defineStore('auth', {
                     this.router.push('/status')
                    
                 }
+                this.authLoading = false
 
 
             }
@@ -93,37 +93,55 @@ export const useAuthStore = defineStore('auth', {
                 this.authIsAdmin = data.data.status == 1
               
                 if(!this.authIsAdmin ){
-                    router.push('/')
+                    this.router.push('/')
                 }
             } catch (e) {
-                router.push('/')
-             
+                this.router.push('/')          
 
             }
 
         },
 
 
+        checkUser(){
+              //check if unverified user is logged in
+              if(this.authOnVerify){
+                this.handleLogout()
+            }
+
+        },
 
         async onLogin(data) {
+          
+            //
             this.authErrors = []
             await this.getToken()
             
-
+            this.authLoading = true
 
             try {
+
+                 // setTimeout(async () => {
+                //     const data = await axios.get("/api/user")
+                //     this.authUser = data.data
+                //     this.checkRole()
+                //     this.authLoading = false
+                //   }, 3000)
                 await axios.post("/login", {
                     email: data.email,
                     password: data.password
                 })
                 localStorage.setItem('positions', null);
                 localStorage.setItem('email',  data.email);
+                this.authLoading =false
                 this.router.push('/')
+                
 
             } catch (e) {
                 if (e.response.status === 422) {
                     this.authErrors = e.response.data.errors
                 }
+                this.authLoading =false
                
 
             }
@@ -135,27 +153,21 @@ export const useAuthStore = defineStore('auth', {
         async handleRegister(data) {
             this.authErrors = []
             this.authStatus = null
+            this.authLoading = true
             await this.getToken()
             try {
+                setTimeout(async () => {
              await axios.post('/register', {
                     name: data.name,
                     email: data.email,
                     password: data.password,
                     password_confirmation: data.password_confirmation
                 })
-
-
-                // this.authStatus ={
-                //     title: 'Welcome to Voting.com',
-                //     status :"We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
-
-                // } 
-                // const status = {
-                //     title:'Welcome to Voting.com',
-                //     message: "We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
-                // }
+            }, 3000)
+            this.authLoading = false
+              
                 localStorage.setItem('email',  data.email);
-                //setStatus(status)
+              
                 this.router.push('/verify')
                
 
@@ -163,6 +175,7 @@ export const useAuthStore = defineStore('auth', {
                 if (e.response.status === 422) {
                     this.authErrors = e.response.data.errors
                 }
+                this.authLoading = false
 
 
             }
@@ -204,10 +217,13 @@ export const useAuthStore = defineStore('auth', {
 
         },
         async handleLogout() {
+            
             await axios.post('/logout')
             this.authUser = null
             this.authStatus =null
             this.authIsAdmin = null
+            this.authOnVerify= false
+            
             localStorage.setItem('email',  '');
             this.router.push('/')
         },
@@ -260,6 +276,8 @@ export const useAuthStore = defineStore('auth', {
                     }
                     setStatus(status)
                     this.router.push('/status')
+
+                    this.authOnVerify =false
     
             }catch(e){
                 if (e.response.status === 422) {
@@ -271,6 +289,12 @@ export const useAuthStore = defineStore('auth', {
             }
            
             console.log(this.authErrors)
+        },
+        onVerify(){
+            if(!this.authOnVerify){
+                this.router.push('/')
+            }
+            
         }
 
 

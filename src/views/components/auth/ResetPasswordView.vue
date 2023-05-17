@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4 w-full">
+  <div class="mt-4 w-full text-white">
     <div class="border w-96  place-content-center m-auto rounded-md">
       <div class="text-2xl mt-4 font-bold">Reset Password</div>
       <form @submit.prevent="authStore.handleResetPassword(form)">
