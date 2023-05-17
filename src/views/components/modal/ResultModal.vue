@@ -44,6 +44,7 @@ export default {
     const electionStore = useElectionStore();
 
     onMounted(() => {
+      authStore.getUser()
     
     });
 
