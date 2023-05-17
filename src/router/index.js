@@ -4,6 +4,7 @@ import LoginView from '@/views/components/auth/LoginView.vue'
 import ResetPassword from '@/views/components/auth/ResetPasswordView.vue'
 import AuthModal from '@/views/components/modal/AuthModal'
 import StatusView from '@/views/components/status/StatusView'
+import VerifyView from '@/views/components/status/VerifyView'
 
 import AdminView from '@/views/AdminView'
 import PositionsView from '@/views/components/admin/PositionsView'
@@ -48,6 +49,12 @@ const routes = [
     name : 'status',
 
     component:StatusView ,
+  },
+  {
+    path: '/verify/',
+    name : 'verify',
+
+    component:VerifyView ,
   },
   {
     path: '/admin',
