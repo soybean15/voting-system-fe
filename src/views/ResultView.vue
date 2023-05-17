@@ -60,7 +60,7 @@ export default {
 
 <style scoped>
 .result-container{
-    height:30em;
+    height:34em;
 }
 
 </style>
