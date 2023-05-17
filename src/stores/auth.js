@@ -13,6 +13,10 @@ export const useAuthStore = defineStore('auth', {
         authIsAdmin : null,
         authLoading:false,
         authVerified: true,
+        authForm:{
+            email:'',
+            code:null
+        }
     
     }),
     getters: {
@@ -21,8 +25,8 @@ export const useAuthStore = defineStore('auth', {
         status:(state)=> state.authStatus,
         isAdmin:(state)=>state.authIsAdmin,
         loading:(state)=>state.authLoading,
-        verified :(state)=>state.authVerified
-        
+        onVerified :(state)=>state.authVerified,
+        form:(state)=>state.authForm
     },
     actions: {
         resetErrors() {
@@ -77,13 +81,8 @@ export const useAuthStore = defineStore('auth', {
         async resendVerification(){
             const data = await axios.post('/email/verification-notification')
 
-            const status = {
-                title:'Verification sent',
-                message: "Please Check you email for verification",
-                
-            }
-            setStatus(status)
-            this.router.push('/status')
+        
+            this.router.push('/verify')
         },
         async checkRole() {
             //await this.getToken()
@@ -98,10 +97,7 @@ export const useAuthStore = defineStore('auth', {
                 }
             } catch (e) {
                 router.push('/')
-                // if(e.response.status ===401){
-                //     router.push('/login')
-                // }
-
+             
 
             }
 
@@ -121,6 +117,7 @@ export const useAuthStore = defineStore('auth', {
                     password: data.password
                 })
                 localStorage.setItem('positions', null);
+                localStorage.setItem('email',  data.email);
                 this.router.push('/')
 
             } catch (e) {
@@ -153,12 +150,13 @@ export const useAuthStore = defineStore('auth', {
                 //     status :"We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
 
                 // } 
-                const status = {
-                    title:'Welcome to Voting.com',
-                    message: "We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
-                }
-                setStatus(status)
-                this.router.push('/status')
+                // const status = {
+                //     title:'Welcome to Voting.com',
+                //     message: "We've sent a verification email to the address you provided during registration, so please check your inbox (and possibly your spam folder) to confirm your account."
+                // }
+                localStorage.setItem('email',  data.email);
+                //setStatus(status)
+                this.router.push('/verify')
                
 
             } catch (e) {
@@ -210,6 +208,7 @@ export const useAuthStore = defineStore('auth', {
             this.authUser = null
             this.authStatus =null
             this.authIsAdmin = null
+            localStorage.setItem('email',  '');
             this.router.push('/')
         },
         onCloseAuthModal() {
@@ -247,6 +246,31 @@ export const useAuthStore = defineStore('auth', {
 
             }
          
+        },
+
+        async handleVerify(){
+           
+            try{ 
+                const data = await axios.post('/verify-email',this.authForm)
+                console.log(data)
+                    const status = {
+                        title:'Verification Successful',
+                        message:data.data.message,
+                        login:true
+                    }
+                    setStatus(status)
+                    this.router.push('/status')
+    
+            }catch(e){
+                if (e.response.status === 422) {
+                    this.authErrors = e.response.data.errors
+                }
+                if (e.response.status === 400) {
+                    this.authErrors.message = e.response.data.message
+                }
+            }
+           
+            console.log(this.authErrors)
         }
 
 
