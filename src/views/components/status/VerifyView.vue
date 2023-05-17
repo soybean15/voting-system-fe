@@ -55,10 +55,10 @@ export default {
     onMounted(() => {
       authStore.form.email = localStorage.getItem("email");
       const endTime = new Date();
-    //   endTime.setMinutes(endTime.getMinutes() + 1);
-    //   endTime.setSeconds(endTime.getSeconds() + 30);
+      endTime.setMinutes(endTime.getMinutes() + 1);
+      endTime.setSeconds(endTime.getSeconds() + 30);
 
-      endTime.setSeconds(endTime.getSeconds() + 5);
+      //endTime.setSeconds(endTime.getSeconds() + 5);
 
       updateCountdown(endTime);
       intervalId = setInterval(() => updateCountdown(endTime), 1000);
