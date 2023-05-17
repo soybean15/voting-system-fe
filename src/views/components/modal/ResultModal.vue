@@ -42,7 +42,7 @@ export default {
   setup(props, { emit }) {
     const authStore = useAuthStore();
     const electionStore = useElectionStore();
-    authStore.getUser()
+    
     onMounted(() => {
      
     

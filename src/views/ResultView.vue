@@ -35,15 +35,18 @@ import { useDashboardStore } from '@/stores/dashboard';
 import { onMounted } from 'vue';
 import CandidatesCard from '@/views/components/admin/components/CandidatesCard.vue'
 import {useElectionStore} from '@/stores/vote'
+import { useAuthStore } from '@/stores/auth';
 export default {
     components:{CandidatesCard},
     setup(){
         //const dashboardStore = useDashboardStore()
         const electionStore = useElectionStore()
+        const authStore = useAuthStore()
 
         onMounted(()=>{
             electionStore.getSettings()
             electionStore.getResult()
+            authStore.getUser()
             //dashboardStore.getResult()
         })
         const currentTime = new Date().toLocaleTimeString();
