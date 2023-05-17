@@ -16,7 +16,7 @@
 
     </div>
     <div v-else>
-      <img class="w-16 h-10 rounded-2xl" src="@/assets/img/icon/loading.gif"/>
+      <img class="w-16 h-10 mt-2 rounded-2xl" src="@/assets/img/icon/loading.gif"/>
     </div>
 
 
