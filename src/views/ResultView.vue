@@ -42,7 +42,7 @@ export default {
         //const dashboardStore = useDashboardStore()
         const electionStore = useElectionStore()
         const authStore = useAuthStore()
-
+        authStore.getUser()
         onMounted(()=>{
             electionStore.getSettings()
             electionStore.getResult()
@@ -51,7 +51,7 @@ export default {
         })
 
         onUnmounted(()=>{
-            authStore.getUser()
+            
         })
         const currentTime = new Date().toLocaleTimeString();
 
