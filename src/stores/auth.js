@@ -97,8 +97,9 @@ export const useAuthStore = defineStore('auth', {
                     this.router.push('/')
                 }
             } catch (e) {
-                this.router.push('/')          
-
+                if(!this.authIsAdmin  && this.router.currentRoute.value.name ==='admin'){
+                    this.router.push('/')
+                }
             }
 
         },
