@@ -35,7 +35,8 @@ export const useAuthStore = defineStore('auth', {
             await axios.get('/sanctum/csrf-cookie')
         },
         async getUser() {
-            
+            console.log(this.router.currentRoute.value.name)
+            console.log(this.router.currentRoute)
             this.authLoading = true
             await this.getToken()
             
@@ -92,7 +93,7 @@ export const useAuthStore = defineStore('auth', {
                
                 this.authIsAdmin = data.data.status == 1
               
-                if(!this.authIsAdmin ){
+                if(!this.authIsAdmin  && this.router.currentRoute.value.name ==='admin'){
                     this.router.push('/')
                 }
             } catch (e) {
