@@ -32,7 +32,7 @@
 
 <script>
 import { useDashboardStore } from '@/stores/dashboard';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import CandidatesCard from '@/views/components/admin/components/CandidatesCard.vue'
 import {useElectionStore} from '@/stores/vote'
 import { useAuthStore } from '@/stores/auth';
@@ -46,8 +46,12 @@ export default {
         onMounted(()=>{
             electionStore.getSettings()
             electionStore.getResult()
-            authStore.getUser()
+           
             //dashboardStore.getResult()
+        })
+
+        onUnmounted(()=>{
+            authStore.getUser()
         })
         const currentTime = new Date().toLocaleTimeString();
 
