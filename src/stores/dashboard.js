@@ -64,6 +64,9 @@ export const useDashboardStore = defineStore('dashboard', {
             console.log(result)
   
         },
+         printResult(){
+             window.open('http://localhost:8000/api/download-result', '_blank');
+        },
          computeTurnoutPercentage(){
             let hasVoted = this.stateDashboard.voters.has_voted
             let totalVoters = hasVoted +  this.stateDashboard.voters.not_voted

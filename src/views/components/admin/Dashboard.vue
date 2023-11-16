@@ -103,13 +103,15 @@
     </div>
 
     <div class="grow mr-6 flex-col md:w-full h-5/6 md:h-96 w-full">
-      <div class="text-white text-xl font-semibold flex p-2 pb-0">
+      <div class="text-white text-xl font-semibold flex p-2 pb-0 justify-between">
         <div class="">Result</div>
+
+        <button  @click="dashboardStore.printResult" class="bg-green-300 px-2 rounded-md shadow-md">Print</button>
       </div>
       <div class="text-gray-400 text-sm flex p-2 pt-0">
         As of {{ currentTime }}
       </div>
-      <div class="overflow-y-auto h-5/6 w-full">
+      <div class="overflow-y-auto h-[700px] w-full">
         <div
           class="drop-shadow-lg rounded-lg bg-gray-700 m-2 p-2 pb-1"
           v-for="position in dashboardStore.dashboard.positions"
